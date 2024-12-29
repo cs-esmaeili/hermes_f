@@ -1,5 +1,7 @@
 const inquirer = require('inquirer');
+const fs = require('fs');
 
+// Define the questions for commit message
 const questions = [
   {
     type: 'list',
@@ -58,7 +60,7 @@ const generateCommitMessage = (answers) => {
       }
       return line;  // Keep lines that don't start with `-` as they are
     }).join('\n');  // Join everything with a new line
-    message += `\n\n${bodyLines}`;
+    message += `${bodyLines}`;
   }
 
   if (answers.footer) {
@@ -78,6 +80,10 @@ const main = async () => {
     console.log('\nGenerated Commit Message:');
     console.log(commitMessage);
 
+    // Optionally save this to a file, if required
+    fs.writeFileSync('commit_message.txt', commitMessage, 'utf8');
+
+    console.log('\nThe commit message has been saved to commit_message.txt');
   } catch (error) {
     console.error('Error generating commit message:', error);
   }

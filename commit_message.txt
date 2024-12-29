@@ -1,0 +1,1 @@
+style(commit program): output style changedoutput now dont have empty lines
