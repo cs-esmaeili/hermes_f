@@ -1,0 +1,7 @@
+{
+    "app_name": "هرمس",
+    "logo_url": "assets/logo.jpg",
+    "api": "https://back.talawin.ir/",
+    "site_description" : "آموزش انلاین",
+    "onLocal" : false
+}
