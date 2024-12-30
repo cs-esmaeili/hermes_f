@@ -6,24 +6,20 @@ const CustomImage = ({
   alt,
   width,
   height,
-  layout = 'intrinsic',
   objectFit = 'cover',
   priority = false,
+  fill = false,
   ...props
 }) => {
-  const globalConfig = {
-    layout,
-    objectFit,
-    priority,
-  };
-
   return (
     <Image
       src={src}
       alt={alt}
-      width={width}
-      height={height}
-      {...globalConfig}
+      width={!fill ? width : undefined}
+      height={!fill ? height : undefined}
+      fill={fill}
+      style={{ objectFit }}
+      priority={priority}
       {...props}
     />
   );
