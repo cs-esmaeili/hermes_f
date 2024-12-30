@@ -6,6 +6,7 @@ import config from "@/config.json";
 import { Toaster } from 'react-hot-toast';
 import { FcGoogle } from "react-icons/fc";
 import Link from 'next/link';
+import Captcha from '@/components/general/captcha';
 
 const LogIn = () => {
 
@@ -31,8 +32,10 @@ const LogIn = () => {
                 </div>
                 <div className='flex flex-col gap-3'>
                     <CustomInput label="ایمیل یا شماره تلفن" inputClassName={"flex w-full"} />
-                    <div className='flex gap-3 flex-col md:flex-row'>
-                        <CustomInput placeholder='کد امنیتی' inputClassName={"placeholder:text-center w-full"} />
+                    <div className='flex gap-3 flex-col sm:flex-row w-full h-fit'>
+                        <div className='min-h-12 max-h-12 xs:min-w-10 min-w-32'>
+                            <Captcha setCaptchaCode={(code) => console.log(code)} />
+                        </div>
                         <CustomInput placeholder='کد امنیتی' inputClassName={"placeholder:text-center w-full"} />
                     </div>
                     <button className='bg-accent p-2 w-full rounded !text-white'>ورود</button>

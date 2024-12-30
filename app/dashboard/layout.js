@@ -1,6 +1,7 @@
 'use client'
 import { Provider } from "react-redux";
 import { store } from "@/state/store";
+import Captcha from "@/components/general/captcha";
 
 export default function Layout({ children }) {
 
