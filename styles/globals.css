@@ -6,7 +6,7 @@
   --color-primary: 255 255 255; /* Light mode primary: FFFFFF */
   --color-secondary: 247 248 249; /* Light mode secondary: F7F8F9 */
   --color-accent: 59 130 246; /* Light mode accent: 3B82F6 */
-  --color-text: 0 0 0; /* Assuming black text for light mode */
+  --color-text: 100 116 139; /* Updated to a blue-gray shade (#64748B) */
 }
 
 @media (prefers-color-scheme: dark) {

@@ -5,10 +5,10 @@ import { store } from "@/state/store";
 export default function Layout({ children }) {
 
   return (
-    <section>
+    <main className="text-ellipsis text-textcolor">
       <Provider store={store}>
         {children}
       </Provider>
-    </section>
+    </main>
   )
 }

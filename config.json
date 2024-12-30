@@ -1,6 +1,6 @@
 {
     "app_name": "هرمس",
-    "logo_url": "assets/logo.jpg",
+    "logo_url": "assets/logo.png",
     "api": "http://localhost:3000/",
     "site_description" : "آموزش انلاین",
     "onLocal" : true

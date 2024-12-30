@@ -1,8 +1,6 @@
-import localFont from 'next/font/local'
 import '@/styles/globals.css';
 import config from "@/config.json";
 import 'react-image-crop/dist/ReactCrop.css';
-
 
 
 export const metadata = {
@@ -12,7 +10,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html className='font-yekanBakh ' lang="en">
+    <html className='font-yekanBakh' lang="fa">
       <body>{children}</body>
     </html>
   )

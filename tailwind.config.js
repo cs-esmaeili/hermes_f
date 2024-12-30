@@ -19,7 +19,7 @@ module.exports = {
         primary: 'rgb(var(--color-primary) / <alpha-value>)',
         secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
         accent: 'rgb(var(--color-accent) / <alpha-value>)',
-        text: 'rgb(var(--color-text) / <alpha-value>)',
+        textcolor: 'rgb(var(--color-text) / <alpha-value>)',
       }
     },
   },
