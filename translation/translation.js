@@ -4,7 +4,7 @@ import config from '@/config.json';
 class Translator {
     constructor() {
         if (!Translator.instance) {
-            this.language = config.language; // Default language from config
+            this.language = config.language;
             Translator.instance = this;
         }
         return Translator.instance;
@@ -46,6 +46,5 @@ class Translator {
     }
 }
 
-// Export a single instance
 const translatorInstance = new Translator();
 export default translatorInstance;

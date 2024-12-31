@@ -11,8 +11,7 @@ import translation from '@/translation/translation';
 
 const LogIn = () => {
 
-    const someThingIsWrong = translation.get('someThingIsWrong');
-
+    
     return (
         <section className='flex  flex-col h-screen w-full max-w-full overflow-hidden justify-center items-center'>
             <Toaster position="top-center" />
@@ -20,7 +19,7 @@ const LogIn = () => {
                 <CustomImage src={config.api + config.logo_url} width={100} height={100} />
                 <div className='text-5xl md:text-7xl'>
                     <span className='dark:text-white'>هر</span>
-                    <span className='text-accent' >{someThingIsWrong}</span>
+                    <span className='text-accent'>مس</span>
                 </div>
             </div>
             <div className='flex flex-col justify-center bg-secondary rounded-lg p-4 text-center shadow-2xl max-w-full'>
@@ -35,7 +34,7 @@ const LogIn = () => {
                 <div className='flex flex-col gap-3'>
                     <CustomInput label="ایمیل یا شماره تلفن" inputClassName={"flex w-full"} />
                     <div className='flex gap-3 flex-col sm:flex-row w-full h-fit'>
-                        <div className='min-h-12 max-h-12 xs:min-w-10 min-w-32'>
+                        <div className='min-h-12 max-h-12 xs:min-w-10 xs:max-w-10 min-w-32 max-w-32'>
                             <Captcha setCaptchaCode={(code) => console.log(code)} />
                         </div>
                         <CustomInput placeholder='کد امنیتی' inputClassName={"placeholder:text-center w-full"} />
