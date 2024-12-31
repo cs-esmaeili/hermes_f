@@ -4,7 +4,7 @@ import ProductList from "@/components/dashboard/ProductList";
 import { useState, useEffect } from 'react';
 import Pagination from '@/components/dashboard/Pagination';
 import toast from 'react-hot-toast';
-import translations from "@/translations.json";
+import translation from "@/translation/translation";
 import { productList as RproductList } from '@/services/Product';
 import { useSelector } from 'react-redux';
 
@@ -15,7 +15,6 @@ export default function Dashboard() {
     const [productsCount, setProductsCount] = useState(null);
     const [activePage, setActivePage] = useState(1);
     const [perPage, setPerPage] = useState(20);
-    const { someThingIsWrong } = translations['fa'];
     const roleName = useSelector((state) => state.information.value.role_id.name);
 
     const productList = async () => {
@@ -32,7 +31,7 @@ export default function Dashboard() {
             if (error?.response?.data?.message) {
                 toast.error(error.response.data.message);
             } else {
-                toast.error(someThingIsWrong);
+                toast.error(translation.get('someThingIsWrong'));
             }
         }
     }

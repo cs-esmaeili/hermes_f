@@ -14,7 +14,7 @@ import { MdSubtitles } from "react-icons/md";
 import { FaMobile } from "react-icons/fa6";
 import { FaIdCardAlt } from "react-icons/fa";
 import { MdCreditCard } from "react-icons/md";
-import translations from "@/translations.json";
+import translation from "@/translation/translation";
 
 const CreateUser = ({ editData, setEditData, setRefreshList, selfMode }) => {
 
@@ -28,7 +28,7 @@ const CreateUser = ({ editData, setEditData, setRefreshList, selfMode }) => {
     const [createStatus, setCreateStatus] = useState(false);
     const { openModal, closeModal } = useModalContext();
 
-    const { someThingIsWrong, createuser } = translations['fa'];
+    const { someThingIsWrong, createuser } = translation.getMultiple(['someThingIsWrong', 'createuser']);
 
     const resetForm = () => {
         setRole(null);

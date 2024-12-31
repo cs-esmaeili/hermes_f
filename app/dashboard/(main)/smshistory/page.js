@@ -6,7 +6,7 @@ import { cancelSendSmsToUser as RcancelSendSmsToUser } from '@/services/smsTempl
 import toast from 'react-hot-toast';
 import Table from '@/components/dashboard/Table';
 import Pagination from '@/components/dashboard/Pagination';
-import translations from "@/translations.json";
+import translation from "@/translation/translation";
 import { TbListDetails } from "react-icons/tb";
 import { useModalContext } from '@/components/dashboard/Modal';
 import { MdCancelScheduleSend } from "react-icons/md";
@@ -20,7 +20,7 @@ const page = () => {
     const [editData, setEditData] = useState(null);
     const { openModal, closeModal } = useModalContext();
 
-    const { someThingIsWrong, categoryPage } = translations['fa'];
+    const { someThingIsWrong, categoryPage } = translation.getMultiple(['someThingIsWrong', 'categoryPage']);
 
 
     const cancelSendSmsToUser = async (job_id) => {

@@ -6,7 +6,7 @@ import { productList as RproductList } from '@/services/Product';
 import toast from 'react-hot-toast';
 import Table from '@/components/dashboard/Table';
 import Pagination from '@/components/dashboard/Pagination';
-import translations from "@/translations.json";
+import translation from "@/translation/translation";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNightEighties } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { useSelector } from 'react-redux';
@@ -22,7 +22,7 @@ const page = () => {
     const [loading, setLoading] = useState(true);
     const apiData = useSelector((state) => state.apiData.value);
 
-    const { someThingIsWrong, product } = translations['fa'];
+    const { someThingIsWrong, product } = translation.getMultiple(['someThingIsWrong', 'product']);
 
 
     const productList = async () => {

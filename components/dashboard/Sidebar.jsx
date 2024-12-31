@@ -7,7 +7,7 @@ import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { BsShieldLockFill } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa6";
 import config from "@/config.json";
-import translations from "@/translations.json";
+import translation from "@/translation/translation";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -23,7 +23,7 @@ import { FaFileInvoiceDollar } from "react-icons/fa";
 const Sidebar = ({ open, setOpen }) => {
 
   const pathname = usePathname();
-  const text = translations["fa"].sideBar;
+  const text = translation.get('sideBar');
   const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState(true);
 

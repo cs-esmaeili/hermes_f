@@ -5,7 +5,7 @@ import { factorListUser, changeFactorStatus } from '@/services/Factor';
 import toast from 'react-hot-toast';
 import Table from '@/components/dashboard/Table';
 import Pagination from '@/components/dashboard/Pagination';
-import translations from "@/translations.json";
+import translation from "@/translation/translation";
 import { addCommas } from '@/utils/main';
 import { RiMore2Fill } from "react-icons/ri";
 import { useModalContext } from '@/components/dashboard/Modal';
@@ -22,7 +22,7 @@ const page = () => {
     const [editData, setEditData] = useState(null);
     const [updateList, setUpdateList] = useState(false);
     const [loading, setLoading] = useState(true);
-    const { someThingIsWrong } = translations['fa'];
+    const { someThingIsWrong } = translation.get('someThingIsWrong');
     const { openModal, closeModal } = useModalContext();
 
     const roleName = useSelector((state) => state.information.value.role_id.name);

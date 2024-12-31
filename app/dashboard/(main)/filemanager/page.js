@@ -8,7 +8,7 @@ import Rename from '@/components/dashboard/filemanager/Rename';
 import Folder from '@/components/dashboard/filemanager/Folder';
 import Files from '@/components/dashboard/filemanager/Files';
 import Input from '@/components/dashboard/Input';
-import translations from "@/translations.json";
+import translation from "@/translation/translation";
 
 export default function FileManager({ fileType = null, fileSelectListener }) {
 
@@ -16,7 +16,7 @@ export default function FileManager({ fileType = null, fileSelectListener }) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [refreshList, setRefreshList] = useState(false);
     const [baseUrl, setBaseUrl] = useState(null);
-    const { filemanagerPage } = translations['fa'];
+    const { filemanagerPage } = translation.get('filemanagerPage');
 
     useEffect(() => {
         if (fileSelectListener != null && selectedFile != null && selectedFile.type != "folder") {

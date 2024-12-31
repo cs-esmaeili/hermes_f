@@ -2,7 +2,7 @@ import Input from '@/components/dashboard/Input';
 import { useState, useEffect } from 'react';
 import { addApiBox } from '@/services/ApiBox';
 import toast from 'react-hot-toast';
-import translations from "@/translations.json";
+import translation from "@/translation.json";
 
 const AddBox = ({ updateList }) => {
 
@@ -15,7 +15,7 @@ const AddBox = ({ updateList }) => {
     const [editMode, setEditMode] = useState(false);
     const [allowCreate, setAllowCreate] = useState(false);
 
-    const { someThingIsWrong } = translations['fa'];
+    const { someThingIsWrong } = translation['fa'];
 
     const createBox = async () => {
         try {

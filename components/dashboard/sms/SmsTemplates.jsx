@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { smsTemplateList as RsmsTemplateList } from '@/services/smsTemplate';
-import translations from "@/translations.json";
+import translation from "@/translation.json";
 import DeleteTemplate from './DeleteTemplate';
 import CreateTemplate from './CreateTemplate';
 
@@ -12,7 +12,7 @@ const SmsTemplates = ({ selectedTemplate, setSelectedTemplate }) => {
     const [activePage, setActivePage] = useState(1);
     const [perPage, setPerPage] = useState(6);
     const [editData, setEditData] = useState(null);
-    const { someThingIsWrong } = translations['fa'];
+    const { someThingIsWrong } = translation['fa'];
 
     const smsTemplateList = async () => {
         try {

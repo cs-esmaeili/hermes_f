@@ -7,7 +7,7 @@ import Pagination from '@/components/dashboard/Pagination';
 import { postList as RpostList } from '@/services/Post';
 import { BiSolidEdit } from 'react-icons/bi';
 import { RiCloseFill } from 'react-icons/ri';
-import translations from "@/translations.json";
+import translation from "@/translation/translation";
 
 const postList = ({ pickMode = false, postPicker = null }) => {
 
@@ -17,7 +17,7 @@ const postList = ({ pickMode = false, postPicker = null }) => {
     const [perPage, setPerPage] = useState(30);
     const [editData, setEditData] = useState(null);
 
-    const { someThingIsWrong, postListPage } = translations['fa'];
+    const { someThingIsWrong, postListPage } = translation.getMultiple(['someThingIsWrong' , 'postListPage']);
 
     const postList = async () => {
         try {

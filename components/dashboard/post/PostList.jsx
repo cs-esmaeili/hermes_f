@@ -7,12 +7,12 @@ import { useModalContext } from '@/components/dashboard/Modal';
 import Filemanager from '@/app/dashboard/(main)/filemanager/page';
 import VideoJS from "@/components/dashboard/videoPlayer";
 import Image from 'next/image';
-import translations from "@/translations.json";
+import translation from "@/translation.json";
 
 const PostList = ({ content, setContent }) => {
 
     const { openModal, closeModal } = useModalContext();
-    const { postList } = translations['fa'];
+    const { postList } = translation['fa'];
 
     const handleItemClick = (newType, newContent, index) => {
         setContent(prevContent => {

@@ -7,7 +7,7 @@ import { categoryList as RcategoryList } from '@/services/Category';
 import toast from 'react-hot-toast';
 import Table from '@/components/dashboard/Table';
 import Pagination from '@/components/dashboard/Pagination';
-import translations from "@/translations.json";
+import translation from "@/translation/translation";
 
 export default function Category({ pickMode = false, selectListener }) {
 
@@ -18,7 +18,7 @@ export default function Category({ pickMode = false, selectListener }) {
     const [perPage, setPerPage] = useState(6);
     const [editData, setEditData] = useState(null);
 
-    const { someThingIsWrong, categoryPage } = translations['fa'];
+    const { someThingIsWrong, categoryPage } = translation.getMultiple(['someThingIsWrong', 'categoryPage']);
 
 
     const categoryList = async () => {

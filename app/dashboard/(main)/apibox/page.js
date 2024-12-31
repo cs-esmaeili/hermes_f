@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { apiBoxList as RapiBoxList } from '@/services/ApiBox';
 import Pagination from '@/components/dashboard/Pagination';
-import translations from "@/translations.json";
+import translation from "@/translation/translation";
 import toast from 'react-hot-toast';
 import ApiBox from '@/components/dashboard/apiBox/ApiBox';
 import AddBox from '@/components/dashboard/apiBox/AddBox';
@@ -16,7 +16,7 @@ const page = ({ selectMode, boxSelectListener }) => {
     const [activePage, setActivePage] = useState(1);
     const [perPage, setPerPage] = useState(6);
 
-    const { someThingIsWrong } = translations['fa'];
+    const { someThingIsWrong } = translation.get('someThingIsWrong');
 
 
     const apiBoxList = async () => {

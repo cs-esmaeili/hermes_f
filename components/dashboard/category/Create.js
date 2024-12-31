@@ -4,7 +4,7 @@ import Filemanager from '@/app/dashboard/(main)/filemanager/page';
 import { createCategory as RcreateCategory, updateCategory as RupdateCategory } from '@/services/Category';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
-import translations from "@/translations.json";
+import translation from "@/translation.json";
 
 export default function CreateCategory({ categoryList, editData, setEditData }) {
 
@@ -13,7 +13,7 @@ export default function CreateCategory({ categoryList, editData, setEditData }) 
     const [editMode, setEditMode] = useState(false);
     const [image, setImage] = useState(null);
     const [name, setName] = useState("");
-    const { someThingIsWrong, categoryCreate } = translations['fa'];
+    const { someThingIsWrong, categoryCreate } = translation['fa'];
 
     const createCategory = async () => {
         try {

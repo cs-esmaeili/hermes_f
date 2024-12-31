@@ -3,7 +3,7 @@ import { LuImage } from "react-icons/lu";
 import Input from './Input';
 import { useState, useEffect } from 'react';
 import { createProduct, updateProduct } from '@/services/Product';
-import translations from "@/translations.json";
+import translation from "@/translation.json";
 import Filemanager from '@/app/dashboard/(main)/filemanager/page';
 import CategoryPage from '@/app/dashboard/(main)/category/page';
 import ApiBox from '@/app/dashboard/(main)/apibox/page';
@@ -35,7 +35,7 @@ const ProductCardEdit = ({ editData, setEditData, updateList }) => {
     const [labName, setLabName] = useState("");
 
     const { openModal, closeModal } = useModalContext();
-    const { someThingIsWrong, ProductCardEdit } = translations['fa'];
+    const { someThingIsWrong, ProductCardEdit } = translation['fa'];
 
 
     const ResetForm = () => {

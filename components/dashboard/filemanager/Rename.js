@@ -3,12 +3,12 @@ import { rename as Rrename } from '@/services/Filemanager';
 import { BiSolidEdit } from 'react-icons/bi';
 import Input from '@/components/dashboard/Input';
 import toast from 'react-hot-toast';
-import translations from "@/translations.json";
+import translation from "@/translation.json";
 
 export default function Rename({ path, file, refreshList }) {
 
     const [inputOpen, setInputOpen] = useState(false);
-    const { someThingIsWrong, filemanagerRename } = translations['fa'];
+    const { someThingIsWrong, filemanagerRename } = translation['fa'];
 
     const rename = async (newName) => {
         try {

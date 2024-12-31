@@ -2,12 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import { createRole as RcreateRole } from '@/services/Role';
 import Input from '@/components/dashboard/Input';
 import toast from 'react-hot-toast';
-import translations from "@/translations.json";
+import translation from "@/translation.json";
 
 export default function Add({ resetAllData, roleList }) {
 
     const [tempMode, setTempMode] = useState(false);
-    const { someThingIsWrong } = translations['fa'];
+    const { someThingIsWrong } = translation['fa'];
 
     const createRole = async (name) => {
         try {

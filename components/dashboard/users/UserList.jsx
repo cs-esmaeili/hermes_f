@@ -6,7 +6,7 @@ import Pagination from '@/components/dashboard/Pagination';
 import { FaUserLock } from "react-icons/fa6";
 import { BiSolidEdit } from 'react-icons/bi';
 import { MdQueryStats } from "react-icons/md";
-import translations from "@/translations.json";
+import translation from "@/translation/translation";
 
 const UserList = ({ editData, setEditData, refreshList }) => {
 
@@ -14,13 +14,13 @@ const UserList = ({ editData, setEditData, refreshList }) => {
     const [usersCount, setUsersCount] = useState(null);
     const [activePage, setActivePage] = useState(1);
     const [perPage, setPerPage] = useState(8);
-    const { someThingIsWrong, userlist } = translations['fa'];
+    const { someThingIsWrong, userlist } = translation.getMultiple(['someThingIsWrong', 'userlist']);
 
     const userList = async () => {
         try {
             const { data } = await RuserList({ page: activePage, perPage });
             const { usersCount, users } = data;
-            
+
             setUsers(users);
             setUsersCount(usersCount);
         } catch (error) {

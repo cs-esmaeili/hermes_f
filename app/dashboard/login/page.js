@@ -7,9 +7,11 @@ import { Toaster } from 'react-hot-toast';
 import { FcGoogle } from "react-icons/fc";
 import Link from 'next/link';
 import Captcha from '@/components/general/captcha';
+import translation from '@/translation/translation';
 
 const LogIn = () => {
 
+    const someThingIsWrong = translation.get('someThingIsWrong');
 
     return (
         <section className='flex  flex-col h-screen w-full max-w-full overflow-hidden justify-center items-center'>
@@ -18,7 +20,7 @@ const LogIn = () => {
                 <CustomImage src={config.api + config.logo_url} width={100} height={100} />
                 <div className='text-5xl md:text-7xl'>
                     <span className='dark:text-white'>هر</span>
-                    <span className='text-accent'>مس</span>
+                    <span className='text-accent' >{someThingIsWrong}</span>
                 </div>
             </div>
             <div className='flex flex-col justify-center bg-secondary rounded-lg p-4 text-center shadow-2xl max-w-full'>

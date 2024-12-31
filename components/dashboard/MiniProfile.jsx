@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
-import translations from "@/translations.json";
+import translation from "@/translation/translation";
 import useLogout from "@/hooks/useLogout"
 import UserInformation from '@/app/dashboard/(main)/user/page';
 import { useModalContext } from '@/components/dashboard/Modal';
@@ -16,7 +16,7 @@ const MiniProfile = ({ sliderIsOpen }) => {
   const [userName, setUserName] = useState("");
   const { push } = useRouter();
   const { openModal, closeModal } = useModalContext();
-  const { miniProfile } = translations['fa'];
+  const miniProfile = translation.get("miniProfile");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

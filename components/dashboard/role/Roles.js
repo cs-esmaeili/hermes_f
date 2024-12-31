@@ -4,14 +4,14 @@ import { roleList as RroleList, deleteRole as RdeleteRole } from '@/services/Rol
 import { ImCancelCircle } from "react-icons/im";
 import Add from './Add';
 import toast from 'react-hot-toast';
-import translations from "@/translations.json";
+import translation from "@/translation/translation";
 
 export default function Roles({ setCurrentRole, setAllpermissions, updateList, selectMode, listener }) {
 
     const [roles, setRoles] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [deleteMode, setDeleteMode] = useState(-1);
-    const { someThingIsWrong, rolesT } = translations['fa'];
+    const { someThingIsWrong, rolesT } = translation['fa'];
 
     const roleList = async (selectLastActiveRole) => {
         try {

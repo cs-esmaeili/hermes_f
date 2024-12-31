@@ -9,7 +9,6 @@ import '@/styles/globals.css';
 import useSocket from '@/hooks/useSocket';
 import useLogout from '@/hooks/useLogout';
 import { useRouter } from 'next/navigation';
-import translations from "@/translations.json";
 import { securityCheck as RsecurityCheck } from '@/services/User';
 import { usePathname } from 'next/navigation';
 import { setPermissions } from '@/state/permissions';
@@ -22,7 +21,6 @@ export default function Layout({ children }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const { push } = useRouter();
-  const { layoutMain } = translations['fa'];
   const pathname = usePathname();
   const dispatch = useDispatch();
   useSocket(!loading);

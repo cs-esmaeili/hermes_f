@@ -3,5 +3,6 @@
     "logo_url": "assets/logo.png",
     "api": "http://localhost:3000/",
     "site_description" : "آموزش انلاین",
-    "onLocal" : true
+    "onLocal" : true,
+    "language" : "fa"
 }
