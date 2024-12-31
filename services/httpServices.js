@@ -10,10 +10,10 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 
 
 axios.interceptors.response.use((response) => {
-    store.dispatch(setlogOutTime(new Date()));
+    store.dispatch(setlogOutTime(new Date().toISOString()));
     return response;
 }, (error) => {
-    store.dispatch(setlogOutTime(new Date()));
+    store.dispatch(setlogOutTime(new Date().toISOString()));
     if (error.response.data.meessage === "token expired" || error.response.data.meessage === "token is wrong") {
         return Promise.reject(error);
     }

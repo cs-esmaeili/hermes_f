@@ -4,5 +4,6 @@
     "api": "http://localhost:3000/",
     "site_description" : "آموزش انلاین",
     "onLocal" : true,
-    "language" : "fa"
+    "language" : "fa",
+    "direction" : "ltr"
 }
