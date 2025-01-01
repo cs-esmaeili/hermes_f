@@ -9,7 +9,7 @@ import Link from 'next/link';
 import Captcha from '@/components/general/captcha';
 import translation from '@/translation/translation';
 import { isEmailOrPhone } from '@/utils/user';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Password from './Password';
 import Phone from './Phone';
 
@@ -18,7 +18,11 @@ const LogIn = () => {
 
     const [userName, setUserName] = useState("09137378601");
     const [userNameType, setUserNameType] = useState("phone");
+    const [error, setError] = useState("");
 
+    useEffect(() => {
+        setError("");
+    }, [userName]);
 
 
     return (
@@ -47,8 +51,13 @@ const LogIn = () => {
                         setUserName(e.target.value);
                         setUserNameType(isEmailOrPhone(e.target.value));
                     }} />
-                    {(userNameType == "phone") && <Phone userName={userName} />}
-                    {(userNameType == "email") && <Password userName={userName} />}
+                    {(userNameType == "phone") && <Phone userName={userName} setError={setError} />}
+                    {(userNameType == "email") && <Password userName={userName} setError={setError} />}
+
+                    <div className={`w-full bg-red-400 rounded-md items-center justify-center p-2 hidden ${error && "!flex"}`}>
+                        {error}
+                    </div>
+
                     <button className='bg-primary p-2 w-full rounded flex justify-center items-center gap-3'>
                         <span>
                             ورود با گوگل

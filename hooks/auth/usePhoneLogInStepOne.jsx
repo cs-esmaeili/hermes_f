@@ -2,7 +2,7 @@ import { toast } from 'react-hot-toast';
 import { logInPhoneStepOne } from '@/services/Auth';
 import translation from '@/translation/translation';
 
-const usePhoneLogInStepOne = (userName, setLoading, setStep, setTimer) => {
+const usePhoneLogInStepOne = (userName, setLoading, setStep, setTimer, setError) => {
 
 
   const phoneStepOneLogInRequest = async () => {
@@ -18,9 +18,9 @@ const usePhoneLogInStepOne = (userName, setLoading, setStep, setTimer) => {
       console.log(error);
 
       if (error?.response?.data?.message) {
-        toast.error(error.response.data.message);
+        setError(error.response.data.message);
       } else {
-        toast.error(translation.get('someThingIsWrong'));
+        setError(translation.get('someThingIsWrong'));
       }
     } finally {
       setLoading(false);

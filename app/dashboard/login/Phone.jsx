@@ -4,15 +4,16 @@ import CustomInput from '@/components/dashboard/CustomInput';
 import Timer from '@/components/dashboard/Timer';
 import { useEffect, useState } from 'react';
 
-const Phone = ({ userName }) => {
+const Phone = ({ userName, setError }) => {
 
     const [loading, setLoading] = useState(false);
     const [code, setCode] = useState("");
     const [step, setStep] = useState(true);
     const [timer, setTimer] = useState(0);
-    const { phoneStepOneLogInRequest } = usePhoneLogInStepOne(userName, setLoading, setStep, setTimer);
+    const { phoneStepOneLogInRequest } = usePhoneLogInStepOne(userName, setLoading, setStep, setTimer, setError);
 
-    const { phoneStepTwoLogInRequest } = usePhoneLogInStepTwo(userName, code, setLoading, setStep, setTimer);
+    const { phoneStepTwoLogInRequest } = usePhoneLogInStepTwo(userName, code, setLoading, setStep, setTimer, setError);
+
 
     useEffect(() => {
         setCode("");
@@ -20,12 +21,17 @@ const Phone = ({ userName }) => {
         setStep(true);
     }, [userName]);
 
+    useEffect(() => {
+        setError("");
+    }, [code]);
+
 
     return (
         <>
             {(!step) &&
                 <CustomInput label={"کد ارسال شده را وارد کنید"} inputClassName={"placeholder:text-center text-center w-full"} onChange={(e) => {
                     setCode(e.target.value);
+
                 }} />
             }
 

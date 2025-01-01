@@ -4,7 +4,7 @@ import useSaveLogInData from '@/hooks/auth/useSaveLogInData';
 import translation from '@/translation/translation';
 import useGoDashboard from '@/hooks/auth/useGoDashboard';
 
-const useCreateOrLoginWithPassword = (userName, password, setLoading) => {
+const useCreateOrLoginWithPassword = (userName, password, setLoading, setError) => {
 
   const { saveData } = useSaveLogInData();
   const { goToDashboard } = useGoDashboard();
@@ -21,11 +21,10 @@ const useCreateOrLoginWithPassword = (userName, password, setLoading) => {
 
     } catch (error) {
       console.log(error);
-
       if (error?.response?.data?.message) {
-        toast.error(error.response.data.message);
+        setError(error.response.data.message);
       } else {
-        toast.error(translation.get('someThingIsWrong'));
+        setError(translation.get('someThingIsWrong'));
       }
     } finally {
       setLoading(false);

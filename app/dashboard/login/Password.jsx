@@ -2,11 +2,11 @@ import useCreateOrLoginWithPassword from '@/hooks/auth/useCreateOrLoginWithPassw
 import CustomInput from '@/components/dashboard/CustomInput';
 import { useState } from 'react';
 
-const Password = ({ userName }) => {
+const Password = ({ userName, setError }) => {
 
     const [password, setPassword] = useState("admin");
     const [loading, setLoading] = useState(false);
-    const { passwordLogInRequest } = useCreateOrLoginWithPassword(userName, password, setLoading);
+    const { passwordLogInRequest } = useCreateOrLoginWithPassword(userName, password, setLoading, setError);
 
     return (
         <>
