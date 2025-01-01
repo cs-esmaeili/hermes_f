@@ -1,23 +1,25 @@
 import { toast } from 'react-hot-toast';
-import { createOrLoginWithPassword } from '@/services/Auth';
-import useSaveLogInData from '@/hooks/auth/useSaveLogInData';
+import { logInPhoneStepTwo } from '@/services/Auth';
 import translation from '@/translation/translation';
 import useGoDashboard from '@/hooks/auth/useGoDashboard';
+import useSaveLogInData from '@/hooks/auth/useSaveLogInData';
 
-const useCreateOrLoginWithPassword = (userName, password, setLoading) => {
+const usePhoneLogInStepTwo = (userName, code, setLoading, setStep , setTimer) => {
+
 
   const { saveData } = useSaveLogInData();
   const { goToDashboard } = useGoDashboard();
-
-  const passwordLogInRequest = async () => {
+  const phoneStepTwoLogInRequest = async () => {
 
     try {
       setLoading(true);
-      const { data: { token, sessionTime, message } } = await createOrLoginWithPassword({ userName, password });
+      const { data: { token, message, sessionTime } } = await logInPhoneStepTwo({ userName, code });
       await saveData(token, sessionTime, userName);
       toast.success(message);
       setLoading(false);
-      //  goToDashboard();
+      setStep(true);
+      setTimer(0);
+      // goToDashboard();
 
     } catch (error) {
       console.log(error);
@@ -33,8 +35,8 @@ const useCreateOrLoginWithPassword = (userName, password, setLoading) => {
   };
 
   return {
-    passwordLogInRequest,
+    phoneStepTwoLogInRequest,
   };
 };
 
-export default useCreateOrLoginWithPassword;
+export default usePhoneLogInStepTwo;

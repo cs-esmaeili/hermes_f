@@ -3,7 +3,6 @@ import config from "@/config.json";
 import 'react-image-crop/dist/ReactCrop.css';
 import translation from '@/translation/translation';
 
-
 export const metadata = {
   title: config.app_name,
   description: config.site_description,

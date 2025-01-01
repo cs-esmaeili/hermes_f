@@ -3,11 +3,11 @@ import config from '@/config.json';
 const CustomInput = ({ label, labelClassName, inputClassName, ...inputProps }) => {
 
   return (
-    <>
+    <div>
       {label && (
         <label
           htmlFor={inputProps.id || inputProps.name}
-          className={`block mb-1 text-sm text-right ${labelClassName}`} 
+          className={`block mb-1 text-sm text-right ${labelClassName}`}
         >
           {label}
         </label>
@@ -19,7 +19,7 @@ const CustomInput = ({ label, labelClassName, inputClassName, ...inputProps }) =
         }
         {...inputProps}
       />
-    </>
+    </div>
   );
 };
 
