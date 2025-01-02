@@ -1,10 +1,10 @@
 import { toast } from 'react-hot-toast';
-import { createOrLoginWithPassword } from '@/services/Auth';
+import { logInWithPassword } from '@/services/Auth';
 import useSaveLogInData from '@/hooks/auth/useSaveLogInData';
 import translation from '@/translation/translation';
 import useGoDashboard from '@/hooks/auth/useGoDashboard';
 
-const useCreateOrLoginWithPassword = (userName, password, setLoading, setError) => {
+const useLoginWithPassword = (userName, password, setLoading, setError) => {
 
   const { saveData } = useSaveLogInData();
   const { goToDashboard } = useGoDashboard();
@@ -13,7 +13,7 @@ const useCreateOrLoginWithPassword = (userName, password, setLoading, setError) 
 
     try {
       setLoading(true);
-      const { data: { token, sessionTime, message } } = await createOrLoginWithPassword({ userName, password });
+      const { data: { token, sessionTime, message } } = await logInWithPassword({ userName, password });
       await saveData(token, sessionTime, userName);
       toast.success(message);
       setLoading(false);
@@ -36,4 +36,4 @@ const useCreateOrLoginWithPassword = (userName, password, setLoading, setError) 
   };
 };
 
-export default useCreateOrLoginWithPassword;
+export default useLoginWithPassword;

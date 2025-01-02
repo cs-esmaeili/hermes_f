@@ -1,19 +1,24 @@
-import useCreateOrLoginWithPassword from '@/hooks/auth/useCreateOrLoginWithPassword';
+import useLoginWithPassword from '@/hooks/auth/useLoginWithPassword';
 import CustomInput from '@/components/dashboard/CustomInput';
 import { useState } from 'react';
 
-const Password = ({ userName, setError }) => {
+const Password = ({ userName, setError, SetPage }) => {
 
     const [password, setPassword] = useState("admin");
     const [loading, setLoading] = useState(false);
-    const { passwordLogInRequest } = useCreateOrLoginWithPassword(userName, password, setLoading, setError);
+    const { passwordLogInRequest } = useLoginWithPassword(userName, password, setLoading, setError);
 
     return (
         <>
-            <CustomInput placeholder='رمز عبور را وارد کنید' inputClassName={"placeholder:text-center text-center w-full"}
+
+            <CustomInput rightLabel='رمز عبور را وارد کنید' leftLabel={"فراموشی رمز عبور"} inputClassName={"placeholder:text-center text-center w-full"}
                 value={password} onChange={(e) => {
                     setPassword(e.target.value);
-                }} />
+                }}
+                onLeftLabelClick={() => {
+                    SetPage("resetPassword");
+                }}
+            />
 
             <div className='flex grow justify-center items-center'>
                 {(loading) ?

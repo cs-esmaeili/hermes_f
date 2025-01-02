@@ -10,8 +10,8 @@ const Phone = ({ userName, setError }) => {
     const [code, setCode] = useState("");
     const [step, setStep] = useState(true);
     const [timer, setTimer] = useState(0);
-    const { phoneStepOneLogInRequest } = usePhoneLogInStepOne(userName, setLoading, setStep, setTimer, setError);
 
+    const { phoneStepOneLogInRequest } = usePhoneLogInStepOne(userName, setLoading, setStep, setTimer, setError);
     const { phoneStepTwoLogInRequest } = usePhoneLogInStepTwo(userName, code, setLoading, setStep, setTimer, setError);
 
 
@@ -25,23 +25,39 @@ const Phone = ({ userName, setError }) => {
         setError("");
     }, [code]);
 
+    useEffect(() => {
+        if (step) {
+            setTimer(0);
+        }
+    }, [step]);
+
+
 
     return (
         <>
             {(!step) &&
-                <CustomInput label={"کد ارسال شده را وارد کنید"} inputClassName={"placeholder:text-center text-center w-full"} onChange={(e) => {
-                    setCode(e.target.value);
+                <CustomInput
+                    rightLabel={"کد ارسال شده را وارد کنید"}
+                    inputClassName={"placeholder:text-center text-center w-full"}
+                    onChange={(e) => {
+                        setCode(e.target.value);
 
-                }} />
+                    }}
+                    maxLength={4}
+                    value={code}
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                />
             }
 
             <div className='flex grow justify-center items-center'>
-                {timer != 0 &&
+                {timer != 0 && !step &&
                     <div className='w-full flex items-center justify-center'>
                         <Timer min={timer} TimerEndListener={() => {
-                            goToPrevious();
+                            setStep(true);
                             setCode("");
                             setTimer(0);
+                            setLoading(false);
                         }} />
                     </div>
                 }
@@ -54,6 +70,7 @@ const Phone = ({ userName, setError }) => {
                     :
                     <>
                         <button className={`bg-accent p-2 w-full rounded !text-white ${step && "bg-yellow-500"}`} onClick={(e) => {
+                            setError("");
                             if (step) {
                                 phoneStepOneLogInRequest();
                             } else {

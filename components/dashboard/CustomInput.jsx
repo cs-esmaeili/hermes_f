@@ -1,22 +1,41 @@
 import config from '@/config.json';
 
-const CustomInput = ({ label, labelClassName, inputClassName, ...inputProps }) => {
-
+const CustomInput = ({
+  leftLabel,
+  rightLabel,
+  leftLabelClassName,
+  rightLabelClassName,
+  inputClassName,
+  onLeftLabelClick,
+  onRightLabelClick,
+  ...inputProps
+}) => {
   return (
     <div>
-      {label && (
-        <label
-          htmlFor={inputProps.id || inputProps.name}
-          className={`block mb-1 text-sm text-right ${labelClassName}`}
-        >
-          {label}
-        </label>
-      )}
+      <div className={`flex justify-between mb-1 ${!leftLabel ? 'justify-end' : ''}`}>
+        {leftLabel && (
+          <label
+            htmlFor={inputProps.id || inputProps.name}
+            className={`text-sm cursor-pointer mr-auto ${leftLabelClassName}`}
+            onClick={onLeftLabelClick}
+          >
+            {leftLabel}
+          </label>
+        )}
+        {rightLabel && (
+          <label
+            htmlFor={inputProps.id || inputProps.name}
+            className={`text-sm cursor-pointer text-right ml-auto ${rightLabelClassName}`}
+            onClick={onRightLabelClick}
+          >
+            {rightLabel}
+          </label>
+        )}
+      </div>
       <input
-        className={`p-2 bg-primary rounded focus:outline-none focus:ring focus:ring-accent  w-full
+        className={`p-2 bg-primary rounded focus:outline-none focus:ring focus:ring-accent w-full
           ${config.direction}
-          ${inputClassName}`
-        }
+          ${inputClassName}`}
         {...inputProps}
       />
     </div>

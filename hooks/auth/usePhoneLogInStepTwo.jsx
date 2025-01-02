@@ -3,15 +3,31 @@ import { logInPhoneStepTwo } from '@/services/Auth';
 import translation from '@/translation/translation';
 import useGoDashboard from '@/hooks/auth/useGoDashboard';
 import useSaveLogInData from '@/hooks/auth/useSaveLogInData';
+import { fourDigitCodeSchema } from '@/validators/logIn';
 
-const usePhoneLogInStepTwo = (userName, code, setLoading, setStep , setTimer , setError) => {
+const usePhoneLogInStepTwo = (userName, code, setLoading, setStep, setTimer, setError) => {
 
 
   const { saveData } = useSaveLogInData();
   const { goToDashboard } = useGoDashboard();
+
+  const checkCode = async () => {
+    try {
+      await fourDigitCodeSchema.validate({ code }, { abortEarly: true });
+      return true;
+    } catch (validationErrors) {
+      console.log(validationErrors);
+      setError(validationErrors.message);
+      return false;
+    }
+  };
+
+
   const phoneStepTwoLogInRequest = async () => {
 
     try {
+      const check = await checkCode();
+      if (!check) return;
       setLoading(true);
       const { data: { token, message, sessionTime } } = await logInPhoneStepTwo({ userName, code });
       await saveData(token, sessionTime, userName);
