@@ -1,6 +1,5 @@
 // services/socketService.js
 import { io } from 'socket.io-client';
-import config from "@/config.json";
 import { getCookie } from 'cookies-next';
 
 let socket;
@@ -12,7 +11,7 @@ export const initializeSocket = () => {
         return;
     }
 
-    socket = io(config.api, {
+    socket = io(process.env.NEXT_PUBLIC_API, {
         query: { token }
     });
 

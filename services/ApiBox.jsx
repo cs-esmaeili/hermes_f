@@ -1,7 +1,6 @@
 import http from "./httpServices";
-import config from "../config.json";
 
-const prefixUrl = `${config.api}apibox`
+const prefixUrl = `${process.env.NEXT_PUBLIC_API}apibox`
 
 export const apiBoxList = (data) => {
     return http.post(`${prefixUrl}/apiBoxList`, JSON.stringify(data));

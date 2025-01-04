@@ -1,7 +1,6 @@
 import http from "./httpServices";
-import config from "../config.json";
 
-const prefixUrl = `${config.api}smsTemplate`
+const prefixUrl = `${process.env.NEXT_PUBLIC_API}smsTemplate`
 
 export const smsTemplateList = () => {
     return http.post(`${prefixUrl}/SmsTemplateList`);

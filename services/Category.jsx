@@ -1,7 +1,6 @@
 import http from "./httpServices";
-import config from "../config.json";
 
-const prefixUrl = `${config.api}category`
+const prefixUrl = `${process.env.NEXT_PUBLIC_API}category`
 
 export const createCategory = (data) => {
     return http.post(`${prefixUrl}/createCategory`, JSON.stringify(data));

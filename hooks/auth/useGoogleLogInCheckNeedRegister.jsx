@@ -2,17 +2,20 @@ import { toast } from 'react-hot-toast';
 import { googleLogInCheckNeedRegister } from '@/services/Auth';
 import translation from '@/translation/translation';
 import useSaveLogInData from '@/hooks/auth/useSaveLogInData';
+import useGoDashboard from '@/hooks/auth/useGoDashboard';
 
-const useGoogleLogInCheckNeedRegister = (setError, SetPage) => {
+const useGoogleLogInCheckNeedRegister = (setError, SetPage, setLoadingMain) => {
 
     const { saveData } = useSaveLogInData();
+    const { goToDashboard } = useGoDashboard();
 
-    const googleLogInCheckNeedRegisterRequest = async (email) => {
+    const googleLogInCheckNeedRegisterRequest = async (email, accessToken) => {
         try {
-            const { data: { userName, token, sessionTime, message } } = await googleLogInCheckNeedRegister({ email });
+            const { data: { userName, token, sessionTime, message } } = await googleLogInCheckNeedRegister({ email, accessToken });
             await saveData(token, sessionTime, userName);
             toast.success(message);
-
+            setLoadingMain(true);
+            goToDashboard();
         } catch (error) {
 
             console.log(error);

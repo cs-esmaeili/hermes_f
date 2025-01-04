@@ -5,7 +5,7 @@ import useGoDashboard from '@/hooks/auth/useGoDashboard';
 import useSaveLogInData from '@/hooks/auth/useSaveLogInData';
 import { fourDigitCodeSchema } from '@/validators/logIn';
 
-const usePhoneLogInStepTwo = (userName, code, setLoading, setStep, setTimer, setError) => {
+const usePhoneLogInStepTwo = (userName, code, setLoading, setStep, setTimer, setError, setLoadingMain) => {
 
 
   const { saveData } = useSaveLogInData();
@@ -35,7 +35,8 @@ const usePhoneLogInStepTwo = (userName, code, setLoading, setStep, setTimer, set
       setLoading(false);
       setStep(true);
       setTimer(0);
-      // goToDashboard();
+      setLoadingMain(true);
+      goToDashboard();
 
     } catch (error) {
       console.log(error);

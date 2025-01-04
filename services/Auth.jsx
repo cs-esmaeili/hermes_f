@@ -1,7 +1,6 @@
 import http from "./httpServices";
-import config from "../config.json";
 
-const prefixUrl = `${config.api}auth`
+const prefixUrl = `${process.env.NEXT_PUBLIC_API}auth`
 
 export const logInWithPassword = (data) => {
     return http.post(`${prefixUrl}/logInWithPassword`, JSON.stringify(data));

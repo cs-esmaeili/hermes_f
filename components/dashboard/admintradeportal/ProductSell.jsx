@@ -4,7 +4,7 @@ import Input from '@/components/dashboard/Input';
 import { useState, useEffect } from 'react';
 import { searchProduct as RsearchProduct } from '@/services/Product';
 import toast from 'react-hot-toast';
-import translation from "@/translation.json";
+import translation from "@/translation/translation";
 
 import DatePicker, { DateObject } from "react-multi-date-picker"
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
@@ -23,7 +23,7 @@ const ProductSell = ({ selectedUser, setSelectedUser }) => {
     const [time, setTime] = useState(new DateObject());
     const [cardPrice, setCardPrice] = useState(0);
     const [selectedProducts, setSelectedProducts] = useState([]);
-    const { someThingIsWrong } = translation['fa'];
+    const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong']);
 
     const doBuyProducts = async () => {
         try {

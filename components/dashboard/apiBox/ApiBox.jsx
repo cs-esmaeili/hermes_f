@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import BoxPrice from '../price/BoxPrice';
 import { updateApiBox } from '@/services/ApiBox';
 import toast from 'react-hot-toast';
-import translation from "@/translation.json";
+import translation from "@/translation/translation";
 
 const ApiBox = ({ box, updateList, selectMode, boxSelectListener }) => {
 
@@ -14,7 +14,7 @@ const ApiBox = ({ box, updateList, selectMode, boxSelectListener }) => {
     const [formulaBuy, setFormulaBuy] = useState(box.formulaBuy);
     const [formulaSell, setFormulaSell] = useState(box.formulaSell);
     const [editMode, setEditMode] = useState(false);
-    const { someThingIsWrong } = translation['fa'];
+    const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong']);
 
     const updateBox = async () => {
         try {

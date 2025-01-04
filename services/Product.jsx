@@ -1,7 +1,6 @@
 import http from "./httpServices";
-import config from "../config.json";
 
-const prefixUrl = `${config.api}product`
+const prefixUrl = `${process.env.NEXT_PUBLIC_API}product`
 
 export const productList = (data) => {
     return http.post(`${prefixUrl}/productList`, JSON.stringify(data));

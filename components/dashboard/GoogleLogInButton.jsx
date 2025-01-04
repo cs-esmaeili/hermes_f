@@ -22,11 +22,12 @@ const GoogleLogInButton = ({ onSuccess, onError = null }) => {
             }
 
             try {
-                const userData = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+                const { data } = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
                     params: { access_token: token },
                 });
                 setLoading(false);
-                onSuccess(userData.data);
+
+                onSuccess(data, token);
             } catch (error) {
                 setLoading(false);
                 if (onError) onError(error);

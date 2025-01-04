@@ -4,7 +4,7 @@ import Input from '@/components/dashboard/Input';
 import { useState, useEffect } from 'react';
 import { searchUser as RsearchUser } from '@/services/User';
 import toast from 'react-hot-toast';
-import translation from "@/translation.json";
+import translation from "@/translation/translation";
 import CreateUser from "@/components/dashboard/users/CreateUser";
 import { useModalContext } from '@/components/dashboard/Modal';
 
@@ -12,7 +12,7 @@ const UserSearch = ({ selectedUser, setSelectedUser }) => {
 
     const [searchValue, setSearchValue] = useState("");
     const [users, setUsers] = useState(null);
-    const { someThingIsWrong } = translation['fa'];
+    const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong']);
     const { openModal, closeModal } = useModalContext();
 
     const searchUser = async () => {

@@ -1,11 +1,10 @@
 import '@/styles/globals.css';
-import config from "@/config.json";
 import 'react-image-crop/dist/ReactCrop.css';
 import translation from '@/translation/translation';
 
 export const metadata = {
-  title: config.app_name,
-  description: config.site_description,
+  title: process.env.NEXT_PUBLIC_APP_NAME,
+  description: process.env.NEXT_PUBLIC_SITE_DESCRIPTION,
 }
 
 

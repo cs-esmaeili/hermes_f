@@ -1,11 +1,11 @@
 import { useRouter } from 'next/navigation';
 
-const useSaveLogInData = () => {
+const useGoDashboard = () => {
 
     const { push } = useRouter();
 
     const goToDashboard = () => {
-        push('/dashboard');
+        // push('/dashboard');
     }
 
     return {
@@ -13,4 +13,4 @@ const useSaveLogInData = () => {
     };
 };
 
-export default useSaveLogInData;
+export default useGoDashboard;

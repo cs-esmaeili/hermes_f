@@ -1,7 +1,6 @@
 import http from "./httpServices";
-import config from "../config.json";
 
-const prefixUrl = `${config.api}role`
+const prefixUrl = `${process.env.NEXT_PUBLIC_API}role`
 
 export const roleList = () => {
     return http.post(`${prefixUrl}/roleList`);

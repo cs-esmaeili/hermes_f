@@ -1,12 +1,9 @@
 import { PiFolderFill } from "react-icons/pi";
 import { usePathname } from 'next/navigation';
 import { MdSpaceDashboard } from "react-icons/md";
-import { BiSolidCategoryAlt } from "react-icons/bi";
 import { MdPostAdd, MdProductionQuantityLimits } from "react-icons/md";
-import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { BsShieldLockFill } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa6";
-import config from "@/config.json";
 import translation from "@/translation/translation";
 import Image from "next/image";
 import Link from "next/link";
@@ -82,11 +79,11 @@ const Sidebar = ({ open, setOpen }) => {
     >
       <div className="flex items-center justify-between min-w-[256px]">
         <div className="flex grow justify-center">
-          <span className="ml-3 text-2xl "> {config.app_name} </span>
+          <span className="ml-3 text-2xl "> {process.env.NEXT_PUBLIC_APP_NAME} </span>
         </div>
         <Image
           className="rounded-md"
-          src={config.api + config.logo_url}
+          src={process.env.NEXT_PUBLIC_API + process.env.NEXT_PUBLIC_LOGO_URL}
           alt="Site logo"
           width={60}
           height={60}

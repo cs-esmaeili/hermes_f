@@ -4,7 +4,7 @@ import CustomInput from '@/components/dashboard/CustomInput';
 import { useEffect, useState } from 'react';
 import Timer from '@/components/dashboard/Timer';
 
-const FirstLogInWithGoogle = ({ email, setError, SetPage }) => {
+const FirstLogInWithGoogle = ({ email, setError, SetPage, setLoadingMain }) => {
 
 
     const [code, setCode] = useState("");
@@ -26,7 +26,7 @@ const FirstLogInWithGoogle = ({ email, setError, SetPage }) => {
 
     const { firstLogInWithGoogleStepOneRequest } = useFirstLogInWithGoogleStepOne(email, phoneNumber, setLoading, setTimer, setError);
 
-    const { firstLogInWithGoogleStepTwoRequest } = useFirstLogInWithGoogleStepTwo(phoneNumber, email, code, password, setLoading, setError, reserForm);
+    const { firstLogInWithGoogleStepTwoRequest } = useFirstLogInWithGoogleStepTwo(phoneNumber, email, code, password, setLoading, setError, reserForm, setLoadingMain);
 
     useEffect(() => {
     }, []);

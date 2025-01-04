@@ -1,7 +1,6 @@
 import http from "./httpServices";
-import config from "../config.json";
 
-const prefixUrl = `${config.api}smsHistory`
+const prefixUrl = `${process.env.NEXT_PUBLIC_API}smsHistory`
 
 export const smsHistoryList = (data) => {
     return http.post(`${prefixUrl}/smsHistoryList`, JSON.stringify(data));

@@ -4,12 +4,12 @@ import {
     deleteFolder as RdeleteFolder,
     deleteFile as RdeleteFile,
 } from '@/services/Filemanager';
-import translation from "@/translation.json";
+import translation from "@/translation/translation";
 
 export default function DeleteFile({ path, file, refreshList }) {
 
-    const { someThingIsWrong, filemanagerDelete } = translation['fa'];
-
+    const { someThingIsWrong, filemanagerDelete } = translation.getMultiple(['someThingIsWrong', 'filemanagerDelete']);
+    
     const deleteFile = async () => {
         try {
             let location = [...path];

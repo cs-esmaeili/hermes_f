@@ -4,7 +4,7 @@ import useSaveLogInData from '@/hooks/auth/useSaveLogInData';
 import translation from '@/translation/translation';
 import useGoDashboard from '@/hooks/auth/useGoDashboard';
 
-const useLoginWithPassword = (userName, password, setLoading, setError) => {
+const useLoginWithPassword = (userName, password, setLoading, setError, setLoadingMain) => {
 
   const { saveData } = useSaveLogInData();
   const { goToDashboard } = useGoDashboard();
@@ -17,7 +17,8 @@ const useLoginWithPassword = (userName, password, setLoading, setError) => {
       await saveData(token, sessionTime, userName);
       toast.success(message);
       setLoading(false);
-      //  goToDashboard();
+      setLoadingMain(true);
+      goToDashboard();
 
     } catch (error) {
       console.log(error);

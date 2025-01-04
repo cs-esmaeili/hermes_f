@@ -3,12 +3,12 @@ import { deleteCategory as RdeleteCategory } from '@/services/Category';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import Input from '@/components/dashboard/Input';
-import translation from "@/translation.json";
+import translation from "@/translation/translation";
 
 export default function DeleteCategory({ row, categoryList, index, categorys, pickMode }) {
 
     const [inputOpen, setInputOpen] = useState(false);
-    const { someThingIsWrong, categoryDelete } = translation['fa'];
+    const { someThingIsWrong, categoryDelete } = translation.getMultiple(['someThingIsWrong', 'categoryDelete']);
 
     const deleteCategory = async (newCategory_id) => {
         try {

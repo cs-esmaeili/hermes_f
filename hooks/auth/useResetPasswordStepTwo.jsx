@@ -4,7 +4,7 @@ import translation from '@/translation/translation';
 import { fourDigitCodeSchema } from '@/validators/logIn';
 import useSaveLogInData from '@/hooks/auth/useSaveLogInData';
 
-const useResetPasswordStepTwo = (userName, code, password, setLoading, setError, resetForm) => {
+const useResetPasswordStepTwo = (userName, code, password, setLoading, setError, resetForm, setLoadingMain) => {
 
     const { saveData } = useSaveLogInData();
     const checkCode = async () => {
@@ -28,9 +28,9 @@ const useResetPasswordStepTwo = (userName, code, password, setLoading, setError,
             const { data: { token, message, sessionTime } } = await resetPasswordStepTwo({ userName, code, password });
             await saveData(token, sessionTime, userName);
             toast.success(message);
-
             resetForm();
-            // goToDashboard();
+            setLoadingMain(true);
+            goToDashboard();
 
         } catch (error) {
             console.log(error);

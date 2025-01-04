@@ -9,7 +9,7 @@ import { RiCloseFill } from 'react-icons/ri';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
 import Filemanager from '@/app/dashboard/(main)/filemanager/page';
-import translation from "@/translation.json";
+import translation from "@/translation/translation";
 
 const PostDetails = ({ content, setContent, editMode, editData, updateListener }) => {
 
@@ -23,7 +23,7 @@ const PostDetails = ({ content, setContent, editMode, editData, updateListener }
     const [imageV, setImageV] = useState(null);
     const [readyToCreate, setReadyToCreate] = useState(false);
 
-    const { someThingIsWrong, postDetails } = translation['fa'];
+    const { someThingIsWrong, postDetails } = translation.getMultiple(['someThingIsWrong', 'postDetails']);
 
     const createPost = async () => {
         try {

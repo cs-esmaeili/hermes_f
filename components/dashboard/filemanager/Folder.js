@@ -3,13 +3,13 @@ import { createFolder as RcreateFolder } from '@/services/Filemanager';
 import { BiSolidFolderPlus } from 'react-icons/bi';
 import Input from '@/components/dashboard/Input';
 import toast from 'react-hot-toast';
-import translation from "@/translation.json";
+import translation from "@/translation/translation";
 
 export default function Folder({ path, refreshList }) {
 
 
     const [inputOpen, setInputOpen] = useState(false);
-    const { someThingIsWrong, filemanagerFolder } = translation['fa'];
+    const { someThingIsWrong, filemanagerFolder } = translation.getMultiple(['someThingIsWrong', 'filemanagerFolder']);
 
     const createFolder = async (folderName) => {
         try {

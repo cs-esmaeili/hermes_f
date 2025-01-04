@@ -9,19 +9,19 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
-                hostname: 'back.talawin.ir',
+                hostname: 'back.hermes.ir',
             },
             {
                 protocol: 'http',
-                hostname: 'back.talawin.ir',
+                hostname: 'back.hermes.ir',
             },
             {
                 protocol: 'https',
-                hostname: 'www.back.talawin.ir',
+                hostname: 'www.back.hermes.ir',
             },
             {
                 protocol: 'http',
-                hostname: 'www.back.talawin.ir',
+                hostname: 'www.back.hermes.ir',
             }
         ],
     },

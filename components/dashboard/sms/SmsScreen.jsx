@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Input from '@/components/dashboard/Input';
 import { sendSmsToUser as RsendSmsToUser } from '@/services/smsTemplate';
 import toast from 'react-hot-toast';
-import translation from "@/translation.json";
+import translation from "@/translation/translation";
 
 
 import DatePicker, { DateObject } from "react-multi-date-picker"
@@ -24,8 +24,7 @@ const SmsScreen = ({ selectedTemplate, selectedUser, setSelectedTemplate, setSel
   const [isChecked, setIsChecked] = useState(false);
 
   const [inputValues, setInputValues] = useState([]);
-  const { someThingIsWrong } = translation['fa'];
-
+  const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong']);
 
   useEffect(() => {
     if (selectedTemplate && selectedTemplate.text) {

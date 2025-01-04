@@ -1,10 +1,9 @@
 import translation from '@/translation/translations.json';
-import config from '@/config.json';
 
 class Translator {
     constructor() {
         if (!Translator.instance) {
-            this.language = config.language;
+            this.language = process.env.NEXT_PUBLIC_LANGUAGE;
             Translator.instance = this;
         }
         return Translator.instance;

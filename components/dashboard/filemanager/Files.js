@@ -6,14 +6,14 @@ import ImageModal from "../Modals/ImageModal";
 import VideoModal from './../Modals/VideoModal';
 import { useState, useEffect } from 'react';
 import { folderFileList as RfolderFileList } from '@/services/Filemanager';
-import translation from "@/translation.json";
+import translation from "@/translation/translation";
 
 export default function Files({ path, selectedFile, setSelectedFile, setPath, refreshList, baseUrl, setBaseUrl, fileType }) {
 
     const { openModal, closeModal } = useModalContext();
     const [files, setFiles] = useState(null);
     const [status, setStatus] = useState(false);
-    const { someThingIsWrong, filemanagerFiles } = translation['fa'];
+    const { someThingIsWrong, filemanagerFiles } = translation.getMultiple(['someThingIsWrong', 'filemanagerFiles']);
 
     const folderFileList = async () => {
         try {

@@ -1,4 +1,3 @@
-import config from '@/config.json';
 
 const CustomInput = ({
   leftLabel,
@@ -34,7 +33,7 @@ const CustomInput = ({
       </div>
       <input
         className={`p-2 bg-primary rounded focus:outline-none focus:ring focus:ring-accent w-full
-          ${config.direction}
+          ${process.env.NEXT_PUBLIC_DIRECTION}
           ${inputClassName}`}
         {...inputProps}
       />

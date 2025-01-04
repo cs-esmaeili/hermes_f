@@ -3,10 +3,14 @@ import { firstLogInWithGoogleStepTwo } from '@/services/Auth';
 import translation from '@/translation/translation';
 import { fourDigitCodeSchema } from '@/validators/logIn';
 import useSaveLogInData from '@/hooks/auth/useSaveLogInData';
+import useGoDashboard from '@/hooks/auth/useGoDashboard';
 
-const useFirstLogInWithGoogleStepTwo = (userName, email, code, password, setLoading, setError, resetForm) => {
+const useFirstLogInWithGoogleStepTwo = (userName, email, code, password, setLoading, setError, resetForm, setLoadingMain) => {
 
     const { saveData } = useSaveLogInData();
+    const { goToDashboard } = useGoDashboard();
+
+
     const checkCode = async () => {
         try {
             await fourDigitCodeSchema.validate({ code }, { abortEarly: true });
@@ -25,9 +29,9 @@ const useFirstLogInWithGoogleStepTwo = (userName, email, code, password, setLoad
             const { data: { token, message, sessionTime } } = await firstLogInWithGoogleStepTwo({ userName, email, code, password });
             await saveData(token, sessionTime, userName);
             toast.success(message);
-
             resetForm();
-            // goToDashboard();
+            setLoadingMain(true);
+            goToDashboard();
 
         } catch (error) {
             console.log(error);

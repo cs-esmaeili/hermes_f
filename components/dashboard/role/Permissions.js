@@ -1,10 +1,10 @@
 import { togglePermission as RtogglePermission } from '@/services/Permission';
 import toast from 'react-hot-toast';
-import translation from "@/translation.json";
+import translation from "@/translation/translation";
 
 export default function Permissions({ allPermissions, currentRole, setUpdateList }) {
 
-    const { someThingIsWrong, permissions } = translation['fa'];
+    const { someThingIsWrong, permissions } = translation.getMultiple(['someThingIsWrong', 'permissions']);
 
     const togglePermission = async (role_id, permission_id) => {
         try {

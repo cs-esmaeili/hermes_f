@@ -1,7 +1,6 @@
 import http from "./httpServices";
-import config from "../config.json";
 
-const prefixUrl = `${config.api}file`
+const prefixUrl = `${process.env.NEXT_PUBLIC_API}file`
 
 export const folderFileList = (data) => {
     return http.post(`${prefixUrl}/folderFileList`, JSON.stringify(data));

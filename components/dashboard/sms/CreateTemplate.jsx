@@ -2,15 +2,15 @@ import Input from '@/components/dashboard/Input';
 import { useState } from 'react';
 import { createSmsTemplate as RcreateSmsTemplate } from '@/services/smsTemplate';
 import toast from 'react-hot-toast';
-import translation from "@/translation.json";
+import translation from "@/translation/translation";
 
 const CreateTemplate = ({ updateList }) => {
 
     const [name, setName] = useState("");
     const [text, setText] = useState("");
     const [code, setCode] = useState("");
-    const { someThingIsWrong } = translation['fa'];
-
+    const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong']);
+    
     const createSmsTemplate = async () => {
         try {
             const { data } = await RcreateSmsTemplate({ code, name, text });

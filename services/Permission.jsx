@@ -1,7 +1,6 @@
 import http from "./httpServices";
-import config from "../config.json";
 
-const prefixUrl = `${config.api}permission`
+const prefixUrl = `${process.env.NEXT_PUBLIC_API}permission`
 
 export const togglePermission = (data) => {
     return http.post(`${prefixUrl}/togglePermission`, JSON.stringify(data));

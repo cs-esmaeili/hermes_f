@@ -1,7 +1,6 @@
 import http from "./httpServices";
-import config from "../config.json";
 
-const prefixUrl = `${config.api}site`
+const prefixUrl = `${process.env.NEXT_PUBLIC_API}site`
 
 
 export const firstPage = () => {

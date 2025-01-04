@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import ProgressBar from '@/components/dashboard/ProgressBar';
 import { useModalContext } from '@/components/dashboard/Modal';
 import ImageCroperArea from './ImageCroperArea';
-import translation from "@/translation.json";
+import translation from "@/translation/translation";
 
 export default function UploadFile({ path, refreshList }) {
 
@@ -14,8 +14,8 @@ export default function UploadFile({ path, refreshList }) {
     const [persent, setPersent] = useState(0);
     const [file, setFile] = useState(null);
     const fileInputRef = useRef(null);
-    const { someThingIsWrong } = translation['fa'];
-
+    const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong']);
+    
     const saveFile = async (event) => {
         try {
             let formData = new FormData();

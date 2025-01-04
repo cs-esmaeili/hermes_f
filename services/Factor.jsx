@@ -1,8 +1,7 @@
 import http from "./httpServices";
-import config from "../config.json";
 
 
-const prefixUrl = `${config.api}factor`
+const prefixUrl = `${process.env.NEXT_PUBLIC_API}factor`
 
 export const factorListUser = (data) => {
     return http.post(`${prefixUrl}/factorListUser`, JSON.stringify(data));
