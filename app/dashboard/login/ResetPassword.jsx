@@ -3,7 +3,6 @@ import useResetPasswordStepTwo from '@/hooks/auth/useResetPasswordStepTwo';
 import CustomInput from '@/components/dashboard/CustomInput';
 import { useEffect, useState } from 'react';
 import Timer from '@/components/dashboard/Timer';
-import { resetPasswordStepOne } from '@/services/Auth';
 
 const ResetPassword = ({ userName, setError, SetPage }) => {
 
@@ -12,10 +11,9 @@ const ResetPassword = ({ userName, setError, SetPage }) => {
     const [timer, setTimer] = useState(0);
     const [loading, setLoading] = useState(true);
 
-    const [passwordOne, setPasswordOne] = useState("test");
-    const [passwordTwo, setPasswordTwo] = useState("test");
+    const [passwordOne, setPasswordOne] = useState("");
+    const [passwordTwo, setPasswordTwo] = useState("");
 
-    console.log(userName);
 
     const reserForm = () => {
         setCode("");

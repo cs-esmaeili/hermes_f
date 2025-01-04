@@ -4,25 +4,36 @@ import CustomImage from '@/components/dashboard/CustomImage';
 import CustomInput from '@/components/dashboard/CustomInput';
 import config from "@/config.json";
 import { Toaster } from 'react-hot-toast';
-import { FcGoogle } from "react-icons/fc";
 import Link from 'next/link';
 import { isEmailOrPhone } from '@/utils/user';
 import { useEffect, useState } from 'react';
 import Password from './Password';
 import Phone from './Phone';
 import ResetPassword from './ResetPassword';
+import FirstLogInWithGoogle from './FirstLogInWithGoogle';
+import GoogleLogInButton from '@/components/dashboard/GoogleLogInButton';
+import useGoogleLogInCheckNeedRegister from '@/hooks/auth/useGoogleLogInCheckNeedRegister';
 
 const LogIn = () => {
 
 
-    const [userName, setUserName] = useState("cs.esmaeili@gmail.com");
-    const [userNameType, setUserNameType] = useState("email");
+    const [userName, setUserName] = useState("");
+    const [userNameType, setUserNameType] = useState("");
     const [error, setError] = useState("");
-    const [page, SetPage] = useState("resetPassword");
+    const [page, SetPage] = useState("main");
+
+    const { googleLogInCheckNeedRegisterRequest } = useGoogleLogInCheckNeedRegister(setError, SetPage);
 
     useEffect(() => {
         setError("");
     }, [userName]);
+
+    const resetMainForm = () => {
+        setUserName("");
+        setUserNameType("");
+        setError("");
+        SetPage("main");
+    }
 
 
     return (
@@ -58,7 +69,12 @@ const LogIn = () => {
                         </>
                     }
                     {(page == "resetPassword") &&
-                        <div className='flex flex-col gap-3'><ResetPassword userName={userName} setError={setError} SetPage={SetPage}  /></div>
+                        <div className='flex flex-col gap-3'><ResetPassword userName={userName} setError={setError} SetPage={SetPage} /></div>
+                    }
+                    {(page == "firstLogInWithGoogle") &&
+                        <div className='flex flex-col gap-3'>
+                            <FirstLogInWithGoogle email={userName} setError={setError} SetPage={SetPage} />
+                        </div>
                     }
 
                     <div className={`w-full bg-red-400 rounded-md items-center justify-center p-2 hidden ${error && "!flex"}`}>
@@ -70,13 +86,11 @@ const LogIn = () => {
                         <span>یا</span>
                         <hr className="flex-1 border-t" />
                     </div>
-
-                    <button className='bg-primary p-2 w-full rounded flex justify-center items-center gap-3'>
-                        <span>
-                            ورود با گوگل
-                        </span>
-                        <FcGoogle className='text-3xl' />
-                    </button>
+                    <GoogleLogInButton onSuccess={(userData) => {
+                        setUserName(userData.email);
+                        googleLogInCheckNeedRegisterRequest(userData.email);
+                    }}
+                    />
                     <div className='text-xs md:text-sm lg:text-xl'>
                         <span>ورود شما به معنای پذیرش </span>
                         <Link href="/terms" className='text-accent'>قوانین</Link>

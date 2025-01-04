@@ -13,9 +13,23 @@ export const logInPhoneStepTwo = (data) => {
     return http.post(`${prefixUrl}/logInPhoneStepTwo`, JSON.stringify(data));
 };
 
+
 export const resetPasswordStepOne = (data) => {
     return http.post(`${prefixUrl}/resetPasswordStepOne`, JSON.stringify(data));
 };
 export const resetPasswordStepTwo = (data) => {
     return http.post(`${prefixUrl}/resetPasswordStepTwo`, JSON.stringify(data));
+};
+
+
+export const googleLogInCheckNeedRegister = (data) => {
+    return http.post(`${prefixUrl}/googleLogInCheckNeedRegister`, JSON.stringify(data));
+};
+
+export const firstLogInWithGoogleStepOne = (data) => {
+    return http.post(`${prefixUrl}/firstLogInWithGoogleStepOne`, JSON.stringify(data));
+};
+
+export const firstLogInWithGoogleStepTwo = (data) => {
+    return http.post(`${prefixUrl}/firstLogInWithGoogleStepTwo`, JSON.stringify(data));
 };
