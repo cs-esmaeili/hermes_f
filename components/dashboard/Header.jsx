@@ -1,36 +1,27 @@
 import React from "react";
-import MiniProfile from "./MiniProfile";
 import { FaBell } from "react-icons/fa";
 import { MdSunny } from "react-icons/md";
 import { RiMenu3Line } from "react-icons/ri";
-import { GiOpenTreasureChest } from "react-icons/gi";
-
-
-import Prices from "./Prices";
-import LogOutTimer from "./LogOutTimer";
 
 const Header = ({ open, setOpen }) => {
 
-
-
   return (
-    <div className="flex items-center p-2">
+    <div className="flex items-center p-5 pr-10">
 
       <div className="mr-3 hidden sm:flex">
         <MdSunny className="text-2xl" />
         <FaBell className="ml-3 text-2xl" />
+        <FaBell className="ml-3 text-2xl" />
+        <FaBell className="ml-3 text-2xl" />
       </div>
-      <MiniProfile sliderIsOpen={open} />
 
-      <div className="flex  grow flex-wrap justify-around gap-1 rounded-xl bg-secondary p-2">
-        <div className="hidden md:flex ">
-          <LogOutTimer />
-        </div>
-        <Prices />
-        <div className="hidden text-yellow-400 md:flex">
-          <GiOpenTreasureChest className="text-2xl" />
-          <span className="text-md">10 G</span>
-        </div>
+      <div className="flex  grow flex-wrap justify-around gap-1 rounded-xl p-2">
+      </div>
+      <div className={`flex flex-row justify-center items-center gap-5 ${process.env.NEXT_PUBLIC_DIRECTION}`}>
+        <span className="rtl font-bold text-2xl">جواد اسماعیلی عزیز ؛خوش اومدی. 👋</span>.
+        <div className="border-l border-gray-400 h-[40px]"></div>
+        <span className="font-bold">شنبه, 15 دی 1403</span>
+
       </div>
 
       <RiMenu3Line

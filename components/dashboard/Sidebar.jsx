@@ -1,7 +1,9 @@
+'use client'
+
 import { PiFolderFill } from "react-icons/pi";
 import { usePathname } from 'next/navigation';
 import { MdSpaceDashboard } from "react-icons/md";
-import { MdPostAdd, MdProductionQuantityLimits } from "react-icons/md";
+import { MdProductionQuantityLimits } from "react-icons/md";
 import { BsShieldLockFill } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa6";
 import translation from "@/translation/translation";
@@ -11,7 +13,6 @@ import { useEffect, useState } from "react";
 import { getCookie } from 'cookies-next';
 import { GiMagicPortal } from "react-icons/gi";
 import { useSelector } from 'react-redux';
-import { Player, Controls } from '@lottiefiles/react-lottie-player';
 import { FaBoxArchive } from "react-icons/fa6";
 import { FaSms } from "react-icons/fa";
 import { MdHistoryEdu } from "react-icons/md";
@@ -37,7 +38,7 @@ const Sidebar = ({ open, setOpen }) => {
     { name: text["/dashboard/role"], url: "/dashboard/role", icon: <BsShieldLockFill className="text-2xl" /> },
     { name: text["/dashboard/user"], url: "/dashboard/user", icon: <FaUserPlus className="text-2xl" /> },
     { name: text["/dashboard/factors"], url: "/dashboard/factors", icon: <FaFileInvoiceDollar className="text-2xl" /> },
-    { name: text["/dashboard/admintradeportal"], url: "/dashboard/admintradeportal", icon: <GiMagicPortal className="text-2xl" />},
+    { name: text["/dashboard/admintradeportal"], url: "/dashboard/admintradeportal", icon: <GiMagicPortal className="text-2xl" /> },
     // { name: text["/dashboard/category"], url: "/dashboard/category", icon: <BiSolidCategoryAlt className="text-2xl" />, lock: true },
     // { name: text["/dashboard/post/createPost"], url: "/dashboard/post/createPost", icon: <MdPostAdd className="text-2xl" />, lock: true },
     // { name: text["/dashboard/post/postList"], url: "/dashboard/post/postList", icon: <HiOutlineClipboardDocumentList className="text-2xl" />, lock: true },
@@ -73,12 +74,12 @@ const Sidebar = ({ open, setOpen }) => {
     <div
       className={
         open
-          ? "fixed bottom-0 right-0 top-0 z-30 h-full min-w-max bg-secondary p-7 duration-500 ease-in overflow-y-auto"
-          : "fixed  right-[-100%] h-full z-30 min-w-max bg-secondary p-7 duration-500 ease-in lg:static lg:flex overflow-y-auto flex-col"
+          ? "fixed bottom-0 right-0 top-0 z-30 h-full min-w-max bg-primary p-3 duration-500 ease-in overflow-hidden"
+          : "fixed  right-[-100%] h-full z-30 min-w-max bg-primary p-3 duration-500 ease-in lg:static lg:flex overflow-hidden flex-col"
       }
     >
-      <div className="flex items-center justify-between min-w-[256px]">
-        <div className="flex grow justify-center">
+      <div className="flex items-center justify-evenly min-w-[256px] mb-8">
+        <div className="flex  justify-center">
           <span className="ml-3 text-2xl "> {process.env.NEXT_PUBLIC_APP_NAME} </span>
         </div>
         <Image
@@ -99,25 +100,13 @@ const Sidebar = ({ open, setOpen }) => {
         </div>
         :
         <>
-          <div className="mb-5 mt-8 flex items-center justify-between rounded-md bg-secondary_dark p-3">
-            <div className="flex grow justify-center mr-3">
-              <span>{information?.data?.fullName ?? userName}</span>
-            </div>
-            <Image
-              className="rounded-full"
-              src="/avatar.jpg"
-              alt="Site logo"
-              width={45}
-              height={45}
-            />
-          </div>
-          <div>
+          <div className="flex flex-col grow overflow-x-hidden overflow-y-auto pr-3">
             {items.map((item, index) => {
               const { url, icon, name } = item;
               return (
                 <Link href={(item.lock) ? "" : url} key={index}>
                   <div className={(pathname == url) ?
-                    "relative bg-siebar_item mb-5 flex items-center rounded-lg bg-active_background p-3 text-accent rtl"
+                    "relative bg-siebar_item mb-5 flex items-center rounded-xl bg-secondary p-3 text-accent rtl"
                     :
                     "relative mb-5 flex items-center p-3 text-dactive rtl"
                   }>
@@ -129,18 +118,43 @@ const Sidebar = ({ open, setOpen }) => {
                     </span>
                     {item.lock == true &&
                       <div className='flex grow justify-center items-center w-full'>
-                        <Player
-                          autoplay
-                          loop
-                          src="/assets/animation.json"
-                          style={{ height: '100px', width: '100px' }}
-                        />
+                        lock
                       </div>
                     }
                   </div>
                 </Link>
               );
             })}
+          </div>
+          <div className="pr-3">
+            <Link href="/ads">
+              <div className={(pathname == "/ads") ?
+                "relative bg-siebar_item mb-5 flex items-center rounded-xl bg-secondary p-3 text-accent rtl"
+                :
+                "relative mb-5 flex items-center p-3 text-dactive rtl"
+              }>
+                <div>
+                  <MdProductionQuantityLimits className="text-2xl" />
+                </div>
+                <span className={`mr-3 text-nowrap`}>
+                  اطلاعات حساب
+                </span>
+              </div>
+            </Link>
+            <Link href="/adss">
+              <div className={(pathname == "/adss") ?
+                "relative bg-siebar_item mb-5 flex items-center rounded-xl bg-secondary p-3 text-accent rtl"
+                :
+                "relative mb-5 flex items-center p-3 text-dactive rtl"
+              }>
+                <div>
+                  <MdProductionQuantityLimits className="text-2xl" />
+                </div>
+                <span className={`mr-3 text-nowrap`}>
+                  خروج
+                </span>
+              </div>
+            </Link>
           </div>
         </>
       }

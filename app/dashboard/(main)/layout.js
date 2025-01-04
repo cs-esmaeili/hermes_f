@@ -1,11 +1,11 @@
 'use client'
 
+import '@/styles/globals.css';
 import { ModalProvider } from '@/components/dashboard/Modal';
 import Sidebar from '@/components/dashboard/Sidebar';
 import Header from '@/components/dashboard/Header';
 import { useState, useEffect } from "react";
 import { Toaster } from 'react-hot-toast';
-import '@/styles/globals.css';
 import useSocket from '@/hooks/useSocket';
 import useLogout from '@/hooks/useLogout';
 import { useRouter } from 'next/navigation';
@@ -74,7 +74,7 @@ export default function Layout({ children }) {
             onClick={() => setOpen(!open)} />
           <div className='flex grow flex-col h-screen min-w-0 max-w-full'>
             <Header open={open} setOpen={setOpen} />
-            <div className="flex relative grow border-solid  overflow-hidden">
+            <div className="flex relative grow border-solid  overflow-hidden bg-secondary rounded-tr-3xl">
               {children}
             </div>
           </div>

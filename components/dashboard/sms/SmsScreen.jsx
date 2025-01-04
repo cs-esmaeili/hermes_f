@@ -70,7 +70,7 @@ const SmsScreen = ({ selectedTemplate, selectedUser, setSelectedTemplate, setSel
     inputValues.forEach(({ name, value }) => {
       const placeholder = `#${name}#`;
       const replacement = value
-        ? `<span class="text-blue-400 font-bold">${value}</span>`
+        ? `<span className="text-blue-400 font-bold">${value}</span>`
         : placeholder;
       finalText = finalText.replace(new RegExp(placeholder, 'g'), replacement);
     });

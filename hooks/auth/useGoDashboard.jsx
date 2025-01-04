@@ -5,7 +5,7 @@ const useGoDashboard = () => {
     const { push } = useRouter();
 
     const goToDashboard = () => {
-        // push('/dashboard');
+        push('/dashboard');
     }
 
     return {
