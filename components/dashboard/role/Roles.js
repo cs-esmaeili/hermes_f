@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { IoMdTrash } from 'react-icons/io';
-import { roleList as RroleList, deleteRole as RdeleteRole } from '@/services/Role'
+import useRoleList from '@/hooks/role/useRoleList'
+import useDeleteRole from '@/hooks/role/useDeleteRole'
 import { ImCancelCircle } from "react-icons/im";
 import Add from './Add';
-import toast from 'react-hot-toast';
 import translation from "@/translation/translation";
 import { useSelector } from 'react-redux';
 
@@ -15,43 +15,6 @@ export default function Roles({ setCurrentRole, setAllpermissions, updateList, s
     const roleName = useSelector((state) => state.information.value.role_id.name);
     const { someThingIsWrong, rolesT } = translation.getMultiple(['someThingIsWrong', 'rolesT']);
 
-    const roleList = async (selectLastActiveRole) => {
-        try {
-            const { data } = await RroleList();
-            setRoles(data.roles);
-            if (!selectMode) {
-                setAllpermissions(data.permissions);
-                if (currentIndex != -1 && selectLastActiveRole) {
-                    setCurrentRole(data.roles[currentIndex]);
-                }
-            }
-        } catch (error) {
-            console.log(error);
-            if (error?.response?.data?.message) {
-                toast.error(error.response.data.message);
-            } else {
-                toast.error(someThingIsWrong);
-            }
-        }
-    }
-
-    const deleteRole = async (role_id, newRole_id) => {
-        try {
-            const { data } = await RdeleteRole({ role_id, newRole_id });
-            const { message } = data;
-            toast.success(message);
-            resetAllData();
-            roleList();
-        } catch (error) {
-            console.log(error);
-            if (error?.response?.data?.message) {
-                toast.error(error.response.data.message);
-            } else {
-                toast.error(someThingIsWrong);
-            }
-        }
-    }
-
     const resetAllData = () => {
         if (!selectMode) {
             setCurrentRole(null);
@@ -61,9 +24,12 @@ export default function Roles({ setCurrentRole, setAllpermissions, updateList, s
         setCurrentIndex(-1);
         setDeleteMode(-1);
     }
+    const { roleListRequest } = useRoleList(setRoles, setAllpermissions, setCurrentRole, selectMode, currentIndex);
+    const { deleteRoleRequest } = useDeleteRole(resetAllData, roleListRequest);
+
 
     useEffect(() => {
-        roleList(true);
+        roleListRequest(true);
     }, [updateList]);
 
     const toggleButtons = (index) => {
@@ -89,9 +55,11 @@ export default function Roles({ setCurrentRole, setAllpermissions, updateList, s
             </div>
             <div className='flex flex-col pr-3 pl-3 w-full gap-2'>
                 {(roles != null) &&
-                    roles.slice().reverse().map((role, index) => {
+                    roles.map((role, index) => {
                         return (
-                            <div className={`flex items-center justify-between p-2 rounded-md bg-primary hover:bg-opacity-50
+                            <div
+                                key={index}
+                                className={`flex items-center justify-between p-2 rounded-md bg-primary hover:bg-opacity-50
                                ${(index === currentIndex && deleteMode == -1) ? "!bg-accent text-white" : ""} 
                                ${(deleteMode != -1) ? (index === deleteMode) ? "!bg-red-400" : "!bg-green-500" : ""}
                                ${role.name == roleName && "opacity-50 cursor-not-allowed"}
@@ -111,7 +79,7 @@ export default function Roles({ setCurrentRole, setAllpermissions, updateList, s
                                                 listener(role);
                                             }
                                         } else if (index != deleteMode) {
-                                            deleteRole(roles[deleteMode]._id, role._id);
+                                            deleteRoleRequest(roles[deleteMode]._id, role._id);
                                         }
                                     }}>
                                     {role.name}
@@ -121,7 +89,7 @@ export default function Roles({ setCurrentRole, setAllpermissions, updateList, s
                         )
                     })}
                 {deleteMode == -1 &&
-                    <Add resetAllData={resetAllData} roleList={roleList} />
+                    <Add resetAllData={resetAllData} roleList={roleListRequest} />
                 }
             </div>
         </div>

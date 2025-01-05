@@ -1,29 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
-import { createRole as RcreateRole } from '@/services/Role';
+import { useState } from 'react';
 import Input from '@/components/dashboard/Input';
-import toast from 'react-hot-toast';
 import translation from "@/translation/translation";
+import useCreateRole from "@/hooks/role/useCreateRole";
 
 export default function Add({ resetAllData, roleList }) {
 
     const [tempMode, setTempMode] = useState(false);
     const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong']);
-    
-    const createRole = async (name) => {
-        try {
-            const { data } = await RcreateRole({ name });
-            const { message } = data;
-            toast.success(message);
-            roleList();
-        } catch (error) {
-            console.log(error);
-            if (error?.response?.data?.message) {
-                toast.error(error.response.data.message);
-            } else {
-                toast.error(someThingIsWrong);
-            }
-        }
-    }
+    const { createRoleRequest } = useCreateRole(roleList);
+
 
 
     return (
@@ -40,7 +25,7 @@ export default function Add({ resetAllData, roleList }) {
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 resetAllData(false);
-                                createRole(e.target.value);
+                                createRoleRequest(e.target.value);
                                 setTempMode(false);
                             }
                         }}

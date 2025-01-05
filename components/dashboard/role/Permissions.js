@@ -1,22 +1,11 @@
-import { togglePermission as RtogglePermission } from '@/services/Permission';
-import toast from 'react-hot-toast';
 import translation from "@/translation/translation";
+import useTogglePermission from "@/hooks/role/useTogglePermission";
 
 export default function Permissions({ allPermissions, currentRole, setUpdateList }) {
-    
-    const { someThingIsWrong, permissions } = translation.getMultiple(['someThingIsWrong', 'permissions']);
 
-    const togglePermission = async (role_id, permission_id) => {
-        try {
-            const { data } = await RtogglePermission({ role_id, permission_id });
-            const { message } = data;
-            toast.success(message);
-            setUpdateList();
-        } catch (error) {
-            console.log(error);
-            toast.error(error?.response?.data?.message || someThingIsWrong);
-        }
-    };
+    const { permissions } = translation.getMultiple(['someThingIsWrong', 'permissions']);
+    const { togglePermissionRequest } = useTogglePermission(setUpdateList);
+
 
     return (
         <>
@@ -35,7 +24,7 @@ export default function Permissions({ allPermissions, currentRole, setUpdateList
                         <div
                             className="flex grow justify-center items-center p-5 bg-primary rounded-lg max-w-full"
                             key={index}
-                            onClick={() => togglePermission(currentRole._id, permission._id)}
+                            onClick={() => togglePermissionRequest(currentRole._id, permission._id)}
                         >
                             <div className="text-pretty flex grow max-w-full" style={{ wordBreak: 'break-word' }}>
                                 {permission?.route}
