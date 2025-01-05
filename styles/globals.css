@@ -9,13 +9,12 @@
   --color-text: 100 116 139; /* Updated to a blue-gray shade (#64748B) */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-primary: 14 35 56; /* Dark mode primary: 0E2338 */
-    --color-secondary: 22 47 72; /* Dark mode secondary: 162F48 */
-    --color-accent: 81 182 255; /* Dark mode accent: 51B6FF */
-    --color-text: 255 255 255; /* White text for dark mode */
-  }
+/* Dark mode variables controlled by the 'dark' class */
+.dark {
+  --color-primary: 14 35 56; /* Dark mode primary: 0E2338 */
+  --color-secondary: 22 47 72; /* Dark mode secondary: 162F48 */
+  --color-accent: 81 182 255; /* Dark mode accent: 51B6FF */
+  --color-text: 255 255 255; /* White text for dark mode */
 }
 
 @font-face {
@@ -81,9 +80,6 @@
   font-weight: 950;
   font-style: normal;
 }
-
-
-
 
 @layer utilities {
   .rtl {

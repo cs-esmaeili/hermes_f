@@ -1,22 +1,14 @@
 'use client'
 
-import { PiFolderFill } from "react-icons/pi";
 import { usePathname } from 'next/navigation';
-import { MdSpaceDashboard } from "react-icons/md";
-import { MdProductionQuantityLimits } from "react-icons/md";
-import { BsShieldLockFill } from "react-icons/bs";
-import { FaUserPlus } from "react-icons/fa6";
 import translation from "@/translation/translation";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getCookie } from 'cookies-next';
-import { GiMagicPortal } from "react-icons/gi";
 import { useSelector } from 'react-redux';
-import { FaBoxArchive } from "react-icons/fa6";
-import { FaSms } from "react-icons/fa";
-import { MdHistoryEdu } from "react-icons/md";
-import { FaFileInvoiceDollar } from "react-icons/fa";
+import Icon from "@/components/general/Icon";
+
 
 const Sidebar = ({ open, setOpen }) => {
 
@@ -27,21 +19,10 @@ const Sidebar = ({ open, setOpen }) => {
 
   const information = useSelector((state) => state.information.value);
   const permissions = useSelector((state) => state.permissions.value);
-
+  permissions
   const allItems = [
-    { name: text["/dashboard"], url: "/dashboard", icon: <MdSpaceDashboard className="text-2xl" /> },
-    { name: text["/dashboard/product"], url: "/dashboard/product", icon: <MdProductionQuantityLimits className="text-2xl" /> },
-    { name: text["/dashboard/apibox"], url: "/dashboard/apibox", icon: <FaBoxArchive className="text-2xl" /> },
-    { name: text["/dashboard/filemanager"], url: "/dashboard/filemanager", icon: <PiFolderFill className="text-2xl" /> },
-    { name: text["/dashboard/sms"], url: "/dashboard/sms", icon: <FaSms className="text-2xl" /> },
-    { name: text["/dashboard/smshistory"], url: "/dashboard/smshistory", icon: <MdHistoryEdu className="text-2xl" /> },
-    { name: text["/dashboard/role"], url: "/dashboard/role", icon: <BsShieldLockFill className="text-2xl" /> },
-    { name: text["/dashboard/user"], url: "/dashboard/user", icon: <FaUserPlus className="text-2xl" /> },
-    { name: text["/dashboard/factors"], url: "/dashboard/factors", icon: <FaFileInvoiceDollar className="text-2xl" /> },
-    { name: text["/dashboard/admintradeportal"], url: "/dashboard/admintradeportal", icon: <GiMagicPortal className="text-2xl" /> },
-    // { name: text["/dashboard/category"], url: "/dashboard/category", icon: <BiSolidCategoryAlt className="text-2xl" />, lock: true },
-    // { name: text["/dashboard/post/createPost"], url: "/dashboard/post/createPost", icon: <MdPostAdd className="text-2xl" />, lock: true },
-    // { name: text["/dashboard/post/postList"], url: "/dashboard/post/postList", icon: <HiOutlineClipboardDocumentList className="text-2xl" />, lock: true },
+    { name: "صفحه اصلی پنل", url: "/dashboard", icon: <Icon name={"dashboard"} className="w-8 h-8" /> },
+    { name: "دسترسی ها", url: "/dashboard/role", icon: <Icon name={"permissions"} className="w-8 h-8" /> },
   ];
 
   const [items, setItems] = useState([]);
@@ -104,23 +85,18 @@ const Sidebar = ({ open, setOpen }) => {
             {items.map((item, index) => {
               const { url, icon, name } = item;
               return (
-                <Link href={(item.lock) ? "" : url} key={index}>
+                <Link href={url} key={index}>
                   <div className={(pathname == url) ?
                     "relative bg-siebar_item mb-5 flex items-center rounded-xl bg-secondary p-3 text-accent rtl"
                     :
                     "relative mb-5 flex items-center p-3 text-dactive rtl"
                   }>
-                    <div className={item.lock && "opacity-50"}>
+                    <div>
                       {icon}
                     </div>
-                    <span className={`mr-3 text-nowrap ${item.lock && "opacity-50"}`}>
+                    <span className={`mr-3 text-nowrap text-lg`}>
                       {name}
                     </span>
-                    {item.lock == true &&
-                      <div className='flex grow justify-center items-center w-full'>
-                        lock
-                      </div>
-                    }
                   </div>
                 </Link>
               );
@@ -134,7 +110,7 @@ const Sidebar = ({ open, setOpen }) => {
                 "relative mb-5 flex items-center p-3 text-dactive rtl"
               }>
                 <div>
-                  <MdProductionQuantityLimits className="text-2xl" />
+                  <Icon name={"profile"} className="w-10 h-10" />
                 </div>
                 <span className={`mr-3 text-nowrap`}>
                   اطلاعات حساب
@@ -148,7 +124,7 @@ const Sidebar = ({ open, setOpen }) => {
                 "relative mb-5 flex items-center p-3 text-dactive rtl"
               }>
                 <div>
-                  <MdProductionQuantityLimits className="text-2xl" />
+                  <Icon name={"exit"} className="w-10 h-10" />
                 </div>
                 <span className={`mr-3 text-nowrap`}>
                   خروج

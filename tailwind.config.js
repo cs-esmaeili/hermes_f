@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        yekanBakh: ['YekanBakh'],
+        yekanBakh: ['YekanBakh', 'sans-serif'], // Add a fallback font
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -20,8 +20,9 @@ module.exports = {
         secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
         accent: 'rgb(var(--color-accent) / <alpha-value>)',
         textcolor: 'rgb(var(--color-text) / <alpha-value>)',
-      }
+      },
     },
   },
   plugins: [],
+  darkMode: "class", // Use the 'class' strategy for dark mode
 };

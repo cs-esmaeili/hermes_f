@@ -22,8 +22,16 @@ const nextConfig = {
             {
                 protocol: 'http',
                 hostname: 'www.back.hermes.ir',
-            }
+            },
         ],
+    },
+    webpack(config) {
+        config.module.rules.push({
+            test: /\.svg$/,
+            use: ['@svgr/webpack'],
+        });
+
+        return config;
     },
 };
 

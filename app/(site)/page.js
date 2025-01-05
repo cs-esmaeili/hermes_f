@@ -9,8 +9,8 @@ const page = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <div className='text-4xl font-bold text-black rtl mb-10'>
-                <span className='text-white text-7xl'>هر</span>
+            <div className='text-4xl font-bold rtl mb-10'>
+                <span className='dark:text-white text-7xl'>هر</span>
                 <span className=' text-7xl' style={{ color: "#3B82F6" }}>مس</span>
             </div>
 

@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html className='font-yekanBakh' lang={translation.getCurrentLanguage()}>
+    <html className='font-yekanBakh ' lang={translation.getCurrentLanguage()}>
       <body>{children}</body>
     </html>
   )
