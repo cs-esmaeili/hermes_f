@@ -13,7 +13,6 @@ import { securityCheck as RsecurityCheck } from '@/services/User';
 import { usePathname } from 'next/navigation';
 import { setPermissions } from '@/state/permissions';
 import { setinformation } from '@/state/information';
-import { setrole } from '@/state/role';
 import { useDispatch } from 'react-redux';
 
 export default function Layout({ children }) {
@@ -34,11 +33,10 @@ export default function Layout({ children }) {
 
       dispatch(setPermissions(permissions));
       dispatch(setinformation(information));
-      dispatch(setrole(information.role_id));
 
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      console.log("Error in securityCheck", error);
       useLogout(push);
     }
   }

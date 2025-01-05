@@ -5,13 +5,15 @@ import { ImCancelCircle } from "react-icons/im";
 import Add from './Add';
 import toast from 'react-hot-toast';
 import translation from "@/translation/translation";
+import { useSelector } from 'react-redux';
 
 export default function Roles({ setCurrentRole, setAllpermissions, updateList, selectMode, listener }) {
 
     const [roles, setRoles] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [deleteMode, setDeleteMode] = useState(-1);
-    const { someThingIsWrong, rolesT } = translation['fa'];
+    const roleName = useSelector((state) => state.information.value.role_id.name);
+    const { someThingIsWrong, rolesT } = translation.getMultiple(['someThingIsWrong', 'rolesT']);
 
     const roleList = async (selectLastActiveRole) => {
         try {
@@ -87,16 +89,20 @@ export default function Roles({ setCurrentRole, setAllpermissions, updateList, s
             </div>
             <div className='flex flex-col pr-3 pl-3 w-full gap-2'>
                 {(roles != null) &&
-                    roles.map((role, index) => {
+                    roles.slice().reverse().map((role, index) => {
                         return (
-                            <div className={`flex items-center justify-center  p-2 rounded-md bg-secondary hover:bg-opacity-50
-                            ${(index === currentIndex && deleteMode == -1) ? "!bg-accent" : ""} 
-                            ${(deleteMode != -1) ? (index === deleteMode) ? "!bg-red-400" : "!bg-green-500" : ""}
+                            <div className={`flex items-center justify-between p-2 rounded-md bg-primary hover:bg-opacity-50
+                               ${(index === currentIndex && deleteMode == -1) ? "!bg-accent text-white" : ""} 
+                               ${(deleteMode != -1) ? (index === deleteMode) ? "!bg-red-400" : "!bg-green-500" : ""}
+                               ${role.name == roleName && "opacity-50 cursor-not-allowed"}
                             `}>
-                                <button
-                                    className="grow"
+                                <div
+                                    className="flex w-full  justify-center items-center"
                                     key={index}
                                     onClick={() => {
+                                        if (role.name == roleName) {
+                                            return;
+                                        }
                                         if (deleteMode == -1) {
                                             setCurrentIndex(index);
                                             if (!selectMode) {
@@ -107,8 +113,9 @@ export default function Roles({ setCurrentRole, setAllpermissions, updateList, s
                                         } else if (index != deleteMode) {
                                             deleteRole(roles[deleteMode]._id, role._id);
                                         }
-                                    }}> {role.name}
-                                </button>
+                                    }}>
+                                    {role.name}
+                                </div>
                                 {toggleButtons(index)}
                             </div>
                         )

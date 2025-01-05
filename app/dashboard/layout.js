@@ -3,7 +3,6 @@
 import { Provider } from "react-redux";
 import { store } from "@/state/store";
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import ThemeToggleButton from "@/components/general/ThemeToggleButton";
 
 export default function Layout({ children }) {
 

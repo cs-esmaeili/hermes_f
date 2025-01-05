@@ -11,8 +11,8 @@ export default function Role() {
 
 
     return (
-        <div className='flex flex-col sm:flex-row grow overflow-hidden'>
-            <div className='flex grow p-1 flex-col  gap-3 overflow-x-hidden overflow-y-auto shadow-xl'>
+        <div className='flex flex-col-reverse sm:flex-row grow overflow-hidden'>
+            <div className='flex grow p-1 flex-col  gap-3 overflow-x-hidden overflow-y-auto'>
                 <Permissions
                     allPermissions={allPermissions}
                     currentRole={currentRole}
