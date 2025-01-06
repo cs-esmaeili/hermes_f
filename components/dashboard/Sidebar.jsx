@@ -53,7 +53,7 @@ const Sidebar = ({ open, setOpen }) => {
   }, []);
 
   return (
-    <div
+    <aside
       className={
         open
           ? "fixed bottom-0 right-0 top-0 z-30 h-full min-w-max bg-primary p-3 duration-500 ease-in overflow-hidden"
@@ -135,7 +135,7 @@ const Sidebar = ({ open, setOpen }) => {
           </div>
         </>
       }
-    </div>
+    </aside>
   );
 };
 

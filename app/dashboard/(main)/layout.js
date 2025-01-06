@@ -72,7 +72,9 @@ export default function Layout({ children }) {
             onClick={() => setOpen(!open)} />
           <div className='flex grow flex-col h-screen min-w-0 max-w-full'>
             <Header open={open} setOpen={setOpen} />
-            <div className="flex relative grow border-solid  overflow-hidden bg-secondary rounded-tr-3xl">
+            <div className=" flex relative grow border-solid  justify-center overflow-hidden bg-secondary rounded-tr-3xl
+           w-full h-full dark:bg-dark-900  xl:px-9 pt-10 pb-14  ">
+
               {children}
             </div>
           </div>

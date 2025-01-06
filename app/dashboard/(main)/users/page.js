@@ -12,9 +12,10 @@ export default function user({ selfMode = false }) {
 
 
     return (
-        <div className='flex relative flex-col grow max-w-full min-w-0 p-3 gap-3 '>
+        <div className='container flex bg-red-400  relative  grow  gap-3 '>
 
             <BlurLoading loading={loading} />
+            {(page == "createUser") && <CreateUser2 setParentLoading={setLoading} />}
 
             <NavigationMenu
                 page={page} setPage={(page) => { setLoading(true); setPage(page); }}
@@ -24,7 +25,7 @@ export default function user({ selfMode = false }) {
                 ]}
             />
 
-            {(page == "createUser") && <CreateUser2 setParentLoading={setLoading} />}
+
         </div >
     )
 }
