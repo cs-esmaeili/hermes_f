@@ -19,10 +19,11 @@ const Sidebar = ({ open, setOpen }) => {
 
   const information = useSelector((state) => state.information.value);
   const permissions = useSelector((state) => state.permissions.value);
-  permissions
+
   const allItems = [
     { name: "صفحه اصلی پنل", url: "/dashboard", icon: <Icon name={"dashboard"} className="w-8 h-8" /> },
     { name: "دسترسی ها", url: "/dashboard/role", icon: <Icon name={"permissions"} className="w-8 h-8" /> },
+    { name: "کاربران", url: "/dashboard/users", icon: <Icon name={"users"} className="w-8 h-8" /> },
   ];
 
   const [items, setItems] = useState([]);
