@@ -1,18 +1,22 @@
 import DivButton from '@/components/dashboard/DivButton';
 import Icon from "@/components/general/Icon";
 
-const NavigationMenu = ({ items, page, setPage }) => {
+const NavigationMenu = ({ items, page, setPage, containerClass = "" }) => {
     if (!items) {
         return null;
     }
     return (
-        <div className={`flex h-fit w-fit self-center p-5 gap-10 justify-end bg-primary rounded-xl ${process.env.NEXT_PUBLIC_DIRECTION}`}>
+        <div className={`flex h-fit w-full self-center gap-3 justify-end rounded-xl
+         ${process.env.NEXT_PUBLIC_DIRECTION}
+         ${containerClass}
+         `}>
+
             {items.map((item, index) => (
                 <DivButton
                     key={index}
-                    className={`gap-1 ${page === item.page && 'text-white bg-accent dark:bg-secondary'}`}
-                    onClick={() => setPage(item.page)}
-                >
+                    className={`transition duration-200 border-2 border-transparent hover:border-accent hover:border-opacity-75 hover:text-accent bg-primary rounded-lg 
+                        ${page === item.page && "text-accent border-2 !border-accent"}`}
+                    onClick={() => setPage(item.page)}>
                     <Icon name={item.icon} className="w-8 h-8" />
                     <span>{item.label}</span>
                 </DivButton>

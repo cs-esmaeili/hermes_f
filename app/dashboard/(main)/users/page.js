@@ -12,20 +12,23 @@ export default function user({ selfMode = false }) {
 
 
     return (
-        <div className='container flex bg-red-400  relative  grow  gap-3 '>
+        <div className=' flex relative grow gap-3 '>
 
             <BlurLoading loading={loading} />
-            {(page == "createUser") && <CreateUser2 setParentLoading={setLoading} />}
+            <div className='w-3/4'>
+                {(page == "createUser") && <CreateUser2 setParentLoading={setLoading} />}
+            </div>
 
-            <NavigationMenu
-                page={page} setPage={(page) => { setLoading(true); setPage(page); }}
-                items={[
-                    { page: "createUser", icon: "dashboard", label: "ساخت کاربر" },
-                    { page: "userList", icon: "dashboard", label: "لیست کاربران" },
-                ]}
-            />
-
-
+            <div className='w-1/4'>
+                <NavigationMenu
+                    page={page} setPage={(page) => { setLoading(true); setPage(page); }}
+                    containerClass={"flex-col pl-3"}
+                    items={[
+                        { page: "createUser", icon: "dashboard", label: "ساخت کاربر" },
+                        { page: "userList", icon: "dashboard", label: "لیست کاربران" },
+                    ]}
+                />
+            </div>
         </div >
     )
 }
