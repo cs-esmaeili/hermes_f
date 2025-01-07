@@ -38,7 +38,7 @@ function InputDatePicker({ icon, value, onChange, reset, length = 3 }) {
     }, [value]);
 
     return (
-        <div className='flex items-center gap-1 bg-primary rounded-md min-w-0'>
+        <div className='flex items-center gap-1 rounded-md min-w-0 bg-secondary p-1 w-full h-fit'>
             <div className='flex h-full items-center ml-1'>{icon}</div>
             <input
                 className='bg-transparent p-1 outline-none text-center min-w-0'

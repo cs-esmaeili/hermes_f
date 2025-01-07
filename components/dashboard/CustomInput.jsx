@@ -5,12 +5,13 @@ const CustomInput = ({
   leftLabelClassName,
   rightLabelClassName,
   inputClassName,
+  containerClassName,
   onLeftLabelClick,
   onRightLabelClick,
   ...inputProps
 }) => {
   return (
-    <div>
+    <div className={containerClassName}>
       <div className={`flex justify-between mb-1 ${!leftLabel ? 'justify-end' : ''}`}>
         {leftLabel && (
           <label
@@ -32,7 +33,7 @@ const CustomInput = ({
         )}
       </div>
       <input
-        className={`p-2 bg-primary rounded focus:outline-none focus:ring focus:ring-accent w-full
+        className={`p-2 bg-primary rounded-md focus:outline-none focus:ring focus:ring-accent w-full
           ${process.env.NEXT_PUBLIC_DIRECTION}
           ${inputClassName}`}
         {...inputProps}
