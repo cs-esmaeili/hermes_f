@@ -24,6 +24,7 @@ const Sidebar = ({ open, setOpen }) => {
     { name: "صفحه اصلی پنل", url: "/dashboard", icon: <Icon name={"dashboard"} className="w-8 h-8" /> },
     { name: "دسترسی ها", url: "/dashboard/role", icon: <Icon name={"permissions"} className="w-8 h-8" /> },
     { name: "کاربران", url: "/dashboard/users", icon: <Icon name={"users"} className="w-8 h-8" /> },
+    { name: "فایل ها", url: "/dashboard/filemanager", icon: <Icon name={"file"} className="w-8 h-8" /> },
   ];
 
   const [items, setItems] = useState([]);
@@ -60,7 +61,7 @@ const Sidebar = ({ open, setOpen }) => {
           : "fixed  right-[-100%] h-full z-30 min-w-max bg-primary p-3 duration-500 ease-in lg:static lg:flex overflow-hidden flex-col"
       }
     >
-      <div className="flex items-center justify-evenly min-w-[256px] mb-8">
+      <div className="flex items-center justify-evenly min-w-[256px] mb-4">
         <div className="flex  justify-center">
           <span className="ml-3 text-2xl "> {process.env.NEXT_PUBLIC_APP_NAME} </span>
         </div>

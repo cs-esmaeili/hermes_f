@@ -1,60 +1,39 @@
 'use client'
-import { PiKeyReturnBold, PiMagnifyingGlassBold } from 'react-icons/pi';
-import { TfiReload } from "react-icons/tfi";
-import { useState, useEffect } from 'react';
-import Delete from '@/components/dashboard/filemanager/Delete';
-import Upload from '@/components/dashboard/filemanager/Upload';
-import Rename from '@/components/dashboard/filemanager/Rename';
-import Folder from '@/components/dashboard/filemanager/Folder';
-import Files from '@/components/dashboard/filemanager/Files';
-import Input from '@/components/dashboard/Input';
-import translation from "@/translation/translation";
 
-export default function FileManager({ fileType = null, fileSelectListener }) {
+import CustomInput from "@/components/dashboard/CustomInput";
+import DivButton from "@/components/dashboard/DivButton"
+import Icon from "@/components/general/Icon";
 
-    const [path, setPath] = useState([]);
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [refreshList, setRefreshList] = useState(false);
-    const [baseUrl, setBaseUrl] = useState(null);
-    const { filemanagerPage } = translation.get('filemanagerPage');
-
-    useEffect(() => {
-        if (fileSelectListener != null && selectedFile != null && selectedFile.type != "folder") {
-            fileSelectListener({ baseUrl, file: selectedFile });
-        }
-    }, [selectedFile]);
+export default function FileManager() {
 
     return (
-        <div className='flex flex-col grow max-w-full'>
-            <div className='flex flex-wrap items-center bg-secondary rounded-xl m-1 p-2 '>
-                <div className='flex items-center grow basis-8 mb-2 gap-3 justify-center'>
-                    <TfiReload className="text-cyan-400 text-xl" onClick={() => {
-                        setRefreshList(!refreshList);
-                    }} />
-                    <PiKeyReturnBold className="text-purple-400 text-xl" onClick={() => {
-                        setPath(path.slice(0, -1));
-                    }} />
-                    <Delete path={path} file={(selectedFile) ? selectedFile : null} refreshList={() => setRefreshList(!refreshList)} />
-                    <Upload path={path} refreshList={() => setRefreshList(!refreshList)} />
-                    <Rename path={path} file={(selectedFile) ? selectedFile.name : null} refreshList={() => setRefreshList(!refreshList)} />
-                    <Folder path={path} refreshList={() => setRefreshList(!refreshList)} />
+        <div className='flex flex-col grow max-w-full gap-3'>
+            <div className="flex flex-col bg-primary rounded-md gap-3 p-3">
+                <div className="flex flex-row bg-secondary p-2">
+                    <CustomInput value={"/temp/test/"} inputClassName={"ltr"} />
                 </div>
-                <div className='flex grow basis-8 mb-2 justify-center mr-2 ml-2'>
-                    <span>
-                        {path == "" ? filemanagerPage.home : `${filemanagerPage.home} > ` + path.join(' > ')}
-                    </span>
+                <div className="flex flex-row  gap-3">
+                    <DivButton className={`bg-secondary !w-fit text-yellow-400 ${process.env.NEXT_PUBLIC_DIRECTION}`}>
+                        <Icon name={"addfolder"} className="w-8 h-8" />
+                        <span>ساخت پوشه</span>
+                    </DivButton>
+                    <DivButton className={`bg-secondary !w-fit text-teal-400 ${process.env.NEXT_PUBLIC_DIRECTION}`}>
+                        <Icon name={"edit"} className="w-8 h-8" />
+                        <span>تغییر نام</span>
+                    </DivButton>
+                    <DivButton className={`bg-secondary !w-fit text-red-400 ${process.env.NEXT_PUBLIC_DIRECTION}`}>
+                        <Icon name={"trash"} className="w-8 h-8" />
+                        <span>حذف</span>
+                    </DivButton>
+                    <DivButton className={`bg-secondary !w-fit text-blue-400 ${process.env.NEXT_PUBLIC_DIRECTION}`}>
+                        <Icon name={"uploadfile"} className="w-8 h-8" />
+                        <span>آپلود</span>
+                    </DivButton>
                 </div>
             </div>
-            <Files
-                selectedFile={selectedFile}
-                setSelectedFile={setSelectedFile}
-                setPath={setPath}
-                path={path}
-                fileType={fileType}
-                refreshList={refreshList}
-                setBaseUrl={setBaseUrl}
-                baseUrl={baseUrl}
-            />
+            <div className="flex flex-col rounded-md gap-3 p-3">
+                slam
+            </div>
         </div>
     )
 }
