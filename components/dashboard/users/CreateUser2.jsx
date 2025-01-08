@@ -3,6 +3,9 @@ import CustomInput from '../CustomInput';
 import { BsImage } from "react-icons/bs";
 import InputDatePicker from '../InputDatePicker';
 import { BsCake2 } from "react-icons/bs";
+import Lottie from "lottie-react";
+import Teacher from '@/animations/teacher.json';
+
 
 const CreateUser2 = ({ setParentLoading }) => {
 
@@ -26,7 +29,9 @@ const CreateUser2 = ({ setParentLoading }) => {
                     <BsImage className='text-5xl rounded' />
                 </div>
             </div>
-
+            <Lottie animationData={Teacher} />;
+            <div className={`bg  ${process.env.NEXT_PUBLIC_DIRECTION}`}>
+            </div>
             <div className='flex grow gap-5 justify-center items-end'>
                 <InputDatePicker icon={<BsCake2 />} />
                 <CustomInput rightLabel={"شماره شبا"} inputClassName={"bg-secondary"} containerClassName={"w-full"} />
