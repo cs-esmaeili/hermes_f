@@ -4,7 +4,8 @@ import { BsImage } from "react-icons/bs";
 import InputDatePicker from '../InputDatePicker';
 import { BsCake2 } from "react-icons/bs";
 import Lottie from "lottie-react";
-import Teacher from '@/animations/teacher.json';
+import Teacher from '@/assets/animations/teacher.json';
+import Company from '@/assets/animations/company.json';
 
 
 const CreateUser2 = ({ setParentLoading }) => {
@@ -29,7 +30,16 @@ const CreateUser2 = ({ setParentLoading }) => {
                     <BsImage className='text-5xl rounded' />
                 </div>
             </div>
-            <Lottie animationData={Teacher} />;
+            <div className='flex grow gap-3'>
+                <div className='w-1/2 flex flex-col bg-secondary rounded-lg p-3 justify-center items-center'>
+                    <Lottie animationData={Company} />
+                    <span>مدرس هستم</span>
+                </div>
+                <div className='w-1/2 flex flex-col bg-secondary rounded-lg p-3 justify-center items-center border-2 border-transparent hover:border-accent'>
+                    <Lottie animationData={Teacher} />
+                    <span>مدرس هستم</span>
+                </div>
+            </div>
             <div className={`bg  ${process.env.NEXT_PUBLIC_DIRECTION}`}>
             </div>
             <div className='flex grow gap-5 justify-center items-end'>
