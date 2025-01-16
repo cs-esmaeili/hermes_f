@@ -3,7 +3,7 @@ import axios from 'axios';
 import { store } from '../state/store';
 import { setlogOutTime } from '../state/logOutTime'; 
 
-const token = getCookie('token');
+const token = decodeURIComponent(getCookie('token'));
 if (token) axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
 axios.defaults.headers.post["Content-Type"] = "application/json";

@@ -5,7 +5,7 @@ import { getCookie } from 'cookies-next';
 let socket;
 
 export const initializeSocket = () => {
-    const token = getCookie('token');
+    const token = decodeURIComponent(getCookie('token'));
     if (!token) {
         console.error('No token available for socket connection');
         return;

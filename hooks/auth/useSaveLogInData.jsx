@@ -12,7 +12,7 @@ const useSaveLogInData = () => {
 
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         let expObj = { expires: new Date(new Date().getTime() + parseInt(sessionTime) * 60000) };
-        setCookie('token', encodeURIComponent(token), expObj);
+        setCookie('token', decodeURIComponent(token), expObj);
         setCookie('userName', userName, expObj);
         setCookie('sessionTime', sessionTime, expObj);
         dispatch(setlogOutTime(new Date().toISOString()));

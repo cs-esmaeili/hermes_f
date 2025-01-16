@@ -16,11 +16,12 @@ export default function FileManager() {
 
     const refreshList = async () => setUpdateList(!updateList);
 
+
     return (
         <div className='flex flex-col grow max-w-full gap-3  overflow-y-auto'>
             <div className="flex flex-col bg-primary rounded-md gap-3 p-3">
 
-                <Path path={path} setPath={setPath} />
+                <Path path={path} setPath={setPath} refreshList={refreshList} />
 
                 <div className="flex flex-col md:flex-row gap-3">
 
@@ -52,7 +53,7 @@ export default function FileManager() {
                 </div>
             </div>
 
-            <List folderPath={path} updateList={updateList} isPrivate={isPrivate} />
+            <List setPath={setPath} folderPath={path} updateList={updateList} isPrivate={isPrivate} refreshList={refreshList} />
         </div>
     )
 }
