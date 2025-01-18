@@ -44,7 +44,8 @@ export default function FileManager() {
                     <DivButton className={`bg-secondary  md:!w-fit ${isPrivate && "!bg-purple-500 text-white"} ${process.env.NEXT_PUBLIC_DIRECTION}`}
                         onClick={() => {
                             setIsPrivate(!isPrivate);
-                            setPath("");
+                            setPath([""]);
+                            refreshList();
                         }}>
                         <Icon name={"lock"} className="w-8 h-8" />
                         <span>مسیر ایمن</span>

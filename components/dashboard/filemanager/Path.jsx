@@ -7,6 +7,7 @@ const Path = ({ path, setPath, refreshList }) => {
         <div className="flex flex-row bg-secondary p-2 justify-center items-center gap-1">
             <DivButton className={`bg-primary !w-fit hover:text-accent border-2 border-transparent ${path[0] == "" && path.length == 1 && "!border-accent"}`} onClick={() => {
                 setPath([""]);
+                refreshList();
             }}>
                 <Icon name="dashboard" className='w-8 h-8' />
                 <span>خانه</span>
