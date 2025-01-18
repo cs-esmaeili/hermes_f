@@ -4,8 +4,8 @@ import { BsImage } from "react-icons/bs";
 import InputDatePicker from '../InputDatePicker';
 import { BsCake2 } from "react-icons/bs";
 import Lottie from "lottie-react";
-import Teacher from '@/assets/animations/teacher.json';
-import Company from '@/assets/animations/company.json';
+import Teacher from '@/public/assets/animations/teacher.json';
+import Company from '@/public/assets/animations/company.json';
 
 
 const CreateUser2 = ({ setParentLoading }) => {

@@ -49,10 +49,30 @@ export default function List({ folderPath, setPath, isPrivate, updateList, refre
                 openModal(<FileDetails file={file} />);
               }}>
                 <img
-                  src={`${process.env.NEXT_PUBLIC_API}file/${file._id}/${
-                    token
-                  }`}
+                  src={`${process.env.NEXT_PUBLIC_API}file/${file._id}/${token
+                    }`}
                   className="w-full h-full object-cover rounded-lg"
+                />
+              </div>
+            )}
+
+            {file.type === "file" && file.mimeType.includes("video") && (
+              <div className='w-full h-full' role='button' onClick={() => {
+                openModal(<FileDetails file={file} />);
+              }}>
+                <Icon
+                  name={"video"}
+                  className="w-full h-3/4 text-red-400"
+                />
+              </div>
+            )}
+            {file.type === "file" && typeof file.mimeType === "string" && !file.mimeType.includes("video") && !file.mimeType.includes("image") && (
+              <div className='w-full h-full' role='button' onClick={() => {
+                openModal(<FileDetails file={file} />);
+              }}>
+                <Icon
+                  name={"file"}
+                  className="w-full h-3/4 text-white"
                 />
               </div>
             )}

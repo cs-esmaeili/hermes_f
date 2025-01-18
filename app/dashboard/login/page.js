@@ -97,7 +97,7 @@ const LogIn = () => {
                             googleLogInCheckNeedRegisterRequest(data.email, token);
                         }}
                         />
-                        <div className='text-xs md:text-sm lg:text-xl'>
+                        <div className='text-xs md:text-sm lg:text-md px-3 opacity-75'>
                             <span>ورود شما به معنای پذیرش </span>
                             <Link href="/terms" className='text-accent'>قوانین</Link>
                             <span> و شرایط هرمس است </span>
