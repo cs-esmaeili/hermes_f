@@ -25,7 +25,7 @@ export default function FileManager() {
 
                 <div className="flex flex-col md:flex-row gap-3">
 
-                    <FolderCreate path={path} refreshList={refreshList} />
+                    <FolderCreate path={path} refreshList={refreshList} isPrivate={isPrivate} />
 
                     <DivButton className={`bg-secondary  md:!w-fit text-teal-400 ${process.env.NEXT_PUBLIC_DIRECTION}`}>
                         <Icon name={"edit"} className="w-8 h-8" />

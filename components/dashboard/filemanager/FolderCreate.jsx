@@ -2,9 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import CustomInput from '@/components/dashboard/CustomInput';
 import DivButton from "@/components/dashboard/DivButton";
 import Icon from "@/components/general/Icon";
+import useCreateFolder from "@/hooks/file/useCreateFolder";
 
-const FolderCreate = ({ refreshList }) => {
+const FolderCreate = ({ refreshList, path, isPrivate }) => {
+
     const [activeInput, setActiveInput] = useState(false);
+    const { CreateFolderRequest } = useCreateFolder(path, isPrivate, refreshList);
     const inputRef = useRef(null);
 
     useEffect(() => {
@@ -26,7 +29,9 @@ const FolderCreate = ({ refreshList }) => {
                     onBlur={() => setActiveInput(false)}
                     ref={inputRef}
                     onKeyDown={(e) => {
-                        if (e.key != "Enter") { return }
+                        if (e.key != "Enter") { 
+                            CreateFolderRequest
+                         }
                     }}
                 />
             ) : (
