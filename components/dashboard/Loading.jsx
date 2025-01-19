@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Loading = ({ size = "w-10 h-10", color = "border-gray-200", Loading = false }) => {
-    if (Loading) {
+const Loading = ({ size = "w-10 h-10", color = "border-gray-200", loading = false }) => {
+    if (loading) {
         return (
             <div className={`relative ${size} ${color}`}>
                 <div className="w-full h-full rounded-full absolute  border-4 border-solid border-gray-200"></div>

@@ -4,7 +4,7 @@ const ProgressBar = ({ progress }) => {
   return (
     <div className="shadow w-full bg-primary rounded-xl">
       <div
-        className="bg-green-400 text-xs leading-none py-1 text-center text-black rounded-xl"
+        className="bg-accent text-xs leading-none py-1 text-center text-textcolor rounded-xl"
         style={{ width: `${progress}%` }}
       >
         {`${progress}%`}

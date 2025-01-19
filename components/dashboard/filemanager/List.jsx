@@ -6,13 +6,14 @@ import Icon from "@/components/general/Icon";
 import { getCookie } from 'cookies-next';
 import Tooltip from '@/components/general/ToolTip';
 import { useModalContext } from '@/components/dashboard/Modal';
+import Loading from "@/components/dashboard/Loading";
 import FileDetails from './FileDetails';
 
-export default function List({ folderPath, setPath, isPrivate, updateList, refreshList }) {
+export default function List({ folderPath, setPath, isPrivate, updateList, refreshList, selectedFile, setSelectedFile }) {
 
   const [List, setList] = useState(null);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const { FileListRequest } = useFileList(folderPath, isPrivate, setList);
+  const [loading, setLoading] = useState(false);
+  const { FileListRequest } = useFileList(folderPath, isPrivate, setList, setLoading);
   const token = decodeURIComponent(getCookie('token'));
   const { openModal, closeModal } = useModalContext();
 
@@ -20,13 +21,29 @@ export default function List({ folderPath, setPath, isPrivate, updateList, refre
     FileListRequest();
   }, [updateList]);
 
+  useEffect(() => {
+    if (List && List.length > 0) {
+      setSelectedFile(List[0]);
+    }
+  }, [List]);
+
+  if (loading) {
+    return (
+      <div className='flex grow items-center justify-center' >
+        <Loading loading={true} size='h-20 w-20' />
+      </div>
+    );
+  }
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-      {List &&
+
+      {List && selectedFile &&
         List.map((file, index) => (
           <div
             key={index}
-            className={`relative bg-primary rounded-lg p-3 hover:shadow-md transition-shadow select-none cursor-pointer  border-2 border-transparent ${selectedIndex == index  && "!border-blue-200"}`}
+            className={`relative bg-primary rounded-lg p-3 hover:shadow-md transition-shadow select-none cursor-pointer  border-2 border-transparent
+               ${selectedFile.hostName == file.hostName && "!border-blue-200"}`
+            }
             role='button'
             onDoubleClick={() => {
               if (file.type === "folder") {
@@ -37,7 +54,7 @@ export default function List({ folderPath, setPath, isPrivate, updateList, refre
               }
             }}
             onClick={() => {
-              setSelectedIndex(index);
+              setSelectedFile(file);
             }}>
             {file.type === "folder" && (
               <div className='w-full'>
