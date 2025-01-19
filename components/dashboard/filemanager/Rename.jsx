@@ -3,6 +3,7 @@ import CustomInput from '@/components/dashboard/CustomInput';
 import DivButton from "@/components/dashboard/DivButton";
 import Icon from "@/components/general/Icon";
 import useRenameFolder from "@/hooks/file/useRenameFolder";
+import useRenameFile from "@/hooks/file/useRenameFile";
 
 const Rename = ({ file, path, isPrivate, refreshList }) => {
 
@@ -13,7 +14,8 @@ const Rename = ({ file, path, isPrivate, refreshList }) => {
         setNewName("");
         setActiveInput(false);
     });
-    
+    const { renameFileRequest } = useRenameFile(isPrivate, refreshList);
+
     const inputRef = useRef(null);
 
     useEffect(() => {
@@ -40,7 +42,11 @@ const Rename = ({ file, path, isPrivate, refreshList }) => {
                     ref={inputRef}
                     onKeyDown={(e) => {
                         if (e.key == "Enter") {
-                            renameFolderRequest(file.hostName || file.name, newName);
+                            if (file.type == "file") {
+                                renameFileRequest(file._id, newName);
+                            } else if (file.type == "folder") {
+                                renameFolderRequest(file.name, newName);
+                            }
                         }
                     }}
                 />
