@@ -42,7 +42,8 @@ export default function List({ folderPath, setPath, isPrivate, updateList, refre
           <div
             key={index}
             className={`relative bg-primary rounded-lg p-3 hover:shadow-md transition-shadow select-none cursor-pointer  border-2 border-transparent
-               ${selectedFile.hostName == file.hostName && "!border-blue-200"}`
+               ${(selectedFile.hostName || selectedFile.name) === (file.hostName || file.name)
+                && "!border-blue-200"}`
             }
             role='button'
             onDoubleClick={() => {

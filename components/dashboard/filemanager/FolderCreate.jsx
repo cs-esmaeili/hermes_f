@@ -29,9 +29,10 @@ const FolderCreate = ({ refreshList, path, isPrivate }) => {
                     onBlur={() => setActiveInput(false)}
                     ref={inputRef}
                     onKeyDown={(e) => {
-                        if (e.key != "Enter") { 
-                            CreateFolderRequest
-                         }
+                        if (e.key == "Enter") {
+                            CreateFolderRequest(e.target.value);
+                            inputRef.current.value = "";
+                        }
                     }}
                 />
             ) : (
