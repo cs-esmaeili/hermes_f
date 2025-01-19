@@ -8,6 +8,7 @@ import List from "@/components/dashboard/filemanager/List";
 import FolderCreate from "@/components/dashboard/filemanager/FolderCreate";
 import Upload from "@/components/dashboard/filemanager/Upload";
 import Delete from "@/components/dashboard/filemanager/Delete";
+import Rename from '@/components/dashboard/filemanager/Rename';
 
 
 export default function FileManager() {
@@ -16,7 +17,7 @@ export default function FileManager() {
     const [updateList, setUpdateList] = useState(false);
     const [isPrivate, setIsPrivate] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
- 
+
 
     const refreshList = async () => setUpdateList(!updateList);
 
@@ -31,10 +32,8 @@ export default function FileManager() {
 
                     <FolderCreate path={path} refreshList={refreshList} isPrivate={isPrivate} />
 
-                    <DivButton className={`bg-secondary  md:!w-fit text-teal-400 ${process.env.NEXT_PUBLIC_DIRECTION}`}>
-                        <Icon name={"edit"} className="w-8 h-8" />
-                        <span>تغییر نام</span>
-                    </DivButton>
+                    <Rename file={selectedFile} path={path} isPrivate={isPrivate} refreshList={refreshList} />
+
                     <Delete isPrivate={isPrivate} refreshList={refreshList} selectedFile={selectedFile} />
                     <Upload folderPath={path} isPrivate={isPrivate} refreshList={refreshList} />
                     <DivButton className={`bg-secondary  md:!w-fit ${isPrivate && "!bg-purple-500 text-white"} ${process.env.NEXT_PUBLIC_DIRECTION}`}

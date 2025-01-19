@@ -22,9 +22,9 @@ const useUploadFile = (folderPath, isPrivate, setPersent, refreshList) => {
         } catch (error) {
             console.log(error);
             if (error?.response?.data?.message) {
-                setError(error.response.data.message);
+                toast.error(error.response.data.message);
             } else {
-                setError(translation.get('someThingIsWrong'));
+                toast.error(translation.get('someThingIsWrong'));
             }
             setPersent(0);
         }

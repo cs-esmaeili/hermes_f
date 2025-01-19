@@ -5,8 +5,11 @@ const prefixUrl = `${process.env.NEXT_PUBLIC_API}file`
 export const deleteFile = (data) => {
     return http.post(`${prefixUrl}/deleteFile`, JSON.stringify(data));
 };
-export const rename = (data) => {
-    return http.post(`${prefixUrl}/rename`, JSON.stringify(data));
+export const renameFolder = (data) => {
+    return http.post(`${prefixUrl}/renameFolder`, JSON.stringify(data));
+};
+export const renameFile = (data) => {
+    return http.post(`${prefixUrl}/renameFile`, JSON.stringify(data));
 };
 export const createFolder = (data) => {
     return http.post(`${prefixUrl}/createFolder`, JSON.stringify(data));
