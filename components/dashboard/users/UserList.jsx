@@ -3,12 +3,10 @@ import { userList as RuserList } from '@/services/User';
 import toast from 'react-hot-toast';
 import Table from '@/components/dashboard/Table';
 import Pagination from '@/components/dashboard/Pagination';
-import { FaUserLock } from "react-icons/fa6";
 import { BiSolidEdit } from 'react-icons/bi';
-import { MdQueryStats } from "react-icons/md";
 import translation from "@/translation/translation";
 
-const UserList = ({ editData, setEditData, refreshList }) => {
+const UserList = ({ editData, setEditData, refreshList, setParentLoading }) => {
 
     const [users, setUsers] = useState(null);
     const [usersCount, setUsersCount] = useState(null);
@@ -20,7 +18,7 @@ const UserList = ({ editData, setEditData, refreshList }) => {
         try {
             const { data } = await RuserList({ page: activePage, perPage });
             const { usersCount, users } = data;
-
+            setParentLoading(false);
             setUsers(users);
             setUsersCount(usersCount);
         } catch (error) {
@@ -44,27 +42,15 @@ const UserList = ({ editData, setEditData, refreshList }) => {
                         headers={[userlist.userName, userlist.role, userlist.fullName]}
                         rowsData={[, "userName", "role_id.name", "data.fullName"]}
                         rows={users}
-                        headerClasses={["", "", "", ""]}
                         rowClasses={(row, rowIndex) => {
-                            return "";
+                            return "bg-primary";
                         }}
                         cellClasses={(cell, cellIndex, row, rowIndex) => {
                             return cell == "ارسال شده" && "text-green-400";
                         }}
-                        columnVisibilityClasses={[
-                            "",
-                            "",
-                            ""
-                        ]}
                         actionComponent={({ rowData, rowIndex }) => {
                             return (
                                 <div className="flex h-full items-center justify-center gap-2 text-nowrap">
-                                    {/* <FaUserLock className='text-xl ml-4 text-red-400' onClick={() => {
-
-                                    }} />
-                                    <MdQueryStats className='text-xl ml-4 text-yellow-400' onClick={() => {
-
-                                    }} /> */}
                                     <BiSolidEdit className='text-xl ml-4 text-blue-400' onClick={() => {
                                         setEditData(rowData);
                                     }} />

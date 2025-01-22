@@ -14,7 +14,7 @@ const Table = ({
     columnVisibilityClasses = [],
     rowCountstart,
     selectListener,
-    dataModifier // Add dataModifier prop
+    dataModifier 
 }) => {
     return (
         <div className="overflow-x-auto w-full">
@@ -41,14 +41,13 @@ const Table = ({
                         return (
                             <tr
                                 key={rowIndex}
-                                className={`${rowIndex % 2 === 1 ? "bg-secondary" : ""} ${rowClass}`}
+                                className={`${rowIndex % 2 === 1 ? "bg-primary" : ""} ${rowClass}`}
                                 onClick={(e) => { (selectListener) && selectListener(row, rowIndex) }}
                             >
                                 <td className="p-2 text-center">{rowIndex + 1 + (rowCountstart != null ? rowCountstart : 0)}</td>
                                 {rowsData.map((key, headerIndex) => {
                                     let cellData = getNestedValue(row, key);
                                     
-                                    // Apply dataModifier if defined
                                     if (dataModifier) {
                                         cellData = dataModifier(cellData, headerIndex, rowIndex);
                                     }
