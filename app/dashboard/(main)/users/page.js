@@ -5,13 +5,11 @@ import NavigationMenu from '@/components/dashboard/NavigationMenu';
 import BlurLoading from '@/components/dashboard/BlurLoading';
 import CreateUser2 from '@/components/dashboard/users/CreateUser2';
 
-export default function user({ selfMode = false }) {
-
+export default function user() {
 
     const [page, setPage] = useState("createUser");
     const [loading, setLoading] = useState(false);
     const scrollbarRef = useRef();
-
 
 
     return (

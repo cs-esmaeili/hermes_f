@@ -16,7 +16,6 @@ const useDeleteFile = (refreshList) => {
             } else {
                 toast.error(translation.get('someThingIsWrong'));
             }
-            setPersent(0);
         }
     };
 
