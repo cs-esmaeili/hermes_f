@@ -84,11 +84,11 @@ export default function Roles({ setCurrentRole, setAllpermissions, updateList, s
                                     }}>
                                     {role.name}
                                 </div>
-                                {toggleButtons(index)}
+                                {!selectMode && toggleButtons(index)}
                             </div>
                         )
                     })}
-                {deleteMode == -1 &&
+                {deleteMode == -1 && !selectMode &&
                     <Add resetAllData={resetAllData} roleList={roleListRequest} />
                 }
             </div>

@@ -12,13 +12,16 @@ import CustomImage from "../CustomImage";
 import useChangeAvatar from "@/hooks/user/useChangeAvatar";
 import useUpdateUserData from "@/hooks/user/useUpdateUserData";
 import useUserInformation from "@/hooks/user/useUserInformation";
+import { useModalContext } from '@/components/dashboard/Modal';
+import Roles from "@/components/dashboard/role/Roles";
 import { ImCross } from "react-icons/im";
 import DivButton from "../DivButton";
 import { useSelector } from 'react-redux';
 
 const CreateUser = ({ setParentLoading, scrollbarRef, setSelectedUser, selectedUser }) => {
-    
+
     const [userType, setUserType] = useState('normal');
+    const { openModal, closeModal } = useModalContext();
     const pickFileRef = useRef(null);
 
     const userData = useSelector((state) => state.information.value.data);
@@ -45,6 +48,9 @@ const CreateUser = ({ setParentLoading, scrollbarRef, setSelectedUser, selectedU
     const [twitter, setTwitter] = useState(priorityData?.twitter || "");
     const [address, setAddress] = useState(priorityData?.address || "");
     const [biography, setBiography] = useState(priorityData?.biography || "");
+
+    const [role, setRole] = useState(selectedUser?.role_id || "");
+
 
     const { userInformationRequest } = useUserInformation(selectedUser?._id, setSelectedUser);
     const { updateUserDataRequest } = useUpdateUserData(selectedUser?._id, () => {
@@ -90,6 +96,8 @@ const CreateUser = ({ setParentLoading, scrollbarRef, setSelectedUser, selectedU
             setTwitter(data?.twitter || "");
             setAddress(data?.address || "");
             setBiography(data?.biography || "");
+
+            setRole(selectedUser?.role_id  || "");
         }
     }, [selectedUser, userData]);
 
@@ -122,6 +130,16 @@ const CreateUser = ({ setParentLoading, scrollbarRef, setSelectedUser, selectedU
                     <CustomInput rightLabel={"کد ملی"} inputClassName={"bg-secondary"} value={nationalCode} onChange={(e) => { setNationalCode(e.target.value) }} />
                     <CustomInput rightLabel={"نام پدر"} inputClassName={"bg-secondary"} containerClassName={"w-full"} value={fatherName} onChange={(e) => { setFatherName(e.target.value) }} />
                     <InputDatePicker icon={<BsCake2 />} value={birthday} onChange={(time) => setBirthday(time)} />
+                    {selectedUser &&
+                        <DivButton className="bg-red-500 items-end justify-center" onClick={() => {
+                            openModal(<Roles selectMode listener={(newRole) => {
+                                setRole(newRole);
+                                closeModal();
+                            }} />)
+                        }}>
+                            <span>{role.name}</span>
+                        </DivButton>
+                    }
                 </div>
                 <div className='flex items-center justify-center bg-secondary w-full md:w-2/6 py-10 md:p-5 xl:p-10 rounded-md'>
                     <PickFile ref={pickFileRef} fileSelectListener={(file) => {
@@ -247,6 +265,7 @@ const CreateUser = ({ setParentLoading, scrollbarRef, setSelectedUser, selectedU
             }
             <DivButton className="bg-green-500 text-textcolor w-full flex justify-center items-center" onClick={() => {
                 updateUserDataRequest({
+                    role_id: role._id,
                     address, fullName, nationalCode, birthday, shebaNumber, cardNumber
                     , fatherName, companyName, economicCode, registrationNumber, postalCode
                     , ostan, shahr, github, linkedin, telegram, instagram, twitter, biography
