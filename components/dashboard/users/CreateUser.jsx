@@ -11,45 +11,51 @@ import PickFile from "../PickFile";
 import CustomImage from "../CustomImage";
 import useChangeAvatar from "@/hooks/user/useChangeAvatar";
 import useUpdateUserData from "@/hooks/user/useUpdateUserData";
+import useCreateUser from "@/hooks/user/useCreateUser";
 import useUserInformation from "@/hooks/user/useUserInformation";
 import { useModalContext } from '@/components/dashboard/Modal';
 import Roles from "@/components/dashboard/role/Roles";
 import { ImCross } from "react-icons/im";
 import DivButton from "../DivButton";
-import { useSelector } from 'react-redux';
 
-const CreateUser = ({ setParentLoading, scrollbarRef, setSelectedUser, selectedUser }) => {
+const CreateUser = ({ setParentLoading, scrollbarRef, setSelectedUser, selectedUser, isAdmin }) => {
 
     const [userType, setUserType] = useState('normal');
+
     const { openModal, closeModal } = useModalContext();
     const pickFileRef = useRef(null);
 
-    const userData = useSelector((state) => state.information.value.data);
 
-    const priorityData = selectedUser?.data || userData;
-
-    const [file, setFile] = useState(priorityData?.image?.url || null);
-    const [fullName, setFullName] = useState(priorityData?.fullName || "");
-    const [nationalCode, setNationalCode] = useState(priorityData?.nationalCode || "");
-    const [birthday, setBirthday] = useState(priorityData?.birthday || "");
-    const [shebaNumber, setShebaNumber] = useState(priorityData?.shebaNumber || "");
-    const [cardNumber, setCardNumber] = useState(priorityData?.cardNumber || "");
-    const [fatherName, setFatherName] = useState(priorityData?.fatherName || "");
-    const [companyName, setCompanyName] = useState(priorityData?.companyName || "");
-    const [economicCode, setEconomicCode] = useState(priorityData?.economicCode || "");
-    const [registrationNumber, setRegistrationNumber] = useState(priorityData?.registrationNumber || "");
-    const [postalCode, setPostalCode] = useState(priorityData?.postalCode || "");
-    const [ostan, setOstan] = useState(priorityData?.ostan || "");
-    const [shahr, setShahr] = useState(priorityData?.shahr || "");
-    const [github, setGithub] = useState(priorityData?.github || "");
-    const [linkedin, setLinkedin] = useState(priorityData?.linkedin || "");
-    const [telegram, setTelegram] = useState(priorityData?.telegram || "");
-    const [instagram, setInstagram] = useState(priorityData?.instagram || "");
-    const [twitter, setTwitter] = useState(priorityData?.twitter || "");
-    const [address, setAddress] = useState(priorityData?.address || "");
-    const [biography, setBiography] = useState(priorityData?.biography || "");
-
+    const [phoneNumber, setPhoneNumber] = useState(selectedUser?.userName || "");
+    const [email, setEmail] = useState(selectedUser?.email || "");
+    const [password, setPassword] = useState("");
     const [role, setRole] = useState(selectedUser?.role_id || "");
+
+    const userData = selectedUser?.data;
+    const [fullName, setFullName] = useState(userData?.fullName || "");
+    const [nationalCode, setNationalCode] = useState(userData?.nationalCode || "");
+    const [birthday, setBirthday] = useState(userData?.birthday || "");
+    const [shebaNumber, setShebaNumber] = useState(userData?.shebaNumber || "");
+    const [cardNumber, setCardNumber] = useState(userData?.cardNumber || "");
+    const [fatherName, setFatherName] = useState(userData?.fatherName || "");
+    const [companyName, setCompanyName] = useState(userData?.companyName || "");
+    const [economicCode, setEconomicCode] = useState(userData?.economicCode || "");
+    const [registrationNumber, setRegistrationNumber] = useState(userData?.registrationNumber || "");
+    const [postalCode, setPostalCode] = useState(userData?.postalCode || "");
+    const [ostan, setOstan] = useState(userData?.ostan || "");
+    const [shahr, setShahr] = useState(userData?.shahr || "");
+    const [github, setGithub] = useState(userData?.github || "");
+    const [linkedin, setLinkedin] = useState(userData?.linkedin || "");
+    const [telegram, setTelegram] = useState(userData?.telegram || "");
+    const [instagram, setInstagram] = useState(userData?.instagram || "");
+    const [twitter, setTwitter] = useState(userData?.twitter || "");
+    const [address, setAddress] = useState(userData?.address || "");
+    const [biography, setBiography] = useState(userData?.biography || "");
+    const [file, setFile] = useState(userData?.image?.url || null);
+
+
+
+    const { createUserRequest } = useCreateUser(selectedUser?._id);
 
 
     const { userInformationRequest } = useUserInformation(selectedUser?._id, setSelectedUser);
@@ -74,32 +80,36 @@ const CreateUser = ({ setParentLoading, scrollbarRef, setSelectedUser, selectedU
     }, []);
 
     useEffect(() => {
-        if (selectedUser || userData) {
-            const data = selectedUser?.data || userData;
-            setFile(data?.image?.url || null);
-            setFullName(data?.fullName || "");
-            setNationalCode(data?.nationalCode || "");
-            setBirthday(data?.birthday || "");
-            setShebaNumber(data?.shebaNumber || "");
-            setCardNumber(data?.cardNumber || "");
-            setFatherName(data?.fatherName || "");
-            setCompanyName(data?.companyName || "");
-            setEconomicCode(data?.economicCode || "");
-            setRegistrationNumber(data?.registrationNumber || "");
-            setPostalCode(data?.postalCode || "");
-            setOstan(data?.ostan || "");
-            setShahr(data?.shahr || "");
-            setGithub(data?.github || "");
-            setLinkedin(data?.linkedin || "");
-            setTelegram(data?.telegram || "");
-            setInstagram(data?.instagram || "");
-            setTwitter(data?.twitter || "");
-            setAddress(data?.address || "");
-            setBiography(data?.biography || "");
 
-            setRole(selectedUser?.role_id  || "");
-        }
-    }, [selectedUser, userData]);
+        setRole(selectedUser?.role_id || "");
+        setPhoneNumber(selectedUser?.userName || "");
+        setEmail(selectedUser?.email || "");
+        setPassword("");
+
+        const data = selectedUser?.data;
+        setFile(data?.image?.url || null);
+        setFullName(data?.fullName || "");
+        setNationalCode(data?.nationalCode || "");
+        setBirthday(data?.birthday || "");
+        setShebaNumber(data?.shebaNumber || "");
+        setCardNumber(data?.cardNumber || "");
+        setFatherName(data?.fatherName || "");
+        setCompanyName(data?.companyName || "");
+        setEconomicCode(data?.economicCode || "");
+        setRegistrationNumber(data?.registrationNumber || "");
+        setPostalCode(data?.postalCode || "");
+        setOstan(data?.ostan || "");
+        setShahr(data?.shahr || "");
+        setGithub(data?.github || "");
+        setLinkedin(data?.linkedin || "");
+        setTelegram(data?.telegram || "");
+        setInstagram(data?.instagram || "");
+        setTwitter(data?.twitter || "");
+        setAddress(data?.address || "");
+        setBiography(data?.biography || "");
+
+
+    }, [selectedUser]);
 
     function isValidUrl(string) {
         try {
@@ -126,41 +136,55 @@ const CreateUser = ({ setParentLoading, scrollbarRef, setSelectedUser, selectedU
             }
             <div className='flex flex-col-reverse md:flex-row grow gap-5'  >
                 <div className='flex flex-col w-full md:w-4/6 gap-3'>
+
+                    {(isAdmin || !selectedUser) && <>
+                        <CustomInput rightLabel={"شماره تلفن (نام کاربری)"} inputClassName={"bg-secondary"} value={phoneNumber} onChange={(e) => { setPhoneNumber(e.target.value) }} />
+                        <CustomInput rightLabel={"ایمیل"} inputClassName={"bg-secondary"} value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                    </>}
+
+
+                    <CustomInput rightLabel={"رمز عبور"} inputClassName={"bg-secondary"} value={password} onChange={(e) => { setPassword(e.target.value) }} />
                     <CustomInput rightLabel={"نام و نام خانوادگی (فارسی)"} inputClassName={"bg-secondary"} value={fullName} onChange={(e) => { setFullName(e.target.value) }} />
                     <CustomInput rightLabel={"کد ملی"} inputClassName={"bg-secondary"} value={nationalCode} onChange={(e) => { setNationalCode(e.target.value) }} />
                     <CustomInput rightLabel={"نام پدر"} inputClassName={"bg-secondary"} containerClassName={"w-full"} value={fatherName} onChange={(e) => { setFatherName(e.target.value) }} />
                     <InputDatePicker icon={<BsCake2 />} value={birthday} onChange={(time) => setBirthday(time)} />
-                    {selectedUser &&
+                    {(isAdmin || !selectedUser) &&
                         <DivButton className="bg-red-500 items-end justify-center" onClick={() => {
                             openModal(<Roles selectMode listener={(newRole) => {
                                 setRole(newRole);
                                 closeModal();
                             }} />)
                         }}>
-                            <span>{role.name}</span>
+                            <span>{role.name || "انتخاب نقش"}</span>
                         </DivButton>
                     }
                 </div>
-                <div className='flex items-center justify-center bg-secondary w-full md:w-2/6 py-10 md:p-5 xl:p-10 rounded-md'>
-                    <PickFile ref={pickFileRef} fileSelectListener={(file) => {
-                        setFile(file);
-                    }} />
-
-                    {file ?
-                        <div className="relative">
-                            <CustomImage src={(isValidUrl(file)) ? file : URL.createObjectURL(file)} width={200} height={200} onClick={() => {
-                                pickFileRef.current.openFilePicker();
+                <div className={`flex items-center justify-center bg-secondary w-full md:w-2/6 py-10 md:p-5 xl:p-10 rounded-md ${!selectedUser && "opacity-25"}`} >
+                    {selectedUser ?
+                        <>
+                            <PickFile ref={pickFileRef} fileSelectListener={(file) => {
+                                setFile(file);
                             }} />
-                            <DivButton className="flex w-full items-center justify-center bg-purple-500 mt-3" onClick={() => {
-                                changeAvatarRequest(file);
-                            }}>
-                                ثبت
-                            </DivButton>
-                        </div>
+
+                            {file ?
+                                <div className="relative">
+                                    <CustomImage src={(isValidUrl(file)) ? file : URL.createObjectURL(file)} width={200} height={200} onClick={() => {
+                                        pickFileRef.current.openFilePicker();
+                                    }} />
+                                    <DivButton className="flex w-full items-center justify-center bg-purple-500 mt-3" onClick={() => {
+                                        changeAvatarRequest(file);
+                                    }}>
+                                        ثبت
+                                    </DivButton>
+                                </div>
+                                :
+                                <BsImage className='text-5xl rounded' onClick={() => {
+                                    pickFileRef.current.openFilePicker();
+                                }} />
+                            }
+                        </>
                         :
-                        <BsImage className='text-5xl rounded' onClick={() => {
-                            pickFileRef.current.openFilePicker();
-                        }} />
+                        <BsImage className='text-5xl rounded' />
                     }
                 </div>
             </div>
@@ -263,15 +287,30 @@ const CreateUser = ({ setParentLoading, scrollbarRef, setSelectedUser, selectedU
                     </div>
                 </>
             }
-            <DivButton className="bg-green-500 text-textcolor w-full flex justify-center items-center" onClick={() => {
-                updateUserDataRequest({
-                    role_id: role._id,
-                    address, fullName, nationalCode, birthday, shebaNumber, cardNumber
-                    , fatherName, companyName, economicCode, registrationNumber, postalCode
-                    , ostan, shahr, github, linkedin, telegram, instagram, twitter, biography
-                });
+            <DivButton className={`${selectedUser ? "bg-green-500" : "bg-orange-500"} text-textcolor w-full flex justify-center items-center`} onClick={() => {
+                if (selectedUser) {
+                    updateUserDataRequest({
+                        role_id: role._id,
+                        userName: phoneNumber,
+                        email,
+                        password,
+                        address, fullName, nationalCode, birthday, shebaNumber, cardNumber
+                        , fatherName, companyName, economicCode, registrationNumber, postalCode
+                        , ostan, shahr, github, linkedin, telegram, instagram, twitter, biography
+                    });
+                } else {
+                    createUserRequest({
+                        role_id: role._id,
+                        userName: phoneNumber,
+                        email,
+                        password,
+                        address, fullName, nationalCode, birthday, shebaNumber, cardNumber
+                        , fatherName, companyName, economicCode, registrationNumber, postalCode
+                        , ostan, shahr, github, linkedin, telegram, instagram, twitter, biography
+                    });
+                }
             }}>
-                ثبت
+                {selectedUser ? "ثبت" : "ساخت کاربر"}
             </DivButton>
         </div>
     );

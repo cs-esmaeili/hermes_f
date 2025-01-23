@@ -20,6 +20,10 @@ export const updateUserData = (data) => {
     return http.post(`${prefixUrl}/updateUserData`, JSON.stringify(data));
 };
 
+export const createUser = (data) => {
+    return http.post(`${prefixUrl}/createUser`, JSON.stringify(data));
+};
+
 export const changeAvatar = (data, uploadLisener) => {
     return http.post(`${prefixUrl}/changeAvatar`, data, {
         onUploadProgress: function (progressEvent) {
