@@ -12,50 +12,52 @@ import CustomImage from "../CustomImage";
 import useChangeAvatar from "@/hooks/user/useChangeAvatar";
 import useUpdateUserData from "@/hooks/user/useUpdateUserData";
 import useUserInformation from "@/hooks/user/useUserInformation";
+import { ImCross } from "react-icons/im";
 import DivButton from "../DivButton";
 import { useSelector } from 'react-redux';
 
-const CreateUser = ({ setParentLoading, scrollbarRef }) => {
-
+const CreateUser = ({ setParentLoading, scrollbarRef, setSelectedUser, selectedUser }) => {
+    
     const [userType, setUserType] = useState('normal');
     const pickFileRef = useRef(null);
 
-
     const userData = useSelector((state) => state.information.value.data);
-    const [file, setFile] = useState(userData?.image?.url || null);
-    const [fullName, setFullName] = useState(userData.fullName || "");
-    const [nationalCode, setNationalCode] = useState(userData.nationalCode || "");
-    const [birthday, setBirthday] = useState(userData.birthday || "");
-    const [shebaNumber, setShebaNumber] = useState(userData.shebaNumber || "");
-    const [cardNumber, setCardNumber] = useState(userData.cardNumber || "");
-    const [fatherName, setFatherName] = useState(userData.fatherName || "");
-    const [companyName, setCompanyName] = useState(userData.companyName || "");
-    const [economicCode, setEconomicCode] = useState(userData.economicCode || "");
-    const [registrationNumber, setRegistrationNumber] = useState(userData.registrationNumber || "");
-    const [postalCode, setPostalCode] = useState(userData.postalCode || "");
-    const [ostan, setOstan] = useState(userData.ostan || "");
-    const [shahr, setShahr] = useState(userData.shahr || "");
-    const [github, setGithub] = useState(userData.github || "");
-    const [linkedin, setLinkedin] = useState(userData.linkedin || "");
-    const [telegram, setTelegram] = useState(userData.telegram || "");
-    const [instagram, setInstagram] = useState(userData.instagram || "");
-    const [twitter, setTwitter] = useState(userData.twitter || "");
-    const [address, setAddress] = useState(userData.address || "");
-    const [biography, setBiography] = useState(userData.biography || "");
 
+    const priorityData = selectedUser?.data || userData;
 
-    const { userInformationRequest } = useUserInformation();
+    const [file, setFile] = useState(priorityData?.image?.url || null);
+    const [fullName, setFullName] = useState(priorityData?.fullName || "");
+    const [nationalCode, setNationalCode] = useState(priorityData?.nationalCode || "");
+    const [birthday, setBirthday] = useState(priorityData?.birthday || "");
+    const [shebaNumber, setShebaNumber] = useState(priorityData?.shebaNumber || "");
+    const [cardNumber, setCardNumber] = useState(priorityData?.cardNumber || "");
+    const [fatherName, setFatherName] = useState(priorityData?.fatherName || "");
+    const [companyName, setCompanyName] = useState(priorityData?.companyName || "");
+    const [economicCode, setEconomicCode] = useState(priorityData?.economicCode || "");
+    const [registrationNumber, setRegistrationNumber] = useState(priorityData?.registrationNumber || "");
+    const [postalCode, setPostalCode] = useState(priorityData?.postalCode || "");
+    const [ostan, setOstan] = useState(priorityData?.ostan || "");
+    const [shahr, setShahr] = useState(priorityData?.shahr || "");
+    const [github, setGithub] = useState(priorityData?.github || "");
+    const [linkedin, setLinkedin] = useState(priorityData?.linkedin || "");
+    const [telegram, setTelegram] = useState(priorityData?.telegram || "");
+    const [instagram, setInstagram] = useState(priorityData?.instagram || "");
+    const [twitter, setTwitter] = useState(priorityData?.twitter || "");
+    const [address, setAddress] = useState(priorityData?.address || "");
+    const [biography, setBiography] = useState(priorityData?.biography || "");
 
-    const { changeAvatarRequest } = useChangeAvatar(() => {
-        setFile(null);
+    const { userInformationRequest } = useUserInformation(selectedUser?._id, setSelectedUser);
+    const { updateUserDataRequest } = useUpdateUserData(selectedUser?._id, () => {
         userInformationRequest();
     });
-    const { updateUserDataRequest } = useUpdateUserData(() => {
+
+    const { changeAvatarRequest } = useChangeAvatar(selectedUser?._id, () => {
+        setFile(null);
         userInformationRequest();
     });
 
     useEffect(() => {
-        if (userType != "normal") {
+        if (userType !== "normal") {
             scrollbarRef.current.scrollTop = scrollbarRef.current.scrollHeight;
         }
     }, [userType]);
@@ -66,30 +68,30 @@ const CreateUser = ({ setParentLoading, scrollbarRef }) => {
     }, []);
 
     useEffect(() => {
-        if (userData) {
-            setFile(userData?.image?.url || null);
-
-            setFullName(userData.fullName || "");
-            setNationalCode(userData.nationalCode || "");
-            setBirthday(userData.birthday || "");
-            setShebaNumber(userData.shebaNumber || "");
-            setCardNumber(userData.cardNumber || "");
-            setFatherName(userData.fatherName || "");
-            setCompanyName(userData.companyName || "");
-            setEconomicCode(userData.economicCode || "");
-            setRegistrationNumber(userData.registrationNumber || "");
-            setPostalCode(userData.postalCode || "");
-            setOstan(userData.ostan || "");
-            setShahr(userData.shahr || "");
-            setGithub(userData.github || "");
-            setLinkedin(userData.linkedin || "");
-            setTelegram(userData.telegram || "");
-            setInstagram(userData.instagram || "");
-            setTwitter(userData.twitter || "");
-            setAddress(userData.address || "");
-            setBiography(userData.biography || "");
+        if (selectedUser || userData) {
+            const data = selectedUser?.data || userData;
+            setFile(data?.image?.url || null);
+            setFullName(data?.fullName || "");
+            setNationalCode(data?.nationalCode || "");
+            setBirthday(data?.birthday || "");
+            setShebaNumber(data?.shebaNumber || "");
+            setCardNumber(data?.cardNumber || "");
+            setFatherName(data?.fatherName || "");
+            setCompanyName(data?.companyName || "");
+            setEconomicCode(data?.economicCode || "");
+            setRegistrationNumber(data?.registrationNumber || "");
+            setPostalCode(data?.postalCode || "");
+            setOstan(data?.ostan || "");
+            setShahr(data?.shahr || "");
+            setGithub(data?.github || "");
+            setLinkedin(data?.linkedin || "");
+            setTelegram(data?.telegram || "");
+            setInstagram(data?.instagram || "");
+            setTwitter(data?.twitter || "");
+            setAddress(data?.address || "");
+            setBiography(data?.biography || "");
         }
-    }, [userData]);
+    }, [selectedUser, userData]);
 
     function isValidUrl(string) {
         try {
@@ -102,6 +104,18 @@ const CreateUser = ({ setParentLoading, scrollbarRef }) => {
 
     return (
         <div className='flex flex-col grow h-fit overflow-hidden gap-3 bg-primary rounded-xl p-5'>
+            {selectedUser &&
+                <div className="flex justify-between bg-orange-400 p-3 rounded-md">
+                    <div className="flex grow items-center">
+                        {`User : ${selectedUser._id}`}
+                    </div>
+                    <DivButton className="flex items-center !w-fit" onClick={() => {
+                        setSelectedUser(null);
+                    }}>
+                        <ImCross className="text-textcolor" />
+                    </DivButton>
+                </div>
+            }
             <div className='flex flex-col-reverse md:flex-row grow gap-5'  >
                 <div className='flex flex-col w-full md:w-4/6 gap-3'>
                     <CustomInput rightLabel={"نام و نام خانوادگی (فارسی)"} inputClassName={"bg-secondary"} value={fullName} onChange={(e) => { setFullName(e.target.value) }} />

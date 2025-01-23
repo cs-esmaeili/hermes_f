@@ -6,16 +6,21 @@ import { setPermissions } from '@/state/permissions';
 import { setinformation } from '@/state/information';
 
 
-const useUserInformation = () => {
+const useUserInformation = (user_id, setSelectedUser) => {
     const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong', 'permissions']);
     const dispatch = useDispatch();
 
-    const userInformationRequest = async (user_id) => {
+    const userInformationRequest = async () => {
         try {
-            
-            const { data } = await userInformation(user_id);
+
+            const { data } = await userInformation({ user_id });
             const { permissions, information } = data;
-            
+
+            if (user_id) {
+                setSelectedUser(information);
+                return;
+            }
+
             dispatch(setPermissions(permissions));
             dispatch(setinformation(information));
         } catch (error) {

@@ -6,7 +6,7 @@ import Pagination from '@/components/dashboard/Pagination';
 import { BiSolidEdit } from 'react-icons/bi';
 import translation from "@/translation/translation";
 
-const UserList = ({ editData, setEditData, refreshList, setParentLoading }) => {
+const UserList = ({ setSelectedUser, setParentLoading }) => {
 
     const [users, setUsers] = useState(null);
     const [usersCount, setUsersCount] = useState(null);
@@ -32,7 +32,7 @@ const UserList = ({ editData, setEditData, refreshList, setParentLoading }) => {
 
     useEffect(() => {
         userList();
-    }, [activePage, refreshList]);
+    }, [activePage]);
 
     return (
         <div className='flex flex-col grow'>
@@ -52,7 +52,7 @@ const UserList = ({ editData, setEditData, refreshList, setParentLoading }) => {
                             return (
                                 <div className="flex h-full items-center justify-center gap-2 text-nowrap">
                                     <BiSolidEdit className='text-xl ml-4 text-blue-400' onClick={() => {
-                                        setEditData(rowData);
+                                        setSelectedUser(rowData);
                                     }} />
                                 </div>
                             );

@@ -2,13 +2,15 @@ import { changeAvatar } from '@/services/User';
 import { toast } from 'react-hot-toast';
 import translation from "@/translation/translation";
 
-const useChangeAvatar = (reloadUserData) => {
+const useChangeAvatar = (user_id, reloadUserData) => {
+
     const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong', 'permissions']);
 
     const changeAvatarRequest = async (file) => {
         try {
             let formData = new FormData();
             formData.append("file", file);
+            if (user_id) formData.append("user_id", user_id);
             const { data } = await changeAvatar(formData, () => { });
             const { message } = data;
             toast.success(message);
