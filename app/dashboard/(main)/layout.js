@@ -8,21 +8,22 @@ import { useState, useEffect } from "react";
 import { Toaster } from 'react-hot-toast';
 import useSocket from '@/hooks/useSocket';
 import useLogout from '@/hooks/useLogout';
-import { useRouter } from 'next/navigation';
 import { securityCheck as RsecurityCheck } from '@/services/User';
 import { usePathname } from 'next/navigation';
 import { setPermissions } from '@/state/permissions';
 import { setinformation } from '@/state/information';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Layout({ children }) {
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { push } = useRouter();
+  const { goOut } = useLogout();
   const pathname = usePathname();
   const dispatch = useDispatch();
+  
   useSocket(!loading);
+  const userData = useSelector((state) => state.information.value);
 
   const securityCheck = async () => {
     try {
@@ -37,13 +38,19 @@ export default function Layout({ children }) {
       setLoading(false);
     } catch (error) {
       console.log("Error in securityCheck", error);
-      useLogout(push);
+      goOut();
     }
   }
 
   useEffect(() => {
     securityCheck();
   }, []);
+  
+  useEffect(() => {
+    if (!userData || userData == null || userData == undefined) {
+      securityCheck();
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const handleResize = () => {

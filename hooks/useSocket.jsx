@@ -4,7 +4,7 @@ import { setApiData } from '@/state/apiData';
 import { setProductPrices } from '@/state/productPrices';
 import { setboxPrices } from '@/state/boxPrices';
 import { initializeSocket } from '@/services/scoket';
-import useLogout from "@/hooks/useLogout"
+import {logout} from "@/hooks/useLogout"
 import { useRouter } from 'next/navigation';
 
 const useSocket = (connect) => {
@@ -18,7 +18,7 @@ const useSocket = (connect) => {
         const socket = initializeSocket();
 
         if (!socket) {
-            useLogout(push);
+            // logout(push);
             return;
         }
 

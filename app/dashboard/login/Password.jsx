@@ -4,9 +4,9 @@ import { useState } from 'react';
 
 const Password = ({ userName, setError, SetPage }) => {
 
-    const [password, setPassword] = useState("");
+    const [password, setPassword] = useState("admin");
     const [loading, setLoading] = useState(false);
-    const { passwordLogInRequest } = useLoginWithPassword(userName, password, setLoading, setError);
+    const { passwordLogInRequest } = useLoginWithPassword(userName, password, setLoading, setError, setLoading);
 
     return (
         <>

@@ -8,7 +8,8 @@ import { useEffect, useState } from "react";
 import { getCookie } from 'cookies-next';
 import { useSelector } from 'react-redux';
 import Icon from "@/components/general/Icon";
-
+import useLogout from "@/hooks/useLogout";
+import { useRouter } from 'next/navigation';
 
 const Sidebar = ({ open, setOpen }) => {
 
@@ -16,10 +17,10 @@ const Sidebar = ({ open, setOpen }) => {
   const text = translation.get('sideBar');
   const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState(true);
-
+  const { goOut } = useLogout();
   const information = useSelector((state) => state.information.value);
   const permissions = useSelector((state) => state.permissions.value);
-
+  const { push } = useRouter();
   const allItems = [
     { name: "صفحه اصلی پنل", url: "/dashboard", icon: <Icon name={"dashboard"} className="w-8 h-8" /> },
     { name: "دسترسی ها", url: "/dashboard/role", icon: <Icon name={"permissions"} className="w-8 h-8" /> },
@@ -119,7 +120,10 @@ const Sidebar = ({ open, setOpen }) => {
                 </span>
               </div>
             </Link>
-            <Link href="/adss">
+            <Link href="" onClick={(e) => {
+              e.preventDefault();
+              goOut();
+            }}>
               <div className={(pathname == "/adss") ?
                 "relative bg-siebar_item mb-5 flex items-center rounded-xl bg-secondary p-3 text-accent rtl"
                 :

@@ -9,6 +9,7 @@ const LogOutTimer = () => {
     const logOutTime = useSelector((state) => state.logOutTime.value);
     const sessionTime = parseInt(getCookie('sessionTime'));
     const { push } = useRouter();
+    const { goOut } = useLogout();
     const [time, setTime] = useState(null);
 
     useEffect(() => {
@@ -32,7 +33,7 @@ const LogOutTimer = () => {
 
                 if (timeRemaining <= 0) {
                     clearInterval(timer);
-                    useLogout(push);
+                    goOut();
                 }
             };
 
