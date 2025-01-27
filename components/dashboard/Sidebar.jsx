@@ -106,20 +106,22 @@ const Sidebar = ({ open, setOpen }) => {
             })}
           </div>
           <div className="pr-3">
-            <Link href="/ads">
-              <div className={(pathname == "/ads") ?
-                "relative bg-siebar_item mb-5 flex items-center rounded-xl bg-secondary p-3 text-accent rtl"
-                :
-                "relative mb-5 flex items-center p-3 text-dactive rtl"
-              }>
-                <div>
-                  <Icon name={"profile"} className="w-10 h-10" />
+            {permissions.some(permission => "/dashboard/profile" === permission.route) &&
+              <Link href="/dashboard/profile">
+                <div className={(pathname == "/ads") ?
+                  "relative bg-siebar_item mb-5 flex items-center rounded-xl bg-secondary p-3 text-accent rtl"
+                  :
+                  "relative mb-5 flex items-center p-3 text-dactive rtl"
+                }>
+                  <div>
+                    <Icon name={"profile"} className="w-10 h-10" />
+                  </div>
+                  <span className={`mr-3 text-nowrap`}>
+                    اطلاعات حساب
+                  </span>
                 </div>
-                <span className={`mr-3 text-nowrap`}>
-                  اطلاعات حساب
-                </span>
-              </div>
-            </Link>
+              </Link>
+            }
             <Link href="" onClick={(e) => {
               e.preventDefault();
               goOut();

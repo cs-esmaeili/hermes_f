@@ -2,7 +2,7 @@ import { createUser } from '@/services/User';
 import { toast } from 'react-hot-toast';
 import translation from "@/translation/translation";
 
-const useCreateUser = (reloadUserInformation) => {
+const useCreateUser = (resetForm) => {
 
     const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong', 'permissions']);
 
@@ -11,7 +11,7 @@ const useCreateUser = (reloadUserInformation) => {
             const { data } = await createUser(userData);
             const { message } = data;
             toast.success(message);
-            if (reloadUserInformation) reloadUserInformation();
+            if (resetForm) resetForm();
         } catch (error) {
             console.log(error);
             if (error?.response?.data?.message) {
