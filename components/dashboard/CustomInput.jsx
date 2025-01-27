@@ -11,10 +11,10 @@ const CustomInput = forwardRef(
       containerClassName,
       onLeftLabelClick,
       onRightLabelClick,
-      placeholder, // دریافت placeholder
+      placeholder,
       ...inputProps
     },
-    ref // Forwarded ref
+    ref
   ) => {
     return (
       <div className={containerClassName}>

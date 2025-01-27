@@ -91,9 +91,15 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
         }
     }, [userType]);
 
+
     useEffect(() => {
         if (setParentLoading) setParentLoading(false);
         userInformationRequest();
+
+        return () => {
+            setSelectedUser(null);
+            setFormData(initialFormData);
+        };
     }, []);
 
     useEffect(() => {

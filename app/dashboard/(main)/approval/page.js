@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Table from '@/components/dashboard/Table';
 import Pagination from '@/components/dashboard/Pagination';
 import useApprovalList from "@/hooks/approval/useApprovalList";
+import useProcessApproval from "@/hooks/approval/useProcessApproval";
 import { FaEye } from "react-icons/fa";
 import DivButton from '@/components/dashboard/DivButton';
 import CustomInput from '@/components/dashboard/CustomInput';
@@ -17,6 +18,7 @@ const UserList = () => {
     const [activePage, setActivePage] = useState(1);
     const [perPage, setPerPage] = useState(8);
     const { approvalListRequest } = useApprovalList(activePage, perPage, setApprovals, setApprovalsCount);
+    const { processApprovalRequest } = useProcessApproval(approvalListRequest);
 
 
     useEffect(() => {
@@ -48,7 +50,7 @@ const UserList = () => {
                                             </span>
                                         </DivButton>
                                     </div>
-                                    <DivButton className='!w-fit bg-green-500'>
+                                    <DivButton className='!w-fit bg-green-500' onClick={() => processApprovalRequest(rowData._id)}>
                                         <span>
                                             ثبت
                                         </span>

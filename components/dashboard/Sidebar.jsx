@@ -107,7 +107,7 @@ const Sidebar = ({ open, setOpen }) => {
             })}
           </div>
           <div className="pr-3">
-            {permissions.some(permission => "/dashboard/profile" === permission.route) &&
+            {permissions && permissions.some(permission => "/dashboard/profile" === permission.route) &&
               <Link href="/dashboard/profile">
                 <div className={(pathname == "/ads") ?
                   "relative bg-siebar_item mb-5 flex items-center rounded-xl bg-secondary p-3 text-accent rtl"
