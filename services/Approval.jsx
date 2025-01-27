@@ -8,3 +8,6 @@ export const approvalList = (data) => {
 export const processApproval = (data) => {
     return http.post(`${prefixUrl}/processApproval`, JSON.stringify(data));
 };
+export const rejectApproval = (data) => {
+    return http.post(`${prefixUrl}/rejectApproval`, JSON.stringify(data));
+};

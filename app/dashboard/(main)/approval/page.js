@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Table from '@/components/dashboard/Table';
 import Pagination from '@/components/dashboard/Pagination';
 import useApprovalList from "@/hooks/approval/useApprovalList";
 import useProcessApproval from "@/hooks/approval/useProcessApproval";
+import useRejectApproval from "@/hooks/approval/useRejectApproval";
 import { FaEye } from "react-icons/fa";
 import DivButton from '@/components/dashboard/DivButton';
 import CustomInput from '@/components/dashboard/CustomInput';
@@ -19,7 +20,9 @@ const UserList = () => {
     const [perPage, setPerPage] = useState(8);
     const { approvalListRequest } = useApprovalList(activePage, perPage, setApprovals, setApprovalsCount);
     const { processApprovalRequest } = useProcessApproval(approvalListRequest);
+    const { rejectApprovalRequest } = useRejectApproval(approvalListRequest);
 
+    const commentRef = useRef();
 
     useEffect(() => {
         approvalListRequest();
@@ -27,24 +30,28 @@ const UserList = () => {
 
     return (
         <div className='flex flex-col grow'>
-            <div className='flex grow w-full overflow-x-scroll rounded-md'>
+            <div className='flex grow w-full overflow-x-scroll rounded-md '>
                 {approvals &&
                     <Table
-                        headers={["ID", "تاریخ", "نوع درخواست"]}
-                        rowsData={["_id", "updatedAt", "urlMeta.name"]}
+                        headers={["ID", "تاریخ", "نوع درخواست", "وضعیت"]}
+                        rowsData={["_id", "updatedAt", "urlMeta.name", "status"]}
                         rows={approvals}
                         rowClasses={(row, rowIndex) => {
-                            return "bg-primary";
+                            return "!bg-primary";
                         }}
                         cellClasses={(cell, cellIndex, row, rowIndex) => {
-                            return cell == "ارسال شده" && "text-green-400";
+                            if (cell == "rejected" && cellIndex == 3) {
+                                return ("text-red-400");
+                            } else if (cell == "pending" && cellIndex == 3) {
+                                return ("text-green-400");
+                            }
                         }}
                         actionComponent={({ rowData, rowIndex }) => {
                             return (
                                 <div className="flex h-full items-center justify-center gap-5 text-nowrap rounded-lg">
-                                    <div className='w-fit  flex !flex-col gap-2 bg-secondary'>
-                                        <CustomInput placeholder="دلیل رد" containerClassName="border-2 rounded-lg !border-red-500" />
-                                        <DivButton className='bg-red-500 flex justify-center items-center'>
+                                    <div className='w-fit  flex !flex-col gap-2 bg-secondary'  >
+                                        <CustomInput placeholder="دلیل رد" defaultValue={rowData.comment} containerClassName="border-2 rounded-lg !border-red-500" ref={commentRef} />
+                                        <DivButton className='bg-red-500 flex justify-center items-center' onClick={() => rejectApprovalRequest(rowData._id, commentRef.current.value)}>
                                             <span>
                                                 رد
                                             </span>
