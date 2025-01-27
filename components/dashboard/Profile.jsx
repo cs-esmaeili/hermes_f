@@ -82,7 +82,6 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
     const { userInformationRequest } = useUserInformation(selectedUser?._id, setSelectedUser);
     const { updateUserDataRequest } = useUpdateUserData(selectedUser?._id, userInformationRequest);
     const { changeAvatarRequest } = useChangeAvatar(selectedUser?._id, () => {
-        setFormData(prev => ({ ...prev, file: null }));
         userInformationRequest();
     });
 
