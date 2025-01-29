@@ -9,11 +9,11 @@ import useRejectApproval from "@/hooks/approval/useRejectApproval";
 import { FaEye } from "react-icons/fa";
 import DivButton from '@/components/dashboard/DivButton';
 import CustomInput from '@/components/dashboard/CustomInput';
-
+import { useModalContext } from '@/components/dashboard/Modal';
+import ApprovalDetails from '@/components/dashboard/ApprovalDetails';
 
 const UserList = () => {
 
-    const [selectedRequest, setSelectedRequest] = useState(null);
     const [approvals, setApprovals] = useState(null);
     const [approvalsCount, setApprovalsCount] = useState(null);
     const [activePage, setActivePage] = useState(1);
@@ -21,6 +21,7 @@ const UserList = () => {
     const { approvalListRequest } = useApprovalList(activePage, perPage, setApprovals, setApprovalsCount);
     const { processApprovalRequest } = useProcessApproval(approvalListRequest);
     const { rejectApprovalRequest } = useRejectApproval(approvalListRequest);
+    const { openModal, closeModal } = useModalContext();
 
     const commentRef = useRef();
 
@@ -64,7 +65,7 @@ const UserList = () => {
                                     </DivButton>
 
                                     <FaEye className='text-xl ml-4 text-yellow-400' onClick={() => {
-                                        setSelectedRequest(rowData);
+                                        openModal(<ApprovalDetails selectedRequest={rowData} />);
                                     }} />
                                 </div>
                             );
