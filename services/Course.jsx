@@ -14,3 +14,9 @@ export const addCourse = (data, uploadLisener) => {
         }
     });
 };
+
+
+export const getCourse = (data) => {
+    return http.post(`${prefixUrl}/getCourse`, JSON.stringify(data));
+};
+

@@ -1,19 +1,18 @@
-import { processApproval } from '@/services/Approval';
+import { getCourse } from '@/services/Course';
 import { toast } from 'react-hot-toast';
 import translation from "@/translation/translation";
 
-const useProcessApproval = (refreshList) => {
+const useGetCourse = (refresh) => {
 
     const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong', 'permissions']);
 
-    const processApprovalRequest = async (approval_id) => {
+    const getCourseRequest = async (course_id) => {
         try {
-            const { data } = await processApproval({ approval_id });
-            const { message } = data;
-            toast.success(message);
-            refreshList();
+            const { data } = await getCourse({ course_id });
+            const { course } = data;
+            refresh(course);
         } catch (error) {
-            console.error(error);
+            console.log(error);
             if (error?.response?.data?.message) {
                 toast.error(error.response.data.message);
             } else {
@@ -22,7 +21,6 @@ const useProcessApproval = (refreshList) => {
         }
     };
 
-    return { processApprovalRequest };
+    return { getCourseRequest };
 };
-
-export default useProcessApproval;
+export default useGetCourse;

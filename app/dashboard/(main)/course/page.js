@@ -8,7 +8,9 @@ import CustomImage from "@/components/dashboard/CustomImage";
 import { ImCross } from "react-icons/im";
 import DivButton from "@/components/dashboard/DivButton";
 import useCreateCourse from "@/hooks/course/useCreateCourse";
+import useGetCourse from "@/hooks/course/useGetCourse";
 import ProgressBar from "@/components/dashboard/ProgressBar";
+import CourseList from "@/components/dashboard/course/CourseList";
 
 
 const page = ({ setSelectedCourse, selectedCourse, isAdmin = false, setParentLoading }) => {
@@ -32,6 +34,8 @@ const page = ({ setSelectedCourse, selectedCourse, isAdmin = false, setParentLoa
         }
     }
     const [progress, setProgress] = useState(0);
+    const [selectedCourseId, setSelectedCourseId] = useState(0);
+
     const [formData, setFormData] = useState({
         courseName: selectedCourse?.courseName || "haha",
         description: selectedCourse?.description || "توضیحات هاها",
@@ -41,12 +45,19 @@ const page = ({ setSelectedCourse, selectedCourse, isAdmin = false, setParentLoa
 
 
 
-    const { createCourseRequest } = useCreateCourse(() => { }, (present) => {
-        setProgress(present);
-    });
+    const { createCourseRequest } = useCreateCourse(
+        (course_id) => {
+            setSelectedCourseId(course_id);
+        },
+        (present) => {
+            setProgress(present);
+        }
+    );
+
+
 
     return (
-        <div className='flex grow  bg-primary rounded-xl p-5 overflow-y-auto'>
+        <div className='flex flex-col grow  bg-primary rounded-xl p-5 overflow-y-auto gap-3'>
             {selectedCourse && isAdmin && (
                 <div className="flex justify-between bg-orange-400 p-3 rounded-md">
                     <div className="flex grow items-center">{`User : ${selectedCourse._id}`}</div>
@@ -81,6 +92,7 @@ const page = ({ setSelectedCourse, selectedCourse, isAdmin = false, setParentLoa
                     </div>
                 </DivButton>
             </div>
+            <CourseList course_id={selectedCourseId} />
         </div>
     );
 };

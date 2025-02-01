@@ -16,6 +16,7 @@ import { useModalContext } from '@/components/dashboard/Modal';
 import Roles from "@/components/dashboard/role/Roles";
 import { ImCross } from "react-icons/im";
 import DivButton from "@/components/dashboard/DivButton";
+import ApprovalStatus from "./approval/ApprovalStatus";
 
 
 const initialFormData = {
@@ -144,6 +145,7 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
 
     return (
         <div className='flex flex-col grow h-full gap-3 bg-primary rounded-xl p-5 overflow-auto' ref={scrollbarRef}>
+            {selectedUser && selectedUser?.approval_id && <ApprovalStatus approval={selectedUser.approval_id} />}
             {selectedUser && isAdmin && (
                 <div className="flex justify-between bg-orange-400 p-3 rounded-md">
                     <div className="flex grow items-center">{`User : ${selectedUser._id}`}</div>

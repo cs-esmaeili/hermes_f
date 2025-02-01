@@ -15,15 +15,11 @@ const useCreateCourse = (refresh, setPersent) => {
             formData.append("category_id", JSON.stringify(category_id));
             formData.append("level", JSON.stringify(level));
             formData.append("file", file);
-
-
-            const { data } = await addCourse(formData, (persent) => {
-                setPersent(persent);
-            });
-
-            const { message } = data;
+            
+            const { data } = await addCourse(formData, setPersent);
+            const { message, course_id } = data;
             toast.success(message);
-            refresh();
+            refresh(course_id);
         } catch (error) {
             console.log(error);
             if (error?.response?.data?.message) {

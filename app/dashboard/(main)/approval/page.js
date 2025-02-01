@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Table from '@/components/dashboard/Table';
 import Pagination from '@/components/dashboard/Pagination';
 import useApprovalList from "@/hooks/approval/useApprovalList";
-import useProcessApproval from "@/hooks/approval/useProcessApproval";
+import useAcceptApproval from "@/hooks/approval/useAcceptApproval";
 import useRejectApproval from "@/hooks/approval/useRejectApproval";
 import { FaEye } from "react-icons/fa";
 import DivButton from '@/components/dashboard/DivButton';
@@ -19,7 +19,7 @@ const UserList = () => {
     const [activePage, setActivePage] = useState(1);
     const [perPage, setPerPage] = useState(8);
     const { approvalListRequest } = useApprovalList(activePage, perPage, setApprovals, setApprovalsCount);
-    const { processApprovalRequest } = useProcessApproval(approvalListRequest);
+    const { acceptApprovalRequest } = useAcceptApproval(approvalListRequest);
     const { rejectApprovalRequest } = useRejectApproval(approvalListRequest);
     const { openModal, closeModal } = useModalContext();
 
@@ -35,7 +35,7 @@ const UserList = () => {
                 {approvals &&
                     <Table
                         headers={["ID", "تاریخ", "نوع درخواست", "وضعیت"]}
-                        rowsData={["_id", "updatedAt", "urlMeta.name", "status"]}
+                        rowsData={["_id", "updatedAt", "title", "status"]}
                         rows={approvals}
                         rowClasses={(row, rowIndex) => {
                             return "!bg-primary";
@@ -58,7 +58,7 @@ const UserList = () => {
                                             </span>
                                         </DivButton>
                                     </div>
-                                    <DivButton className='!w-fit bg-green-500' onClick={() => processApprovalRequest(rowData._id)}>
+                                    <DivButton className='!w-fit bg-green-500' onClick={() => acceptApprovalRequest(rowData._id)}>
                                         <span>
                                             ثبت
                                         </span>
