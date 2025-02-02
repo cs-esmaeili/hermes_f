@@ -10,10 +10,10 @@ const useCreateCourse = (refresh, setPersent) => {
         try {
 
             let formData = new FormData();
-            formData.append("courseName", JSON.stringify(courseName));
-            formData.append("description", JSON.stringify(description));
-            formData.append("category_id", JSON.stringify(category_id));
-            formData.append("level", JSON.stringify(level));
+            formData.append("courseName", courseName);
+            formData.append("description", description);
+            formData.append("category_id", category_id);
+            formData.append("level", level);
             formData.append("file", file);
             
             const { data } = await addCourse(formData, setPersent);
