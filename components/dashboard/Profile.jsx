@@ -19,40 +19,8 @@ import DivButton from "@/components/dashboard/DivButton";
 import ApprovalStatus from "./approval/ApprovalStatus";
 
 
-const initialFormData = {
-    userName: "",
-    email: "",
-    password: "",
-    role: "",
-    fullName: "",
-    nationalCode: "",
-    birthday: "",
-    shebaNumber: "",
-    cardNumber: "",
-    fatherName: "",
-    companyName: "",
-    economicCode: "",
-    registrationNumber: "",
-    postalCode: "",
-    ostan: "",
-    shahr: "",
-    github: "",
-    linkedin: "",
-    telegram: "",
-    instagram: "",
-    twitter: "",
-    address: "",
-    biography: "",
-    file: null,
-};
-
-const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoading }) => {
-    const [userType, setUserType] = useState('normal');
-    const { openModal, closeModal } = useModalContext();
-    const pickFileRef = useRef(null);
-    const scrollbarRef = useRef();
-
-    const [formData, setFormData] = useState({
+const converSelectedUserToFormData = (selectedUser) => {
+    return {
         userName: selectedUser?.userName || "",
         email: selectedUser?.email || "",
         password: "",
@@ -77,7 +45,17 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
         address: selectedUser?.data?.address || "",
         biography: selectedUser?.data?.biography || "",
         file: selectedUser?.data?.image?.url || null,
-    });
+    }
+}
+const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoading }) => {
+    const [userType, setUserType] = useState('normal');
+    const { openModal, closeModal } = useModalContext();
+    const pickFileRef = useRef(null);
+    const scrollbarRef = useRef();
+
+
+
+    const [formData, setFormData] = useState(converSelectedUserToFormData(selectedUser));
 
     const { createUserRequest } = useCreateUser(() => { setFormData(initialFormData) });
     const { userInformationRequest } = useUserInformation(selectedUser?._id, setSelectedUser);
@@ -99,19 +77,15 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
 
         return () => {
             setSelectedUser(null);
-            setFormData(initialFormData);
+            setFormData(converSelectedUserToFormData(null));
         };
     }, []);
 
+
+
     useEffect(() => {
         if (selectedUser) {
-            setFormData({
-                ...formData,
-                userName: selectedUser.userName || "",
-                email: selectedUser.email || "",
-                role: selectedUser.role_id || "",
-                ...selectedUser.data
-            });
+            setFormData(converSelectedUserToFormData(selectedUser));
         }
     }, [selectedUser]);
 
@@ -145,7 +119,7 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
 
     return (
         <div className='flex flex-col grow h-full gap-3 bg-primary rounded-xl p-5 overflow-auto' ref={scrollbarRef}>
-            {selectedUser && selectedUser?.approval_id && <ApprovalStatus approval={selectedUser.approval_id} />}
+            {selectedUser && selectedUser?.status && <ApprovalStatus approval={selectedUser} />}
             {selectedUser && isAdmin && (
                 <div className="flex justify-between bg-orange-400 p-3 rounded-md">
                     <div className="flex grow items-center">{`User : ${selectedUser._id}`}</div>
@@ -176,6 +150,7 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
                 <div className={`flex items-center justify-center bg-secondary w-full md:w-2/6 py-10 md:p-5 xl:p-10 rounded-md ${!selectedUser && "opacity-25"}`}>
                     {selectedUser ? (
                         <>
+                            {/* {console.log(formData.file)} */}
                             <PickFile ref={pickFileRef} fileSelectListener={handleFileChange} />
                             {formData.file ? (
                                 <div className="relative">
