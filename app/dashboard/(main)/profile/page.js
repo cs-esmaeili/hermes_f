@@ -12,7 +12,7 @@ const page = () => {
     return (
         <div className='flex grow h-full overflow-hidden '>
             <Profile selectedUser={userData} setSelectedUser={(data) => {
-                dispatch(setinformation(data));
+                if (data) dispatch(setinformation(data));
             }} />
         </div>
     );
