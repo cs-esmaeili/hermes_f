@@ -1,27 +1,28 @@
-import { addCourse } from '@/services/Course';
+import { editCourse } from '@/services/Course';
 import { toast } from 'react-hot-toast';
 import translation from "@/translation/translation";
 
-const useCreateCourse = (listener, setPersent) => {
+const useEditCourse = (refresh, setPersent) => {
 
     const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong', 'permissions']);
 
-    const createCourseRequest = async ({ courseName, description, category_id, level, file }) => {
+    const editCourseRequest = async ({ _id, courseName, description, category_id, level, file }) => {
         try {
 
-            console.log("createCourseRequest");
+            console.log("useEditCourse");
 
             let formData = new FormData();
+            formData.append("course_id", _id);
             formData.append("courseName", courseName);
             formData.append("description", description);
             formData.append("category_id", category_id);
             formData.append("level", level);
             formData.append("file", file);
 
-            const { data } = await addCourse(formData, setPersent);
+            const { data } = await editCourse(formData, setPersent);
             const { message, course_id } = data;
             toast.success(message);
-            listener(course_id);
+            refresh(course_id);
         } catch (error) {
             console.log(error);
             if (error?.response?.data?.message) {
@@ -32,6 +33,6 @@ const useCreateCourse = (listener, setPersent) => {
         }
     };
 
-    return { createCourseRequest };
+    return { editCourseRequest };
 };
-export default useCreateCourse;
+export default useEditCourse;

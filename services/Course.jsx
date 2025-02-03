@@ -13,8 +13,25 @@ export const addCourse = (data, uploadLisener) => {
         }
     });
 };
+export const editCourse = (data, uploadLisener) => {
+    return http.post(`${prefixUrl}/editCourse`, data, {
+        onUploadProgress: function (progressEvent) {
+            var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            uploadLisener(percentCompleted);
+        },
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+};
 
 export const courseList = (data) => {
     return http.post(`${prefixUrl}/courseList`, JSON.stringify(data));
 };
+
+
+export const courseInformation = (data) => {
+    return http.post(`${prefixUrl}/courseInformation`, JSON.stringify(data));
+};
+
 

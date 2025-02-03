@@ -4,9 +4,10 @@ import { BsImage } from "react-icons/bs";
 import PickFile from "@/components/dashboard/PickFile";
 import CustomImage from "@/components/dashboard/CustomImage";
 import useCreateCourse from "@/hooks/course/useCreateCourse";
+import useEditCourse from "@/hooks/course/useEditCourse";
 import DivButton from "@/components/dashboard/DivButton";
 import ProgressBar from "@/components/dashboard/ProgressBar";
-import useGetCourse from "@/hooks/course/useCourseList";
+import useCourseInformation from "@/hooks/course/useCourseInformation";
 import { ImCross } from "react-icons/im";
 import ApprovalStatus from "../approval/ApprovalStatus";
 
@@ -16,6 +17,7 @@ const convertCourseToForm = (selectedCourse) => {
         description: selectedCourse?.description || "",
         level: selectedCourse?.level || "",
         file: selectedCourse?.image?.url || null,
+        _id: selectedCourse?._id || null,
     }
 }
 const CreateCourse = ({ selectedCourse, setSelectedCourse, isAdmin, setParentLoading }) => {
@@ -24,13 +26,15 @@ const CreateCourse = ({ selectedCourse, setSelectedCourse, isAdmin, setParentLoa
     const [progress, setProgress] = useState(0);
     const [formData, setFormData] = useState(convertCourseToForm(selectedCourse));
 
-    const { createCourseRequest } = useCreateCourse(
-        (course_id) => {
-        },
-        (present) => {
-            setProgress(present);
-        }
-    );
+    const { userInformationRequest } = useCourseInformation(setSelectedCourse);
+
+    const { createCourseRequest } = useCreateCourse(userInformationRequest, (present) => {
+        setProgress(present);
+    });
+
+    const { editCourseRequest } = useEditCourse((course_id) => userInformationRequest(course_id), (present) => {
+        setProgress(present);
+    });
 
 
     const pickFileRef = useRef(null);
@@ -94,6 +98,7 @@ const CreateCourse = ({ selectedCourse, setSelectedCourse, isAdmin, setParentLoa
 
             <DivButton className={`flex w-full items-center justify-center  bg-yellow-500 mt-3 ${progress > 0 && "bg-opacity-50 cursor-not-allowed"}`} onClick={() => {
                 if (progress == 0 && !selectedCourse) createCourseRequest(formData);
+                if (progress == 0 && selectedCourse) editCourseRequest(formData);
             }}>
                 <div className="flex flex-col grow justify-center items-center gap-3 text-textcolor">
                     <span>ثبت</span>
