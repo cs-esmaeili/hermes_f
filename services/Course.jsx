@@ -1,6 +1,5 @@
 import http from "./httpServices";
 
-
 const prefixUrl = `${process.env.NEXT_PUBLIC_API}course`
 
 export const addCourse = (data, uploadLisener) => {
@@ -15,8 +14,7 @@ export const addCourse = (data, uploadLisener) => {
     });
 };
 
-
-export const getCourse = (data) => {
-    return http.post(`${prefixUrl}/getCourse`, JSON.stringify(data));
+export const courseList = (data) => {
+    return http.post(`${prefixUrl}/courseList`, JSON.stringify(data));
 };
 

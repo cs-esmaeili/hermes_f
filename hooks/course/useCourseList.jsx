@@ -1,16 +1,16 @@
-import { getCourse } from '@/services/Course';
+import { courseList } from '@/services/Course';
 import { toast } from 'react-hot-toast';
 import translation from "@/translation/translation";
 
-const useGetCourse = (refresh) => {
+const useCourseList = (Listener) => {
 
     const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong', 'permissions']);
 
-    const getCourseRequest = async (course_id) => {
+    const courseListRequest = async (page, perPage) => {
         try {
-            const { data } = await getCourse({ course_id });
-            const { course } = data;
-            refresh(course);
+            const { data } = await courseList({ page, perPage });
+            const { courses, courseCount } = data;
+            Listener(courses, courseCount);
         } catch (error) {
             console.log(error);
             if (error?.response?.data?.message) {
@@ -21,6 +21,6 @@ const useGetCourse = (refresh) => {
         }
     };
 
-    return { getCourseRequest };
+    return { courseListRequest };
 };
-export default useGetCourse;
+export default useCourseList;

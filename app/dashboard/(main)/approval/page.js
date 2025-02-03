@@ -35,7 +35,7 @@ const UserList = () => {
                 {approvals &&
                     <Table
                         headers={["ID", "تاریخ", "نوع درخواست", "وضعیت"]}
-                        rowsData={["_id", "updatedAt", "title", "status"]}
+                        rowsData={["_id", "updatedAt", "approval_title", "approval_status"]}
                         rows={approvals}
                         rowClasses={(row, rowIndex) => {
                             return "!bg-primary";
@@ -51,7 +51,7 @@ const UserList = () => {
                             return (
                                 <div className="flex h-full items-center justify-center gap-5 text-nowrap rounded-lg">
                                     <div className='w-fit  flex !flex-col gap-2 bg-secondary'  >
-                                        <CustomInput placeholder="دلیل رد" defaultValue={rowData.comment} containerClassName="border-2 rounded-lg !border-red-500" ref={commentRef} />
+                                        <CustomInput placeholder="دلیل رد" defaultValue={rowData.approval_comment} containerClassName="border-2 rounded-lg !border-red-500" ref={commentRef} />
                                         <DivButton className='bg-red-500 flex justify-center items-center' onClick={() => rejectApprovalRequest(rowData._id, commentRef.current.value)}>
                                             <span>
                                                 رد

@@ -119,7 +119,7 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
 
     return (
         <div className='flex flex-col grow h-full gap-3 bg-primary rounded-xl p-5 overflow-auto' ref={scrollbarRef}>
-            {selectedUser && selectedUser?.status && <ApprovalStatus approval={selectedUser} />}
+            {selectedUser && <ApprovalStatus approval={selectedUser} />}
             {selectedUser && isAdmin && (
                 <div className="flex justify-between bg-orange-400 p-3 rounded-md">
                     <div className="flex grow items-center">{`User : ${selectedUser._id}`}</div>

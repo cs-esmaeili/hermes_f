@@ -1,83 +1,56 @@
-import Icon from '@/components/general/Icon';
 import { useState, useEffect, useRef } from "react";
-import useGetCourse from "@/hooks/course/useGetCourse";
-import Loading from '@/components/dashboard/Loading';
-import FileManager from '@/app/dashboard/(main)/filemanager/page';
+import useCourseList from "@/hooks/course/useCourseList";
+import Table from '@/components/dashboard/Table';
+import Pagination from '@/components/dashboard/Pagination';
+import { BiSolidEdit } from 'react-icons/bi';
 
-const CourseList = ({ course_id }) => {
+const CourseList = ({ setSelectedCourse, setParentLoading }) => {
 
 
-    const [course, setCourse] = useState(null);
-    const [loading, setLoading] = useState(course_id ? true : false);
+    const [courses, setCourses] = useState(null);
+    const [courseCount, setCourseCount] = useState(null);
+    const [page, setPage] = useState(1);
+    const [perPage, setPerPage] = useState(12);
 
-    const { getCourseRequest } = useGetCourse((course) => {
-        setLoading(false);
-        setCourse(course);
-        console.log(course);
-
+    const { courseListRequest } = useCourseList((courses, courseCount) => {
+        setCourses(courses);
+        setCourseCount(courseCount);
     });
 
 
     useEffect(() => {
-        if (course_id) {
-            setLoading(true);
-            getCourseRequest(course_id);
-        }
-    }, [course_id]);
+        setParentLoading(false);
+        courseListRequest(page, perPage);
+    }, []);
 
     return (
-        <div className={`flex flex-col gap-3 ${process.env.NEXT_PUBLIC_DIRECTION}`}>
-            <Loading loading={loading} />
-            {!loading && course?.courseMaterials && course?.courseMaterials.map((value, index) =>
-                <div className='flex  grow h-fit justify-between   rounded-md p-3  border-2 border-dashed border-blue-400 cursor-pointer select-none'>
-                    <div className='relative flex items-center justify-center gap-2 pr-3'>
-                        <span className="absolute right-[-27px] w-[29px] h-[29px] bg-primary border-2 border-gray-400 border-opacity-50 text-[16px] font-bold flex items-center  justify-center rounded-full leading-none ">
-                            5
-                        </span>
-                        <div>معرفی ابزار های keyword research</div>
-                        <div className="w-px h-full bg-gray-400"></div>
-                        <Icon name={"lock"} className="w-8 h-8 text-blue-400" />
-                        <Icon name={"public"} className="w-8 h-8 text-yellow-400" />
-                        <Icon name={"trash"} className="w-8 h-8 text-red-400" />
-                    </div>
-                    <div className='flex items-center justify-center gap-2'>
-                        <div>04:40</div>
-                        <div className="w-px h-full bg-gray-400"></div>
-                        <Icon name={"download"} className="w-8 h-8 text-green-400" />
-                    </div>
-                </div>
-            )}
-
-            {/* {!loading && course && course.courseMaterials.length <= 0 &&
-                <div className='flex grow items-center justify-center p-3 my-5 rounded-md'>
-                    <span>شما هیچ فایلی ندارید</span>
-                </div>
-            } */}
-
-            <div className='flex  grow h-fit justify-between   rounded-md p-3  border-2 border-dashed border-blue-400 cursor-pointer select-none'>
-                <div className='relative flex items-center justify-center gap-2 pr-3'>
-                    <span className="absolute right-[-27px] w-[29px] h-[29px] bg-primary border-2 border-gray-400 border-opacity-50 text-[16px] font-bold flex items-center  justify-center rounded-full leading-none ">
-                        5
-                    </span>
-                    <div>معرفی ابزار های keyword research</div>
-                    <div className="w-px h-full bg-gray-400"></div>
-                    <Icon name={"lock"} className="w-8 h-8 text-blue-400" />
-                    <Icon name={"public"} className="w-8 h-8 text-yellow-400" />
-                    <Icon name={"trash"} className="w-8 h-8 text-red-400" />
-                </div>
-                <div className='flex items-center justify-center gap-2'>
-                    <div>04:40</div>
-                    <div className="w-px h-full bg-gray-400"></div>
-                    <Icon name={"download"} className="w-8 h-8 text-green-400" />
-                </div>
+        <div className='flex flex-col grow'>
+            <div className='flex grow w-full overflow-x-scroll '>
+                {courses &&
+                    <Table
+                        headers={["نام دوره", "وضعیت", "زمان ساخت"]}
+                        rowsData={["courseName", "status", "createdAt"]}
+                        rows={courses}
+                        rowClasses={(row, rowIndex) => {
+                            return "bg-primary";
+                        }}
+                        cellClasses={(cell, cellIndex, row, rowIndex) => {
+                            return cell == "ارسال شده" && "text-green-400";
+                        }}
+                        actionComponent={({ rowData, rowIndex }) => {
+                            return (
+                                <div className="flex h-full items-center justify-center gap-2 text-nowrap">
+                                    <BiSolidEdit className='text-xl ml-4 text-blue-400' onClick={() => {
+                                        setSelectedCourse(rowData);
+                                    }} />
+                                </div>
+                            );
+                        }}
+                        rowCountstart={(perPage * (page - 1))}
+                    />
+                }
             </div>
-
-
-            <div className='flex grow items-center justify-center border-2 border-solid border-gray-400 p-3 rounded-md'>
-                <Icon name={"add"} />
-                <span>افزودن فایل</span>
-            </div>
-
+            <Pagination activePage={page} perPage={perPage} count={courseCount} setActivePage={setPage} />
         </div>
     );
 };
