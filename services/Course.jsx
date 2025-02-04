@@ -50,4 +50,8 @@ export const deleteTopic = (data) => {
     return http.post(`${prefixUrl}/deleteTopic`, JSON.stringify(data));
 };
 
+export const editTopic = (data) => {
+    return http.post(`${prefixUrl}/editTopic`, JSON.stringify(data));
+};
+
 
