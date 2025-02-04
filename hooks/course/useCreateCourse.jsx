@@ -9,8 +9,6 @@ const useCreateCourse = (listener, setPersent) => {
     const createCourseRequest = async ({ courseName, description, category_id, level, file }) => {
         try {
 
-            console.log("createCourseRequest");
-
             let formData = new FormData();
             formData.append("courseName", courseName);
             formData.append("description", description);

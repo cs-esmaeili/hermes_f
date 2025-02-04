@@ -26,13 +26,13 @@ const CreateCourse = ({ selectedCourse, setSelectedCourse, isAdmin, setParentLoa
     const [progress, setProgress] = useState(0);
     const [formData, setFormData] = useState(convertCourseToForm(selectedCourse));
 
-    const { userInformationRequest } = useCourseInformation(setSelectedCourse);
+    const { courseInformationRequest } = useCourseInformation(setSelectedCourse);
 
-    const { createCourseRequest } = useCreateCourse(userInformationRequest, (present) => {
+    const { createCourseRequest } = useCreateCourse((course_id) => courseInformationRequest(course_id), (present) => {
         setProgress(present);
     });
 
-    const { editCourseRequest } = useEditCourse((course_id) => userInformationRequest(course_id), (present) => {
+    const { editCourseRequest } = useEditCourse((course_id) => courseInformationRequest(course_id), (present) => {
         setProgress(present);
     });
 
@@ -68,7 +68,7 @@ const CreateCourse = ({ selectedCourse, setSelectedCourse, isAdmin, setParentLoa
     return (
         <div className='flex flex-col grow  bg-primary rounded-xl p-5 overflow-y-auto gap-3'>
 
-            {selectedCourse && isAdmin && (
+            {selectedCourse && (
                 <div className={`flex justify-between bg-orange-400 p-3 rounded-md ${process.env.NEXT_PUBLIC_DIRECTION}`}>
                     <div className="flex grow items-center">{`دوره : ${selectedCourse.courseName}`}</div>
                     <DivButton className="flex items-center !w-fit" onClick={() => setSelectedCourse(null)}>

@@ -7,12 +7,10 @@ const useCourseInformation = (setSelectedCourse) => {
 
     const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong', 'permissions']);
 
-    const userInformationRequest = async (course_id) => {
+    const courseInformationRequest = async (course_id) => {
         try {
-            console.log("userInformationRequest");
 
-            const { data } = await courseInformation({ course_id });
-            const { course } = data;
+            const { data: { course } } = await courseInformation({ course_id });
             setSelectedCourse(course);
         } catch (error) {
             console.log(error);
@@ -24,6 +22,6 @@ const useCourseInformation = (setSelectedCourse) => {
         }
     };
 
-    return { userInformationRequest };
+    return { courseInformationRequest };
 };
 export default useCourseInformation;

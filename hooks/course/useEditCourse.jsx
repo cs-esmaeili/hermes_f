@@ -9,8 +9,6 @@ const useEditCourse = (refresh, setPersent) => {
     const editCourseRequest = async ({ _id, courseName, description, category_id, level, file }) => {
         try {
 
-            console.log("useEditCourse");
-
             let formData = new FormData();
             formData.append("course_id", _id);
             formData.append("courseName", courseName);
