@@ -16,7 +16,7 @@ import useGoogleLogInCheckNeedRegister from '@/hooks/auth/useGoogleLogInCheckNee
 const LogIn = () => {
 
 
-    const [userName, setUserName] = useState("cs.esmaeili1@gmail.com");
+    const [userName, setUserName] = useState("cs.esmaeili@gmail.com");
     const [userNameType, setUserNameType] = useState("email");
     const [error, setError] = useState("");
     const [loadingMain, setLoadingMain] = useState(false);

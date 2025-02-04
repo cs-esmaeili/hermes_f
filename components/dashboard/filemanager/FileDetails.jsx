@@ -7,7 +7,10 @@ const FileDetails = ({ file }) => {
 
     const token = decodeURIComponent(getCookie('token'));
     const { originalName, hostName, mimeType, size, isPrivate } = file;
+
     const fileUrl = `${process.env.NEXT_PUBLIC_API}file/${file._id}/${decodeURIComponent(token)}`;
+    console.log(fileUrl);
+
     return (
         <div className="flex gap-3 flex-col-reverse lg:min-w-[50rem]  md:flex-row h-full sm:min-w-[30rem] xl:min-w-[70rem]  xl:max-w-[70rem] overflow-x-hidden">
 
@@ -28,7 +31,7 @@ const FileDetails = ({ file }) => {
                 }
                 {mimeType.includes("image") &&
                     <CustomImage
-                        src={`${process.env.NEXT_PUBLIC_API}file/${file._id}/${decodeURIComponent(token)}`}
+                        src={fileUrl}
                         alt="Example Image"
                         fill={true}
                         objectFit="contain"
