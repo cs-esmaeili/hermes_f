@@ -46,4 +46,8 @@ export const courseInformation = (data) => {
     return http.post(`${prefixUrl}/courseInformation`, JSON.stringify(data));
 };
 
+export const deleteTopic = (data) => {
+    return http.post(`${prefixUrl}/deleteTopic`, JSON.stringify(data));
+};
+
 

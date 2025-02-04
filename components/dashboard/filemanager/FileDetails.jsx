@@ -9,7 +9,6 @@ const FileDetails = ({ file }) => {
     const { originalName, hostName, mimeType, size, isPrivate } = file;
 
     const fileUrl = `${process.env.NEXT_PUBLIC_API}file/${file._id}/${decodeURIComponent(token)}`;
-    console.log(fileUrl);
 
     return (
         <div className="flex gap-3 flex-col-reverse lg:min-w-[50rem]  md:flex-row h-full sm:min-w-[30rem] xl:min-w-[70rem]  xl:max-w-[70rem] overflow-x-hidden">

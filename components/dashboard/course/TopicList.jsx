@@ -2,13 +2,14 @@ import Icon from '@/components/general/Icon';
 import { useState, useEffect, useRef } from 'react';
 import AddTopic from './addTopic';
 import useCourseInformation from "@/hooks/course/useCourseInformation";
+import useDeleteTopic from "@/hooks/course/useDeleteTopic";
 import { useModalContext } from '@/components/dashboard/Modal';
 import FileDetails from '../filemanager/FileDetails';
 
 const TopicList = ({ selectedCourse, setSelectedCourse }) => {
 
-
     const { courseInformationRequest } = useCourseInformation(setSelectedCourse);
+    const { deleteTopicRequest } = useDeleteTopic(() => courseInformationRequest(selectedCourse._id));
     const { openModal, closeModal } = useModalContext();
 
     return (
@@ -26,7 +27,11 @@ const TopicList = ({ selectedCourse, setSelectedCourse }) => {
                             :
                             <Icon name={"public"} className="w-8 h-8 text-yellow-400" />
                         }
-                        <Icon name={"trash"} className="w-8 h-8 text-red-400" />
+                        <div onClick={() => {
+                            deleteTopicRequest(selectedCourse._id, value.file_id)
+                        }}>
+                            <Icon name={"trash"} className="w-8 h-8 text-red-400" />
+                        </div>
                     </div>
                     <div className='flex items-center justify-center gap-2' onClick={() => {
                         openModal(<FileDetails file={value.file_id} />)
