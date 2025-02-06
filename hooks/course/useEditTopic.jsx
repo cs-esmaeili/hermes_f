@@ -8,6 +8,8 @@ const useEditTopic = (listener) => {
 
     const editTopicRequest = async (course_id, file_id, title, order, changeVisibility) => {
         try {
+            // console.log({ course_id, file_id, title, order, changeVisibility });
+            
             const { data } = await editTopic({ course_id, file_id, title, order, changeVisibility });
             const { message } = data;
             toast.success(message);

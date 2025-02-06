@@ -15,10 +15,16 @@ const TopicList = ({ selectedCourse, setSelectedCourse }) => {
     const { deleteTopicRequest } = useDeleteTopic(() => courseInformationRequest(selectedCourse._id));
     const { openModal, closeModal } = useModalContext();
 
+
+    useEffect(() => {
+        console.log(selectedCourse);
+    }, [selectedCourse]);
+
+
     return (
         <div className={`flex flex-col gap-3 bg-primary mt-3 ${process.env.NEXT_PUBLIC_DIRECTION} p-3 rounded-md`}>
             {selectedCourse && selectedCourse?.courseMaterials.map((value, index) =>
-                <div className='flex  grow h-fit justify-between   rounded-md p-3  border-2 border-solid border-blue-400 cursor-pointer select-none'>
+                <div key={index} className='flex  grow h-fit justify-between   rounded-md p-3  border-2 border-solid border-blue-400 cursor-pointer select-none'>
                     <div className='relative flex items-center justify-center gap-2 pr-3'>
                         <span className="absolute right-[-27px] w-[29px] h-[29px] bg-primary border-2 border-gray-400 border-opacity-50 text-[16px] font-bold flex items-center  justify-center rounded-full leading-none ">
                             {value.order}
