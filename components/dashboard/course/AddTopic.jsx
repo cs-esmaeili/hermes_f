@@ -3,6 +3,7 @@ import CustomInput from '../CustomInput';
 import { useState, useEffect, useRef } from 'react';
 import useAddTopic from '@/hooks/course/useAddTopic';
 import PickFile from '@/components/dashboard/PickFile';
+import ProgressBar from '@/components/dashboard/ProgressBar';
 
 const AddTopic = ({ course_id, refreshList }) => {
 
@@ -14,12 +15,9 @@ const AddTopic = ({ course_id, refreshList }) => {
     const { addTopicRequest } = useAddTopic(() => { refreshList() }, (persent) => setPersent(persent));
 
     return (
-        <div className={`bg-primary mt-3 ${process.env.NEXT_PUBLIC_DIRECTION}`}>
-            <div className='flex  grow h-fit justify-between rounded-md p-3  border-2 border-dashed border-blue-400 cursor-pointer select-none'>
+        <div className={`flex flex-col justify-center bg-primary mt-3 border-2 border-dashed border-blue-400 p-1 ${process.env.NEXT_PUBLIC_DIRECTION}`}>
+            <div className='flex  grow h-fit justify-between rounded-md p-3   cursor-pointer select-none'>
                 <div className='relative flex items-center justify-center gap-2 pr-3'>
-                    <span className="absolute right-[-27px] w-[29px] h-[29px] bg-primary border-2  border-gray-400 border-opacity-50 text-[16px] font-bold flex items-center  justify-center rounded-full leading-none ">
-                        5
-                    </span>
                     <CustomInput placeholder="عنوان سرفصل" containerClassName="border-2 border-accent rounded-md border-opacity-50"
                         value={title}
                         onChange={(e) => {
@@ -54,6 +52,7 @@ const AddTopic = ({ course_id, refreshList }) => {
                     <Icon name={"uploadfile"} className="w-8 h-8 text-green-400" />
                 </div>
             </div>
+            <ProgressBar progress={persent} setProgress={setPersent} />
         </div>
     );
 };

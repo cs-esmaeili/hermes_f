@@ -35,7 +35,6 @@ const page = () => {
                     ]}
                 />
             </div>
-
             <div className='w-full h-fit xl:w-3/4 flex-grow'>
                 {(page == "createCourse") &&
                     <>

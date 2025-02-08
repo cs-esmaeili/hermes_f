@@ -10,6 +10,7 @@ import ProgressBar from "@/components/dashboard/ProgressBar";
 import useCourseInformation from "@/hooks/course/useCourseInformation";
 import { ImCross } from "react-icons/im";
 import ApprovalStatus from "../approval/ApprovalStatus";
+import AddTopic from "./AddTopic";
 
 const convertCourseToForm = (selectedCourse) => {
     return {
@@ -95,7 +96,6 @@ const CreateCourse = ({ selectedCourse, setSelectedCourse, isAdmin, setParentLoa
                 </div>
                 <CustomInput rightLabel={"سطح دوره"} inputClassName={"bg-secondary"} value={formData.level} onChange={handleInputChange('level')} />
             </div>
-
             <DivButton className={`flex w-full items-center justify-center  bg-yellow-500 mt-3 ${progress > 0 && "bg-opacity-50 cursor-not-allowed"}`} onClick={() => {
                 if (progress == 0 && !selectedCourse) createCourseRequest(formData);
                 if (progress == 0 && selectedCourse) editCourseRequest(formData);
