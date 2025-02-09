@@ -1,32 +1,31 @@
-'use client'
-import { useState, useEffect } from 'react';
-import { BiSolidEdit } from 'react-icons/bi';
-import Create from '@/components/dashboard/category/Create';
-import Delete from '@/components/dashboard/category/Delete';
+'use client';
+import { useState, useEffect, useRef } from 'react';
+import Cytoscape from 'cytoscape';
 import { categoryList as RcategoryList } from '@/services/Category';
 import toast from 'react-hot-toast';
-import Table from '@/components/dashboard/Table';
-import Pagination from '@/components/dashboard/Pagination';
 import translation from "@/translation/translation";
+import CreateCategory from '@/components/dashboard/category/Create';
+import { createCategory as RcreateCategory, updateCategory as RupdateCategory } from '@/services/Category';
 
-export default function Category({ pickMode = false, selectListener }) {
-
-
+export default function Category({ selectListener }) {
     const [categorys, setCategorys] = useState(null);
-    const [categorysCount, setCategorysCount] = useState(null);
-    const [activePage, setActivePage] = useState(1);
-    const [perPage, setPerPage] = useState(6);
-    const [editData, setEditData] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState(null);
 
-    const { someThingIsWrong, categoryPage } = translation.getMultiple(['someThingIsWrong', 'categoryPage']);
+    const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong']);
+    const cyRef = useRef(null);
+    const [addEdgeMode, setAddEdgeMode] = useState(false);
 
+    const addEdgeModeRef = useRef(addEdgeMode);
 
-    const categoryList = async () => {
+    const updateCategory = async (child, parent, name) => {
         try {
-            const { data } = await RcategoryList({ page: activePage, perPage });
-            const { categorysCount, categorys } = data;
-            setCategorys(categorys);
-            setCategorysCount(categorysCount);
+            console.log({ child, parent, name });
+
+            const { data } = await RupdateCategory({ child, parent, name });
+            const { message } = data;
+            toast.success(message);
+            setSelectedCategory(null);
+            categoryList();
         } catch (error) {
             if (error?.response?.data?.message) {
                 toast.error(error.response.data.message);
@@ -36,63 +35,197 @@ export default function Category({ pickMode = false, selectListener }) {
         }
     }
 
+
+    useEffect(() => {
+        addEdgeModeRef.current = addEdgeMode;
+        if (!addEdgeMode && selectedSourceRef.current) {
+            selectedSourceRef.current.removeClass('selected');
+            selectedSourceRef.current = null;
+        }
+    }, [addEdgeMode]);
+
+    const selectedSourceRef = useRef(null);
+
+    const categoryList = async () => {
+        try {
+            const { data } = await RcategoryList();
+            setCategorys(data.categorys);
+        } catch (error) {
+            toast.error(error?.response?.data?.message || someThingIsWrong);
+        }
+    };
+
     useEffect(() => {
         categoryList();
-    }, [activePage]);
+    }, []);
+
+    useEffect(() => {
+        if (categorys) {
+            const nodes = categorys.map((category) => ({
+                data: { id: category._id.toString(), label: category.name },
+            }));
+
+            const edges = categorys.reduce((acc, category) => {
+                if (category.parent) {
+                    const parentCategory = categorys.find(
+                        (cat) => cat._id.toString() === category.parent.toString()
+                    );
+                    if (parentCategory) {
+                        acc.push({
+                            data: {
+                                source: category._id.toString(),       
+                                target: parentCategory._id.toString(),     
+                            },
+                        });
+                    }
+                }
+                return acc;
+            }, []);
+
+            const cyInstance = Cytoscape({
+                container: cyRef.current,
+                elements: [...nodes, ...edges],
+                style: [
+                    {
+                        selector: 'node',
+                        style: {
+                            'background-color': '#ffffff',
+                            'label': 'data(label)',
+                            'font-size': 14,
+                            'text-valign': 'top',
+                            'text-halign': 'center',
+                            'color': '#ffffff',
+                            'text-margin': '0 0 50px 0',
+                            'border-width': 2,
+                            'border-color': '#000000',
+                        },
+                    },
+                    {
+                        selector: 'node.selected',
+                        style: {
+                            'border-width': 4,
+                            'border-color': 'red',
+                        },
+                    },
+                    {
+                        selector: 'edge',
+                        style: {
+                            width: 2,
+                            'line-color': '#ccc',
+                            'target-arrow-color': '#ccc',
+                            'target-arrow-shape': 'triangle',
+                            'curve-style': 'bezier',
+                        },
+                    },
+                ],
+                layout: {
+                    name: 'breadthfirst',
+                    directed: true,
+                    padding: 10,
+                    spacingFactor: 1.5,
+                    animate: true,
+                },
+                zoomingEnabled: true,
+                userZoomingEnabled: true,
+                panEnabled: true,
+                userPanningEnabled: true,
+                userDragNodesEnabled: false,
+            });
+            const handleNodeTap = (event) => {
+                const clickedNode = event.target;
+                if (addEdgeModeRef.current) {
+                    if (!selectedSourceRef.current) {
+                        selectedSourceRef.current = clickedNode;
+                        clickedNode.addClass('selected');
+                        toast('فرزند انتخاب شد. حالا نود پدر را انتخاب کنید.');
+                    } else {
+                        if (selectedSourceRef.current.id() === clickedNode.id()) {
+                            clickedNode.removeClass('selected');
+                            selectedSourceRef.current = null;
+                            toast('انتخاب فرزند لغو شد.');
+                        } else {
+                            const childId = selectedSourceRef.current.id();
+                            const existingEdges = cyInstance.$(`edge[source="${childId}"]`);
+                            if (existingEdges.length > 0) {
+                                existingEdges.remove();
+                                console.log('ارتباط قبلی حذف شد برای فرزند:', selectedSourceRef.current.data());
+                            }
+                            cyInstance.add({
+                                group: 'edges',
+                                data: { source: childId, target: clickedNode.id() },
+                            });
+                            updateCategory(selectedSourceRef.current.data().id, clickedNode.data().id, undefined)
+
+                            selectedSourceRef.current.removeClass('selected');
+                            selectedSourceRef.current = null;
+                        }
+                    }
+                } else {
+                    const clickedNodeId = clickedNode.id();
+                    const clickedCategory = categorys.find(
+                        (category) => category._id.toString() === clickedNodeId
+                    );
+                    if (clickedCategory) {
+                        console.log('اطلاعات کامل دسته بندی:', clickedCategory);
+                        setSelectedCategory(clickedCategory);
+                        if (selectListener) {
+                            selectListener(clickedCategory);
+                        }
+                    }
+                }
+            };
+
+            const handleEdgeContextTap = (event) => {
+                if (addEdgeModeRef.current) {
+                    const clickedEdge = event.target;
+                    const sourceId = clickedEdge.data('source');
+                    const targetId = clickedEdge.data('target');
+                    console.log(
+                        'حذف ارتباط (راست کلیک روی فلش): فرزند:',
+                        cyInstance.getElementById(sourceId).data(),
+                        '=> پدر:',
+                        cyInstance.getElementById(targetId).data()
+                    );
+                    clickedEdge.remove();
+                    updateCategory(cyInstance.getElementById(sourceId).data().id, null, undefined)
+
+                }
+            };
+
+            cyInstance.on('tap', 'node', handleNodeTap);
+            cyInstance.on('cxttap', 'edge', handleEdgeContextTap);
+
+            return () => {
+                if (cyInstance) {
+                    cyInstance.destroy();
+                }
+            };
+        }
+    }, [categorys]);
 
     return (
-        <div className='flex flex-col w-full'>
-            {pickMode == false &&
-                <div>
-                    <Create categoryList={categoryList} editData={editData} setEditData={setEditData} />
-                </div>
-            }
-            <div className='flex grow w-full p-2 overflow-x-scroll'>
-                {categorys &&
-                    <Table
-                        headers={[categoryPage.id, categoryPage.name, categoryPage.updatedAt]}
-                        actionHeader={categoryPage.actions}
-                        rowsData={["_id", "name", "updatedAt"]}
-                        rows={categorys}
-                        headerClasses={["", "", "", ""]}
-                        rowClasses={(row, rowIndex) => {
-                            return "";
-                        }}
-                        cellClasses={(cell, cellIndex, row, rowIndex) => {
-                            return cell == "ارسال شده" && "text-green-400";
-                        }}
-                        columnVisibilityClasses={[
-                            "",
-                            "",
-                            "",
-                            ""
-                        ]}
-                        rowCountstart={(perPage * (activePage - 1))}
-                        selectListener={(row, rowIndex) => {
-                            if (pickMode) {
-                                selectListener(row);
+        <div className="flex flex-col w-full p-4 bg-primary rounded-lg">
+            <CreateCategory categoryList={categoryList} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+            <div className="flex grow justify-center items-center mb-4">
+                <button
+                    onClick={() => {
+                        setAddEdgeMode((prev) => {
+                            if (prev && selectedSourceRef.current) {
+                                selectedSourceRef.current.removeClass('selected');
+                                selectedSourceRef.current = null;
                             }
-                        }}
-                        actionComponent={({ rowData, rowIndex }) => {
-                            return (
-                                <td className={`h-[1px]  p-0 pb-1 ${pickMode && "opacity-50"}`}>
-                                    <div className="flex h-full items-center justify-center rounded-e-xl bg-secondary p-1 text-nowrap">
-                                        <Delete row={rowData} index={rowIndex} categoryList={categoryList} categorys={categorys} pickMode={pickMode} />
-                                        <BiSolidEdit className='text-xl ml-4 text-blue-400' onClick={() => {
-                                            if (!pickMode) {
-                                                setEditData(rowData);
-                                            }
-                                        }} />
-                                    </div>
-                                </td>
-                            );
-                        }}
-                    />
-                }
+                            return !prev;
+                        });
+                    }}
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                    {addEdgeMode ? "خروج از حالت تغییر/افزودن فلش" : "ورود به حالت تغییر/افزودن فلش"}
+                </button>
             </div>
-            <Pagination activePage={activePage} perPage={perPage} count={categorysCount} setActivePage={setActivePage} />
+            <div className="flex grow w-full p-2 overflow-x-auto overflow-y-hidden border border-gray-300 rounded-lg shadow-md">
+                <div ref={cyRef} className="w-full h-full" style={{ minHeight: '500px' }} />
+            </div>
 
         </div>
-
-    )
+    );
 }
