@@ -9,18 +9,16 @@ import { getCookie } from 'cookies-next';
 import { useSelector } from 'react-redux';
 import Icon from "@/components/general/Icon";
 import useLogout from "@/hooks/useLogout";
-import { useRouter } from 'next/navigation';
 
 const Sidebar = ({ open, setOpen }) => {
 
   const pathname = usePathname();
-  const text = translation.get('sideBar');
   const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState(true);
   const { goOut } = useLogout();
   const information = useSelector((state) => state.information.value);
   const permissions = useSelector((state) => state.permissions.value);
-  const { push } = useRouter();
+
   const allItems = [
     { name: "صفحه اصلی پنل", url: "/dashboard", icon: <Icon name={"dashboard"} className="w-8 h-8" /> },
     { name: "دسترسی ها", url: "/dashboard/role", icon: <Icon name={"permissions"} className="w-8 h-8" /> },
@@ -45,7 +43,7 @@ const Sidebar = ({ open, setOpen }) => {
       });
       setItems(tempItems);
     }
-  }, [permissions, information]);
+  }, [permissions, information, pathname]);
 
   useEffect(() => {
     if (permissions != null && permissions.length > 0 && information != null) {
@@ -111,7 +109,7 @@ const Sidebar = ({ open, setOpen }) => {
           <div className="pr-3">
             {permissions && permissions.some(permission => "/dashboard/profile" === permission.route) &&
               <Link href="/dashboard/profile">
-                <div className={(pathname == "/ads") ?
+                <div className={(pathname == "/dashboard/profile") ?
                   "relative bg-siebar_item mb-5 flex items-center rounded-xl bg-secondary p-3 text-accent rtl"
                   :
                   "relative mb-5 flex items-center p-3 text-dactive rtl"

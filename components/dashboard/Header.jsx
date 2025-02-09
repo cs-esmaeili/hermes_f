@@ -3,6 +3,7 @@ import { RiMenu3Line } from "react-icons/ri";
 import ThemeToggleButton from "../general/ThemeToggleButton";
 import Icon from "../general/Icon";
 import { useSelector } from 'react-redux';
+import Link from "next/link";
 
 const Header = ({ open, setOpen }) => {
 
@@ -12,10 +13,11 @@ const Header = ({ open, setOpen }) => {
     <div className="flex items-center p-5 pr-10">
 
       <div className="flex-row mr-3 gap-4  flex">
-        <Icon name={"profile"} className="w-8 h-8 rounded-full" />
+        <Link href="/dashboard/profile">
+          <Icon name={"profile"} className="w-8 h-8 rounded-full" />
+        </Link>
         <ThemeToggleButton />
       </div>
-
       <div className="flex grow flex-wrap justify-around gap-1 rounded-xl p-2">
       </div>
       <div className={`flex flex-row justify-center items-center gap-5 ${process.env.NEXT_PUBLIC_DIRECTION}`}>
@@ -28,7 +30,7 @@ const Header = ({ open, setOpen }) => {
         className="ml-3 text-2xl lg:hidden"
         onClick={() => setOpen(!open)}
       />
-    </div>
+    </div >
   );
 };
 

@@ -5,9 +5,9 @@ import { categoryList as RcategoryList } from '@/services/Category';
 import toast from 'react-hot-toast';
 import translation from "@/translation/translation";
 import CreateCategory from '@/components/dashboard/category/Create';
-import { createCategory as RcreateCategory, updateCategory as RupdateCategory } from '@/services/Category';
+import { updateCategory as RupdateCategory } from '@/services/Category';
 
-export default function Category({ selectListener }) {
+export default function Category({ selectListener, pickMode = false }) {
     const [categorys, setCategorys] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -19,8 +19,6 @@ export default function Category({ selectListener }) {
 
     const updateCategory = async (child, parent, name) => {
         try {
-            console.log({ child, parent, name });
-
             const { data } = await RupdateCategory({ child, parent, name });
             const { message } = data;
             toast.success(message);
@@ -33,8 +31,7 @@ export default function Category({ selectListener }) {
                 toast.error(someThingIsWrong);
             }
         }
-    }
-
+    };
 
     useEffect(() => {
         addEdgeModeRef.current = addEdgeMode;
@@ -73,8 +70,8 @@ export default function Category({ selectListener }) {
                     if (parentCategory) {
                         acc.push({
                             data: {
-                                source: category._id.toString(),       
-                                target: parentCategory._id.toString(),     
+                                source: category._id.toString(),
+                                target: parentCategory._id.toString(),
                             },
                         });
                     }
@@ -121,9 +118,12 @@ export default function Category({ selectListener }) {
                 layout: {
                     name: 'breadthfirst',
                     directed: true,
-                    padding: 10,
-                    spacingFactor: 1.5,
+                    padding: 200,            // افزایش padding برای فاصله بیشتر اطراف گراف
+                    spacingFactor: 4.0,      // افزایش فاصله بین نودها
+                    avoidOverlap: true,      // جلوگیری از همپوشانی نودها
+                    avoidOverlapPadding: 20, // فاصله اضافی برای جلوگیری از همپوشانی
                     animate: true,
+                    fit: false,              // جلوگیری از فیت خودکار گراف به container
                 },
                 zoomingEnabled: true,
                 userZoomingEnabled: true,
@@ -131,6 +131,7 @@ export default function Category({ selectListener }) {
                 userPanningEnabled: true,
                 userDragNodesEnabled: false,
             });
+
             const handleNodeTap = (event) => {
                 const clickedNode = event.target;
                 if (addEdgeModeRef.current) {
@@ -154,7 +155,7 @@ export default function Category({ selectListener }) {
                                 group: 'edges',
                                 data: { source: childId, target: clickedNode.id() },
                             });
-                            updateCategory(selectedSourceRef.current.data().id, clickedNode.data().id, undefined)
+                            updateCategory(selectedSourceRef.current.data().id, clickedNode.data().id, undefined);
 
                             selectedSourceRef.current.removeClass('selected');
                             selectedSourceRef.current = null;
@@ -187,8 +188,7 @@ export default function Category({ selectListener }) {
                         cyInstance.getElementById(targetId).data()
                     );
                     clickedEdge.remove();
-                    updateCategory(cyInstance.getElementById(sourceId).data().id, null, undefined)
-
+                    updateCategory(cyInstance.getElementById(sourceId).data().id, null, undefined);
                 }
             };
 
@@ -205,27 +205,30 @@ export default function Category({ selectListener }) {
 
     return (
         <div className="flex flex-col w-full p-4 bg-primary rounded-lg">
-            <CreateCategory categoryList={categoryList} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-            <div className="flex grow justify-center items-center mb-4">
-                <button
-                    onClick={() => {
-                        setAddEdgeMode((prev) => {
-                            if (prev && selectedSourceRef.current) {
-                                selectedSourceRef.current.removeClass('selected');
-                                selectedSourceRef.current = null;
-                            }
-                            return !prev;
-                        });
-                    }}
-                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                >
-                    {addEdgeMode ? "خروج از حالت تغییر/افزودن فلش" : "ورود به حالت تغییر/افزودن فلش"}
-                </button>
-            </div>
+            {!pickMode &&
+                <>
+                    <CreateCategory categoryList={categoryList} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+                    <div className="flex grow justify-center items-center mb-4">
+                        <button
+                            onClick={() => {
+                                setAddEdgeMode((prev) => {
+                                    if (prev && selectedSourceRef.current) {
+                                        selectedSourceRef.current.removeClass('selected');
+                                        selectedSourceRef.current = null;
+                                    }
+                                    return !prev;
+                                });
+                            }}
+                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        >
+                            {addEdgeMode ? "خروج از حالت تغییر/افزودن فلش" : "ورود به حالت تغییر/افزودن فلش"}
+                        </button>
+                    </div>
+                </>
+            }
             <div className="flex grow w-full p-2 overflow-x-auto overflow-y-hidden border border-gray-300 rounded-lg shadow-md">
                 <div ref={cyRef} className="w-full h-full" style={{ minHeight: '500px' }} />
             </div>
-
         </div>
     );
 }

@@ -10,13 +10,16 @@ import ProgressBar from "@/components/dashboard/ProgressBar";
 import useCourseInformation from "@/hooks/course/useCourseInformation";
 import { ImCross } from "react-icons/im";
 import ApprovalStatus from "../approval/ApprovalStatus";
-import AddTopic from "./AddTopic";
+import { useModalContext } from '@/components/dashboard/Modal';
+import Category from "@/app/dashboard/(main)/category/page";
 
 const convertCourseToForm = (selectedCourse) => {
     return {
         courseName: selectedCourse?.courseName || "",
         description: selectedCourse?.description || "",
         level: selectedCourse?.level || "",
+        category_id: selectedCourse?.category_id._id || null,
+        categoryName: selectedCourse?.category_id?.name || "انتخاب دسته بندی",
         file: selectedCourse?.image?.url || null,
         _id: selectedCourse?._id || null,
     }
@@ -24,9 +27,10 @@ const convertCourseToForm = (selectedCourse) => {
 const CreateCourse = ({ selectedCourse, setSelectedCourse, isAdmin, setParentLoading }) => {
 
 
+
     const [progress, setProgress] = useState(0);
     const [formData, setFormData] = useState(convertCourseToForm(selectedCourse));
-
+    const { openModal, closeModal } = useModalContext();
     const { courseInformationRequest } = useCourseInformation(setSelectedCourse);
 
     const { createCourseRequest } = useCreateCourse((course_id) => courseInformationRequest(course_id), (present) => {
@@ -94,7 +98,19 @@ const CreateCourse = ({ selectedCourse, setSelectedCourse, isAdmin, setParentLoa
                     <CustomInput rightLabel={"نام دوره"} inputClassName={"bg-secondary"} containerClassName={" w-full"} value={formData.courseName} onChange={handleInputChange('courseName')} />
                     <CustomInput rightLabel={"توضیحات دوره"} inputClassName={"bg-secondary"} containerClassName={" w-full"} value={formData.description} onChange={handleInputChange('description')} />
                 </div>
-                <CustomInput rightLabel={"سطح دوره"} inputClassName={"bg-secondary"} value={formData.level} onChange={handleInputChange('level')} />
+                <div className="flex w-full gap-3 items-end">
+                    <CustomInput rightLabel={"سطح دوره"} inputClassName={"bg-secondary"} value={formData.level} containerClassName={" w-full"} onChange={handleInputChange('level')} />
+                    <DivButton className="bg-red-500 h-full justify-center" onClick={(e) => {
+                        openModal(<Category selectListener={(category) => {
+                            console.log(category);
+                            setFormData((prev) => ({ ...prev, category_id: category._id }));
+                            setFormData((prev) => ({ ...prev, categoryName: category.name }));
+                            closeModal()
+                        }} pickMode />)
+                    }}>
+                        {formData.categoryName}
+                    </DivButton>
+                </div>
             </div>
             <DivButton className={`flex w-full items-center justify-center  bg-yellow-500 mt-3 ${progress > 0 && "bg-opacity-50 cursor-not-allowed"}`} onClick={() => {
                 if (progress == 0 && !selectedCourse) createCourseRequest(formData);
