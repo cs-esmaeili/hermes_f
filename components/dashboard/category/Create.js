@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useModalContext } from '@/components/dashboard/Modal';
 import { createCategory as RcreateCategory, updateCategory as RupdateCategory } from '@/services/Category';
 import toast from 'react-hot-toast';
 import translation from "@/translation/translation";
 
 export default function CreateCategory({ categoryList, selectedCategory, setSelectedCategory }) {
-
-    const { openModal, closeModal } = useModalContext();
 
     const [editMode, setEditMode] = useState(false);
     const [name, setName] = useState("");
@@ -20,8 +17,6 @@ export default function CreateCategory({ categoryList, selectedCategory, setSele
             setName("");
             categoryList();
         } catch (error) {
-            console.log(error);
-
             if (error?.response?.data?.message) {
                 toast.error(error.response.data.message);
             } else {

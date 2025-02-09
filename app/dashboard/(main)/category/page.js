@@ -149,7 +149,6 @@ export default function Category({ selectListener, pickMode = false }) {
                             const existingEdges = cyInstance.$(`edge[source="${childId}"]`);
                             if (existingEdges.length > 0) {
                                 existingEdges.remove();
-                                console.log('ارتباط قبلی حذف شد برای فرزند:', selectedSourceRef.current.data());
                             }
                             cyInstance.add({
                                 group: 'edges',
@@ -167,7 +166,6 @@ export default function Category({ selectListener, pickMode = false }) {
                         (category) => category._id.toString() === clickedNodeId
                     );
                     if (clickedCategory) {
-                        console.log('اطلاعات کامل دسته بندی:', clickedCategory);
                         setSelectedCategory(clickedCategory);
                         if (selectListener) {
                             selectListener(clickedCategory);
@@ -181,12 +179,6 @@ export default function Category({ selectListener, pickMode = false }) {
                     const clickedEdge = event.target;
                     const sourceId = clickedEdge.data('source');
                     const targetId = clickedEdge.data('target');
-                    console.log(
-                        'حذف ارتباط (راست کلیک روی فلش): فرزند:',
-                        cyInstance.getElementById(sourceId).data(),
-                        '=> پدر:',
-                        cyInstance.getElementById(targetId).data()
-                    );
                     clickedEdge.remove();
                     updateCategory(cyInstance.getElementById(sourceId).data().id, null, undefined);
                 }

@@ -27,6 +27,7 @@ const Sidebar = ({ open, setOpen }) => {
     { name: "درخواست ها", url: "/dashboard/approval", icon: <Icon name={"adminApproval"} className="w-8 h-8" /> },
     { name: "دوره ها", url: "/dashboard/course", icon: <Icon name={"course"} className="w-8 h-8" /> },
     { name: "دسته بندی ها", url: "/dashboard/category", icon: <Icon name={"category"} className="w-8 h-8" /> },
+    { name: "تیکت پشتیبانی", url: "/dashboard/ticket", icon: <Icon name={"ticket"} className="w-8 h-8" /> },
   ];
 
   const [items, setItems] = useState([]);
