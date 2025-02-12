@@ -1,12 +1,13 @@
 'use client'
 
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CustomInput from "@/components/dashboard/CustomInput";
 import CustomSelect from "@/components/dashboard/CustomSelect";
 import DivButton from "@/components/dashboard/DivButton";
 import useCreateTicket from "@/hooks/ticket/useCreateTicket";
 
-const CreateTicket = ({ refresh }) => {
+const CreateTicket = ({ setParentLoading, setParentPage }) => {
+
     const [subject, setSubject] = useState('هاها');
     const [priority, setPriority] = useState('high');
     const [comment, setComment] = useState('این یک متن خیلی مهمه');
@@ -15,7 +16,7 @@ const CreateTicket = ({ refresh }) => {
         setSubject("");
         setPriority("");
         setComment("");
-        if (refresh) refresh();
+        setParentPage("ticketList");
     });
 
     const handleSubmit = () => {
@@ -27,6 +28,10 @@ const CreateTicket = ({ refresh }) => {
 
         createTicketRequest(ticketData);
     };
+
+    useEffect(() => {
+        setParentLoading(false);
+    }, []);
 
     return (
         <div className="flex w-full bg-primary p-4 rounded-lg">

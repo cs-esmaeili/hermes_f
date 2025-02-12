@@ -16,7 +16,10 @@ const NavigationMenu = ({ items, page, setPage, containerClass = "" }) => {
                     key={index}
                     className={`transition duration-200 border-2 border-transparent hover:border-accent hover:border-opacity-75 hover:text-accent bg-primary rounded-lg 
                         ${page === item.page && "text-accent border-2 !border-accent"}`}
-                    onClick={() => setPage(item.page)}>
+                    onClick={() => {
+                        if (page != item.page)
+                            setPage(item.page)
+                    }}>
                     <Icon name={item.icon} className="w-8 h-8" />
                     <span>{item.label}</span>
                 </DivButton>
