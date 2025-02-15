@@ -1,13 +1,14 @@
+import { ReactSVG } from "react-svg";
 
-const Icon = ({ name, className = 'w-12 h-12', ...props }) => {
-    try {
-        const IconComponent = require(`@/public/assets/icons/${name}.svg`).default;
-
-        return <IconComponent className={className} {...props} />;
-    } catch (error) {
-        console.error(`Icon "${name}" not found in the icons folder.`);
-        return null;
-    }
+const Icon = ({ name, className }) => {
+    return (
+        <ReactSVG
+            src={`/assets/icons/${name}.svg`}
+            beforeInjection={(svg) => {
+                svg.classList.add(...className.split(" "));
+            }}
+        />
+    );
 };
 
 export default Icon;

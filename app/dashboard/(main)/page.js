@@ -1,12 +1,11 @@
 'use client'
 
-export default function Dashboard() {
 
-
-
+const page = () => {
     return (
-        <div className="flex flex-col items-center  grow">
-            salam
+        <div className="w-full">
         </div>
-    )
-}
+    );
+};
+
+export default page;

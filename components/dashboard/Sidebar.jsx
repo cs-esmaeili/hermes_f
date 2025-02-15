@@ -27,8 +27,13 @@ const Sidebar = ({ open, setOpen }) => {
     { name: "درخواست ها", url: "/dashboard/approval", icon: <Icon name={"adminApproval"} className="w-8 h-8" /> },
     { name: "دوره ها", url: "/dashboard/course", icon: <Icon name={"course"} className="w-8 h-8" /> },
     { name: "دسته بندی ها", url: "/dashboard/category", icon: <Icon name={"category"} className="w-8 h-8" /> },
+<<<<<<< Updated upstream
     { name: "ادمین / تیکت ها", url: "/dashboard/adminTickets", icon: <Icon name={"ticket"} className="w-8 h-8" /> },
     { name: "تیکت ها", url: "/dashboard/tickets", icon: <Icon name={"ticket"} className="w-8 h-8" /> },
+=======
+    { name: "تیکت پشتیبانی", url: "/dashboard/ticket", icon: <Icon name={"ticket"} className="w-8 h-8" /> },
+    { name: "پست", url: "/dashboard/post/createpost", icon: <Icon name={"ticket"} className="w-8 h-8" /> },
+>>>>>>> Stashed changes
   ];
 
   const [items, setItems] = useState([]);

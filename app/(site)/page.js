@@ -1,30 +1,74 @@
-import Head from 'next/head';
+'use client'
+// App.js
+import React, { useRef, useEffect } from 'react';
 
-const page = () => {
-    return (
-        <div className="min-h-screen bg-primary flex flex-col items-center justify-center px-4">
-            <Head>
-                <title>به زودی!</title>
-                <meta name="description" content="وبسایت ما به زودی راه اندازی می شود!" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+// کامپوننت‌های نمونه برای متن تو در تو
+const BoldText = ({ children }) => (
+  <strong style={{ color: 'red' }}>{children}</strong>
+);
+const ItalicText = ({ children }) => (
+  <em style={{ color: 'blue' }}>{children}</em>
+);
 
-            <div className='text-4xl font-bold rtl mb-10'>
-                <span className='dark:text-white text-7xl'>هر</span>
-                <span className=' text-7xl' style={{ color: "#3B82F6" }}>مس</span>
-            </div>
+// کامپوننت NestedText با متن تو در تو
+const NestedText = () => (
+  <div style={{ lineHeight: '1.6', fontSize: '18px' }}>
+    این یک متن نمونه است. برای مثال، <BoldText>این متن بولد است</BoldText> و همچنین{' '}
+    <ItalicText>این متن ایتالیک است</ItalicText>. شما می‌توانید در هر نقطه‌ای تایپ کنید.
+  </div>
+);
 
-            <h1 className="text-4xl font-bold text-black rtl" style={{ color: "#cccccc" }}>
-                به زودی می رسیم!
-            </h1>
+const App = () => {
+  const containerRef = useRef(null);
 
-            <div className="mt-8">
-                <div className="bg-secondary hover:bg-opacity-75  font-bold py-2 px-4 rounded-full rtl justify-center text-center items-center flex" style={{ color: "#cccccc" }}>
-                    وبسایت ما در حال ساخت است. برای راه اندازی آن با ما همراه باشید!
-                </div>
-            </div>
-        </div>
-    );
+  useEffect(() => {
+    const handleSelectionChange = () => {
+      const selection = window.getSelection();
+      if (
+        selection &&
+        selection.rangeCount > 0 &&
+        selection.toString().trim() !== ''
+      ) {
+        const range = selection.getRangeAt(0);
+        // بررسی می‌کنیم که انتخاب درون container ما انجام شده باشد
+        if (
+          containerRef.current &&
+          containerRef.current.contains(range.commonAncestorContainer)
+        ) {
+          console.clear();
+          console.log('متن انتخاب شده یا موقعیت caret:', selection.toString());
+          console.log('Start container:', range.startContainer);
+          console.log('Start offset:', range.startOffset);
+          console.log('End container:', range.endContainer);
+          console.log('End offset:', range.endOffset);
+          console.log('Common ancestor:', range.commonAncestorContainer);
+        }
+      }
+    };
+
+    // اضافه کردن رویداد global به document
+    document.addEventListener('selectionchange', handleSelectionChange);
+    return () => {
+      document.removeEventListener('selectionchange', handleSelectionChange);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      contentEditable={true}
+      style={{
+        padding: '20px',
+        border: '1px solid #ccc',
+        margin: '20px',
+        borderRadius: '8px',
+        direction: 'rtl',
+        backgroundColor: '#f9f9f9',
+      }}
+    >
+      <NestedText />
+    </div>
+  );
 };
 
-export default page;
+export default App;

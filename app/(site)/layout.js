@@ -1,7 +1,7 @@
 export default function Layout({ children }) {
     return (
-        <html lang="en">
-            <body>{children}</body>
-        </html>
+        <main className="text-ellipsis text-textcolor bg-primary ">
+            {children}
+        </main>
     )
 }

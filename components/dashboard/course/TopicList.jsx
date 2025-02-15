@@ -1,6 +1,6 @@
 import Icon from '@/components/general/Icon';
 import { useState, useEffect, useRef } from 'react';
-import AddTopic from './addTopic';
+import AddTopic from './AddTopic';
 import useCourseInformation from "@/hooks/course/useCourseInformation";
 import useEditTopic from "@/hooks/course/useEditTopic";
 import useDeleteTopic from "@/hooks/course/useDeleteTopic";

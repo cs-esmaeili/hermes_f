@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 const ProgressBar = ({ progress, setProgress = null }) => {
 
   useEffect(() => {
-    if (progress == 100) {
+    if (progress == 100 && setProgress) {
       setProgress(0);
     }
   }, [progress]);

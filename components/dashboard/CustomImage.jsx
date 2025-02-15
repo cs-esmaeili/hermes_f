@@ -14,7 +14,7 @@ const CustomImage = ({
   return (
     <Image
       src={src}
-      alt={alt}
+      alt={alt || "basic"}
       width={!fill ? width : undefined}
       height={!fill ? height : undefined}
       fill={fill}
