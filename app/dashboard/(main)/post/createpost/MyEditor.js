@@ -6,7 +6,7 @@ import Heading from '@tiptap/extension-heading';
 import TextAlign from '@tiptap/extension-text-align';
 import Highlight from '@tiptap/extension-highlight';
 import Link from '@tiptap/extension-link';
-import Image from '@tiptap/extension-image';
+import ResizableImage from './ResizableImage'; // اکستنشن سفارشی
 
 const buttonStyle = "bg-primary p-3 rounded-lg text-textcolor";
 const activeButtonStyle = "bg-primary p-3 rounded-lg text-textcolor text-purple-500";
@@ -167,9 +167,8 @@ const Toolbar = ({
             {/* دکمه Image: استفاده از URL پیش‌فرض */}
             <button
                 onClick={() => {
-                    // استفاده از URL پیش‌فرض برای عکس
                     const defaultImageUrl = "https://picsum.photos/200/300";
-                    editor.chain().focus().setImage({ src: defaultImageUrl }).run();
+                    editor.chain().focus().setImage({ src: defaultImageUrl, width: "300px", height: "200px" }).run();
                 }}
                 className={buttonStyle}
             >
@@ -194,11 +193,7 @@ const MyEditor = () => {
                     style: 'color: #4b7de2;',
                 },
             }),
-            Image.configure({
-                HTMLAttributes: {
-                    style: 'display: block; margin: 0 auto;',
-                },
-            }),
+            ResizableImage, // اکستنشن سفارشی ما برای تصویر
         ],
         editorProps: {
             attributes: {
