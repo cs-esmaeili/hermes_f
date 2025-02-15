@@ -1,5 +1,5 @@
 // components/MyEditor.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Heading from '@tiptap/extension-heading';
@@ -21,6 +21,7 @@ const Toolbar = ({
     setLinkUrl,
     applyLink,
     removeLink,
+    toggleHtmlView,
 }) => {
     const [highlightColor, setHighlightColor] = useState('#FFFF00'); // رنگ پیش‌فرض زرد
     const { openModal, closeModal } = useModalContext();
@@ -167,18 +168,26 @@ const Toolbar = ({
                     </button>
                 )}
             </div>
+            {/* دکمه Image */}
             <button
                 onClick={() => {
                     openModal(<FileManager listener={(file) => {
-                        if (file?.type == "file") {
-                            closeModal()
+                        if (file?.type === "file") {
+                            closeModal();
                             editor.chain().focus().setImage({ src: file.publicUrl, width: "300px", height: "200px" }).run();
-                        };
+                        }
                     }} />)
                 }}
                 className={buttonStyle}
             >
                 Image
+            </button>
+            {/* دکمه HTML */}
+            <button
+                onClick={toggleHtmlView}
+                className={buttonStyle}
+            >
+                HTML
             </button>
         </div>
     );
@@ -187,8 +196,8 @@ const Toolbar = ({
 const MyEditor = () => {
     const [isEditingLink, setIsEditingLink] = useState(false);
     const [linkUrl, setLinkUrl] = useState('');
-
-
+    const [showHtml, setShowHtml] = useState(false);
+    const [htmlContent, setHtmlContent] = useState('');
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -236,6 +245,18 @@ const MyEditor = () => {
         }
     };
 
+    // تابع برای تغییر حالت HTML View
+    const toggleHtmlView = () => {
+        if (!showHtml) {
+            // نمایش HTML: گرفتن محتوای HTML فعلی
+            setHtmlContent(editor.getHTML());
+        } else {
+            // اعمال تغییرات: به‌روز کردن محتوای editor با محتوای textarea
+            editor.commands.setContent(htmlContent);
+        }
+        setShowHtml(!showHtml);
+    };
+
     return (
         <div className='rtl p-2'>
             <Toolbar
@@ -246,10 +267,42 @@ const MyEditor = () => {
                 setLinkUrl={setLinkUrl}
                 applyLink={applyLink}
                 removeLink={removeLink}
+                toggleHtmlView={toggleHtmlView}
             />
-            <div onClick={handleEditorClick}>
-                <EditorContent editor={editor} />
-            </div>
+            {editor && isEditingLink && (
+                <BubbleMenu editor={editor} tippyOptions={{ duration: 100, placement: 'bottom' }}>
+                    <div className="flex gap-2 bg-white p-2 rounded shadow-lg">
+                        <input
+                            type="text"
+                            placeholder="URL لینک"
+                            value={linkUrl}
+                            onChange={(e) => setLinkUrl(e.target.value)}
+                            className="bg-primary p-2 rounded-lg text-textcolor outline-none border border-gray-300"
+                            style={{ width: '200px' }}
+                        />
+                        <button onClick={applyLink} className={buttonStyle}>
+                            Apply
+                        </button>
+                        <button onClick={removeLink} className={buttonStyle}>
+                            Remove
+                        </button>
+                    </div>
+                </BubbleMenu>
+            )}
+            {showHtml ? (
+                <div className="my-4">
+                    <textarea
+                        value={htmlContent}
+                        onChange={(e) => setHtmlContent(e.target.value)}
+                        className="w-full ltr p-4 border rounded-lg bg-transparent"
+                        rows="10"
+                    />
+                </div>
+            ) :
+                <div onClick={handleEditorClick} style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                    <EditorContent editor={editor} />
+                </div>
+            }
         </div>
     );
 };
