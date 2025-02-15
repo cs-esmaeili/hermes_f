@@ -1,6 +1,6 @@
 // components/MyEditor.js
 import { useState, useEffect } from 'react';
-import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
+import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Heading from '@tiptap/extension-heading';
 import TextAlign from '@tiptap/extension-text-align';
@@ -286,26 +286,6 @@ const MyEditor = ({ onChangeContent }) => {
                 removeLink={removeLink}
                 toggleHtmlView={toggleHtmlView}
             />
-            {editor && isEditingLink && (
-                <BubbleMenu editor={editor} tippyOptions={{ duration: 100, placement: 'bottom' }}>
-                    <div className="flex gap-2 bg-white p-2 rounded shadow-lg">
-                        <input
-                            type="text"
-                            placeholder="URL لینک"
-                            value={linkUrl}
-                            onChange={(e) => setLinkUrl(e.target.value)}
-                            className="bg-primary p-2 rounded-lg text-textcolor outline-none border border-gray-300"
-                            style={{ width: '200px' }}
-                        />
-                        <button onClick={applyLink} className={buttonStyle}>
-                            Apply
-                        </button>
-                        <button onClick={removeLink} className={buttonStyle}>
-                            Remove
-                        </button>
-                    </div>
-                </BubbleMenu>
-            )}
             {showHtml ? (
                 <div className="my-4">
                     <textarea
