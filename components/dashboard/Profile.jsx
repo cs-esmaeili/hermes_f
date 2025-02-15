@@ -150,7 +150,6 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
                 <div className={`flex items-center justify-center bg-secondary w-full md:w-2/6 py-10 md:p-5 xl:p-10 rounded-md ${!selectedUser && "opacity-25"}`}>
                     {selectedUser ? (
                         <>
-                            {/* {console.log(formData.file)} */}
                             <PickFile ref={pickFileRef} fileSelectListener={handleFileChange} />
                             {formData.file ? (
                                 <div className="relative">

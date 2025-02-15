@@ -1,5 +1,5 @@
 // components/MyEditor.js
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Heading from '@tiptap/extension-heading';
@@ -171,12 +171,16 @@ const Toolbar = ({
             {/* دکمه Image */}
             <button
                 onClick={() => {
-                    openModal(<FileManager listener={(file) => {
-                        if (file?.type === "file") {
-                            closeModal();
-                            editor.chain().focus().setImage({ src: file.publicUrl, width: "300px", height: "200px" }).run();
-                        }
-                    }} />)
+                    openModal(
+                        <FileManager
+                            listener={(file) => {
+                                if (file?.type === "file") {
+                                    closeModal();
+                                    editor.chain().focus().setImage({ src: file.publicUrl, width: "300px", height: "200px" }).run();
+                                }
+                            }}
+                        />
+                    );
                 }}
                 className={buttonStyle}
             >
@@ -193,11 +197,12 @@ const Toolbar = ({
     );
 };
 
-const MyEditor = () => {
+const MyEditor = ({ onChangeContent }) => {
     const [isEditingLink, setIsEditingLink] = useState(false);
     const [linkUrl, setLinkUrl] = useState('');
     const [showHtml, setShowHtml] = useState(false);
     const [htmlContent, setHtmlContent] = useState('');
+    const [savedHtml, setSavedHtml] = useState('');
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -206,9 +211,7 @@ const MyEditor = () => {
             Highlight.configure({ multicolor: true }),
             Link.configure({
                 openOnClick: false,
-                HTMLAttributes: {
-                    style: 'color: #4b7de2;',
-                },
+                HTMLAttributes: { style: 'color: #4b7de2;' },
             }),
             ResizableImage,
         ],
@@ -220,6 +223,22 @@ const MyEditor = () => {
         },
         content: `<p dir="rtl">این یک متن نمونه به زبان فارسی است. متن خود را ویرایش کنید.</p>`,
     });
+
+    // ذخیره محتوای HTML مناسب جهت ذخیره در دیتابیس
+    useEffect(() => {
+        if (!editor) return;
+        const updateHandler = () => {
+            const html = editor.getHTML();
+            setSavedHtml(html);
+            if (onChangeContent) {
+                onChangeContent(html);
+            }
+        };
+        editor.on('update', updateHandler);
+        return () => {
+            editor.off('update', updateHandler);
+        };
+    }, [editor, onChangeContent]);
 
     const applyLink = () => {
         if (linkUrl.trim() !== '') {
@@ -245,13 +264,11 @@ const MyEditor = () => {
         }
     };
 
-    // تابع برای تغییر حالت HTML View
+    // تابع تغییر حالت HTML View
     const toggleHtmlView = () => {
         if (!showHtml) {
-            // نمایش HTML: گرفتن محتوای HTML فعلی
             setHtmlContent(editor.getHTML());
         } else {
-            // اعمال تغییرات: به‌روز کردن محتوای editor با محتوای textarea
             editor.commands.setContent(htmlContent);
         }
         setShowHtml(!showHtml);
@@ -298,11 +315,11 @@ const MyEditor = () => {
                         rows="10"
                     />
                 </div>
-            ) :
+            ) : (
                 <div onClick={handleEditorClick} style={{ maxHeight: '400px', overflowY: 'auto' }}>
                     <EditorContent editor={editor} />
                 </div>
-            }
+            )}
         </div>
     );
 };
