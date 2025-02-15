@@ -1,11 +1,12 @@
 // components/MyEditor.js
 import React, { useState } from 'react';
-import { useEditor, EditorContent } from '@tiptap/react';
+import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Heading from '@tiptap/extension-heading';
 import TextAlign from '@tiptap/extension-text-align';
 import Highlight from '@tiptap/extension-highlight';
 import Link from '@tiptap/extension-link';
+import Image from '@tiptap/extension-image';
 
 const buttonStyle = "bg-primary p-3 rounded-lg text-textcolor";
 const activeButtonStyle = "bg-primary p-3 rounded-lg text-textcolor text-purple-500";
@@ -67,7 +68,7 @@ const Toolbar = ({
             >
                 Strike
             </button>
-            {/* ترکیب دکمه Highlight و input رنگ */}
+            {/* Highlight */}
             <label
                 className={editor.isActive('highlight') ? activeButtonStyle : buttonStyle}
                 style={{
@@ -123,11 +124,10 @@ const Toolbar = ({
             >
                 Justify
             </button>
-            {/* دکمه لینک با ورودی درون دکمه */}
-            <div className={`flex  rounded-lg ${isEditingLink && "bg-blue-500 p-1"}`}>
+            {/* دکمه Link */}
+            <div className={`flex rounded-lg ${isEditingLink && "bg-blue-500 p-1"}`}>
                 {isEditingLink ? (
                     <div className="flex gap-2 grow">
-
                         <button
                             onClick={removeLink}
                             className={buttonStyle}
@@ -148,12 +148,10 @@ const Toolbar = ({
                             className="bg-primary p-3 rounded-lg text-textcolor outline-none"
                             style={{ width: '200px' }}
                         />
-
                     </div>
                 ) : (
                     <button
                         onClick={() => {
-                            // اگر روی متن لینک کلیک شده باشد، مقدار فعلی لینک را دریافت می‌کنیم
                             const currentLink = editor.getAttributes('link').href;
                             if (currentLink) {
                                 setLinkUrl(currentLink);
@@ -166,6 +164,17 @@ const Toolbar = ({
                     </button>
                 )}
             </div>
+            {/* دکمه Image: استفاده از URL پیش‌فرض */}
+            <button
+                onClick={() => {
+                    // استفاده از URL پیش‌فرض برای عکس
+                    const defaultImageUrl = "https://picsum.photos/200/300";
+                    editor.chain().focus().setImage({ src: defaultImageUrl }).run();
+                }}
+                className={buttonStyle}
+            >
+                Image
+            </button>
         </div>
     );
 };
@@ -182,7 +191,12 @@ const MyEditor = () => {
             Link.configure({
                 openOnClick: false,
                 HTMLAttributes: {
-                    style: 'color: #4b7de2;', // لینک‌ها به صورت آبی نمایش داده می‌شوند
+                    style: 'color: #4b7de2;',
+                },
+            }),
+            Image.configure({
+                HTMLAttributes: {
+                    style: 'display: block; margin: 0 auto;',
                 },
             }),
         ],
@@ -211,7 +225,6 @@ const MyEditor = () => {
         setLinkUrl('');
     };
 
-    // اگر کاربر روی یک لینک در متن کلیک کند، فیلد ورودی باز می‌شود
     const handleEditorClick = (e) => {
         if (e.target.tagName === 'A') {
             const currentHref = e.target.getAttribute('href');
