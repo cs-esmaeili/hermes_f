@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Path from "@/components/dashboard/filemanager/Path";
 import DivButton from "@/components/dashboard/DivButton";
 import Icon from "@/components/general/Icon";
@@ -11,7 +11,7 @@ import Delete from "@/components/dashboard/filemanager/Delete";
 import Rename from '@/components/dashboard/filemanager/Rename';
 
 
-export default function FileManager() {
+export default function FileManager({ listener }) {
 
     const [path, setPath] = useState([""]);
     const [updateList, setUpdateList] = useState(false);
@@ -21,6 +21,12 @@ export default function FileManager() {
 
     const refreshList = async () => setUpdateList(!updateList);
 
+
+
+    useEffect(() => {
+        if (listener)
+            listener(selectedFile)
+    }, [selectedFile]);
 
     return (
         <div className='flex flex-col grow max-w-full gap-3  overflow-y-auto'>

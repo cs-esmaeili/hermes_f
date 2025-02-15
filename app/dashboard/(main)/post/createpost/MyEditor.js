@@ -6,7 +6,9 @@ import Heading from '@tiptap/extension-heading';
 import TextAlign from '@tiptap/extension-text-align';
 import Highlight from '@tiptap/extension-highlight';
 import Link from '@tiptap/extension-link';
-import ResizableImage from './ResizableImage'; // اکستنشن سفارشی
+import ResizableImage from './ResizableImage';
+import { useModalContext } from '@/components/dashboard/Modal';
+import FileManager from '../../filemanager/page';
 
 const buttonStyle = "bg-primary p-3 rounded-lg text-textcolor";
 const activeButtonStyle = "bg-primary p-3 rounded-lg text-textcolor text-purple-500";
@@ -21,6 +23,7 @@ const Toolbar = ({
     removeLink,
 }) => {
     const [highlightColor, setHighlightColor] = useState('#FFFF00'); // رنگ پیش‌فرض زرد
+    const { openModal, closeModal } = useModalContext();
 
     if (!editor) return null;
 
@@ -164,11 +167,14 @@ const Toolbar = ({
                     </button>
                 )}
             </div>
-            {/* دکمه Image: استفاده از URL پیش‌فرض */}
             <button
                 onClick={() => {
-                    const defaultImageUrl = "https://picsum.photos/200/300";
-                    editor.chain().focus().setImage({ src: defaultImageUrl, width: "300px", height: "200px" }).run();
+                    openModal(<FileManager listener={(file) => {
+                        if (file?.type == "file") {
+                            closeModal()
+                            editor.chain().focus().setImage({ src: file.publicUrl, width: "300px", height: "200px" }).run();
+                        };
+                    }} />)
                 }}
                 className={buttonStyle}
             >
@@ -181,6 +187,8 @@ const Toolbar = ({
 const MyEditor = () => {
     const [isEditingLink, setIsEditingLink] = useState(false);
     const [linkUrl, setLinkUrl] = useState('');
+
+
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -193,7 +201,7 @@ const MyEditor = () => {
                     style: 'color: #4b7de2;',
                 },
             }),
-            ResizableImage, // اکستنشن سفارشی ما برای تصویر
+            ResizableImage,
         ],
         editorProps: {
             attributes: {
