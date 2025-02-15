@@ -17,6 +17,8 @@
   --color-text: 255 255 255; /* White text for dark mode */
 }
 
+
+
 @font-face {
   font-family: 'YekanBakh';
   src: url('/assets/fonts/YekanBakh-Regular.woff2') format('woff2'),

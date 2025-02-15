@@ -56,7 +56,7 @@ const App = () => {
   return (
     <div
       ref={containerRef}
-      contentEditable={true}
+      // contentEditable={true}
       style={{
         padding: '20px',
         border: '1px solid #ccc',
