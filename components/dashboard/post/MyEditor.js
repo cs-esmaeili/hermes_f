@@ -8,7 +8,7 @@ import Highlight from '@tiptap/extension-highlight';
 import Link from '@tiptap/extension-link';
 import ResizableImage from './ResizableImage';
 import { useModalContext } from '@/components/dashboard/Modal';
-import FileManager from '../../filemanager/page';
+import FileManager from '@/app/dashboard/(main)/filemanager/page';
 
 const buttonStyle = "bg-primary p-3 rounded-lg text-textcolor";
 const activeButtonStyle = "bg-primary p-3 rounded-lg text-textcolor text-purple-500";
@@ -197,12 +197,13 @@ const Toolbar = ({
     );
 };
 
-const MyEditor = ({ onChangeContent }) => {
+const MyEditor = ({ onChangeContent, body = `<p dir="rtl">این یک متن نمونه به زبان فارسی است. متن خود را ویرایش کنید.</p>` }) => {
     const [isEditingLink, setIsEditingLink] = useState(false);
     const [linkUrl, setLinkUrl] = useState('');
     const [showHtml, setShowHtml] = useState(false);
     const [htmlContent, setHtmlContent] = useState('');
     const [savedHtml, setSavedHtml] = useState('');
+
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -221,7 +222,7 @@ const MyEditor = ({ onChangeContent }) => {
                 style: 'border: none; outline: none; padding-right:8px;',
             },
         },
-        content: `<p dir="rtl">این یک متن نمونه به زبان فارسی است. متن خود را ویرایش کنید.</p>`,
+        content: body,
     });
 
     // ذخیره محتوای HTML مناسب جهت ذخیره در دیتابیس
@@ -296,7 +297,7 @@ const MyEditor = ({ onChangeContent }) => {
                     />
                 </div>
             ) : (
-                <div onClick={handleEditorClick} style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                <div onClick={handleEditorClick} >
                     <EditorContent editor={editor} />
                 </div>
             )}

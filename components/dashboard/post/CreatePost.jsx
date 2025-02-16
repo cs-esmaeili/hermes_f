@@ -4,14 +4,14 @@ import { useState, useEffect, useRef } from 'react';
 
 import DivButton from "@/components/dashboard/DivButton";
 import MyEditor from "./MyEditor";
-import PickFile from '@/components/dashboard/PickFile';
 import { BsImage } from "react-icons/bs";
 import CustomImage from "@/components/dashboard/CustomImage";
 import CustomInput from '@/components/dashboard/CustomInput';
 import { useModalContext } from '@/components/dashboard/Modal';
 import useCreatePost from '@/hooks/post/useCreatePost';
+import useUpdatePost from '@/hooks/post/useUpdatePost';
 import Category from "@/app/dashboard/(main)/category/page";
-import FileManager from '../../filemanager/page';
+import FileManager from '@/app/dashboard/(main)/filemanager/page';
 
 const convertToFormData = (post) => {
     return {
@@ -37,19 +37,22 @@ function isValidUrl(string) {
     }
 }
 
-const page = () => {
+const CreatePost = ({ setParentLoading, setSelectedPost, selectedPost }) => {
 
-    const pickFileH = useRef(null);
-    const pickFileV = useRef(null);
-
-    const [formData, setFormData] = useState(convertToFormData(null));
+    const [formData, setFormData] = useState(convertToFormData(selectedPost));
     const { openModal, closeModal } = useModalContext();
     const { createPostRequest } = useCreatePost();
+    const { updatePostRequest } = useUpdatePost();
 
 
     const handleInputChange = (field) => (e) => {
         setFormData({ ...formData, [field]: e.target.value });
     };
+
+
+    useEffect(() => {
+        if (setParentLoading) setParentLoading(false);
+    }, []);
 
     return (
         <div className="w-full overflow-y-auto ">
@@ -79,7 +82,14 @@ const page = () => {
                                     src={isValidUrl(formData.imageH) ? formData.imageH : URL.createObjectURL(formData.imageH)}
                                     width={200}
                                     height={200}
-                                    onClick={() => pickFileH.current.openFilePicker()}
+                                    onClick={() => {
+                                        openModal(<FileManager listener={(file) => {
+                                            if (file?.type === "file") {
+                                                setFormData({ ...formData, imageH: file.publicUrl })
+                                                closeModal();
+                                            }
+                                        }} pickMode />)
+                                    }}
                                 />
                             </div>
                         ) : (
@@ -102,7 +112,14 @@ const page = () => {
                                     src={isValidUrl(formData.imageV) ? formData.imageV : URL.createObjectURL(formData.imageV)}
                                     width={200}
                                     height={200}
-                                    onClick={() => pickFileH.current.openFilePicker()}
+                                    onClick={() => {
+                                        openModal(<FileManager listener={(file) => {
+                                            if (file?.type === "file") {
+                                                setFormData({ ...formData, imageV: file.publicUrl })
+                                                closeModal();
+                                            }
+                                        }} pickMode />)
+                                    }}
                                 />
                             </div>
                         ) : (
@@ -120,14 +137,18 @@ const page = () => {
 
                 </div>
             </div>
-            <MyEditor onChangeContent={(editorContent) => {
+            <MyEditor body={formData.body} onChangeContent={(editorContent) => {
                 setFormData({ ...formData, body: editorContent });
             }} />
-            <DivButton className="w-full bg-green-500 p-3 rounded-md justify-center mt-5" onClick={() => {
-                createPostRequest(formData)
-            }}>ثبت</DivButton>
+            <DivButton className={`w-full bg-green-500 p-3 rounded-md justify-center mt-5 ${selectedPost && "bg-yellow-500"}`} onClick={() => {
+                if (selectedPost) {
+                    updatePostRequest(formData, selectedPost._id);
+                } else {
+                    createPostRequest(formData);
+                }
+            }}>{selectedPost ? "ثبت تغییرات" : "ثبت"}</DivButton>
         </div>
     );
 };
 
-export default page;
+export default CreatePost;
