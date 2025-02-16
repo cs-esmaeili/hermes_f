@@ -3,15 +3,16 @@
 import { useState, useEffect, useRef } from 'react';
 import NavigationMenu from '@/components/dashboard/NavigationMenu';
 import BlurLoading from '@/components/dashboard/BlurLoading';
-import CourseList from "@/components/dashboard/course/CourseList";
 import PostList from "@/components/dashboard/post/PostList";
 import CreatePost from '@/components/dashboard/post/CreatePost';
+
 
 const page = () => {
 
     const [selectedPost, setSelectedPost] = useState(null);
     const [page, setPage] = useState("createPost");
     const [loading, setLoading] = useState(false);
+ 
     const scrollbarRef = useRef();
 
     useEffect(() => {

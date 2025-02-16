@@ -9,6 +9,7 @@ import Link from '@tiptap/extension-link';
 import ResizableImage from './ResizableImage';
 import { useModalContext } from '@/components/dashboard/Modal';
 import FileManager from '@/app/dashboard/(main)/filemanager/page';
+import userHavePermission from '@/hooks/general/userHavePermission';
 
 const buttonStyle = "bg-primary p-3 rounded-lg text-textcolor";
 const activeButtonStyle = "bg-primary p-3 rounded-lg text-textcolor text-purple-500";
@@ -25,6 +26,7 @@ const Toolbar = ({
 }) => {
     const [highlightColor, setHighlightColor] = useState('#FFFF00'); // رنگ پیش‌فرض زرد
     const { openModal, closeModal } = useModalContext();
+    const htmlPermission = userHavePermission(['editor.html']);
 
     if (!editor) return null;
 
@@ -186,13 +188,14 @@ const Toolbar = ({
             >
                 Image
             </button>
-            {/* دکمه HTML */}
-            <button
-                onClick={toggleHtmlView}
-                className={buttonStyle}
-            >
-                HTML
-            </button>
+            {htmlPermission &&
+                <button
+                    onClick={toggleHtmlView}
+                    className={buttonStyle}
+                >
+                    HTML
+                </button>
+            }
         </div>
     );
 };
@@ -203,6 +206,7 @@ const MyEditor = ({ onChangeContent, body = `<p dir="rtl">این یک متن ن�
     const [showHtml, setShowHtml] = useState(false);
     const [htmlContent, setHtmlContent] = useState('');
     const [savedHtml, setSavedHtml] = useState('');
+
 
     const editor = useEditor({
         extensions: [
