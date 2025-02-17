@@ -1,6 +1,6 @@
 import Icon from '@/components/general/Icon';
 import CustomInput from '../CustomInput';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import useAddTopic from '@/hooks/course/useAddTopic';
 import PickFile from '@/components/dashboard/PickFile';
 import ProgressBar from '@/components/dashboard/ProgressBar';
