@@ -20,7 +20,7 @@ const converSelectedExamToFormData = (selectedExam) => {
     }
 }
 
-const CreateExam = () => {
+const Exam = ({ setParentLoading, pickMode = false, examPicker = null }) => {
 
     const [formData, setFormData] = useState(converSelectedExamToFormData(null));
 
@@ -52,6 +52,7 @@ const CreateExam = () => {
 
     useEffect(() => {
         getExamsRequest();
+        setParentLoading(false);
     }, []);
 
     useEffect(() => {
@@ -61,22 +62,25 @@ const CreateExam = () => {
 
     return (
         <div className='flex flex-col gap-3 bg-primary p-3  rounded-lg'>
-            <div className='flex grow flex-wrap md:flex-nowrap gap-3  justify-between rtl'>
-                <CustomInput rightLabel="عنوان" inputClassName={"bg-secondary"} containerClassName={"w-full"}
-                    value={formData.title} onChange={handleInputChange('title')} />
-                <CustomInput rightLabel="زمان امتحان" inputClassName={"bg-secondary"} containerClassName={"w-full"}
-                    value={formData.duration} onChange={handleInputChange('duration')} />
-                <CustomInput rightLabel="تعداد سوالات" inputClassName={"bg-secondary"} containerClassName={"w-full"}
-                    value={formData.questionCount} onChange={handleInputChange('questionCount')} />
-            </div>
-            <DivButton className={`w-full bg-green-500 justify-center ${selectedExam && "bg-yellow-500"}`} onClick={() => {
-                if (selectedExam) {
-                    updateExamRequest(formData)
-                } else {
-                    CreateExamRequest(formData);
-                }
-            }}>{(selectedExam) ? "ثبت تغییرات" : "ایجاد"}</DivButton>
+            {!pickMode &&
+                <>
+                    <div className='flex grow flex-wrap md:flex-nowrap gap-3  justify-between rtl'>
+                        <CustomInput rightLabel="عنوان" inputClassName={"bg-secondary"} containerClassName={"w-full"}
+                            value={formData.title} onChange={handleInputChange('title')} />
+                        <CustomInput rightLabel="زمان امتحان" inputClassName={"bg-secondary"} containerClassName={"w-full"}
+                            value={formData.duration} onChange={handleInputChange('duration')} />
+                        <CustomInput rightLabel="تعداد سوالات" inputClassName={"bg-secondary"} containerClassName={"w-full"}
+                            value={formData.questionCount} onChange={handleInputChange('questionCount')} />
+                    </div>
+                    <DivButton className={`w-full bg-green-500 justify-center ${selectedExam && "bg-yellow-500"}`} onClick={() => {
+                        if (selectedExam) {
+                            updateExamRequest(formData)
+                        } else {
+                            CreateExamRequest(formData);
+                        }
+                    }}>{(selectedExam) ? "ثبت تغییرات" : "ایجاد"}</DivButton>
 
+                </>}
             <div className='flex flex-col grow'>
                 <div className='flex grow w-full overflow-x-scroll '>
                     {exams &&
@@ -90,12 +94,17 @@ const CreateExam = () => {
                             cellClasses={(cell, cellIndex, row, rowIndex) => {
                                 return cell == "ارسال شده" && "text-green-400";
                             }}
+                            selectListener={(row, index) => {
+                                if (pickMode && examPicker) examPicker(row);
+                            }}
                             actionComponent={({ rowData, rowIndex }) => {
                                 return (
                                     <div className="flex h-full items-center justify-center gap-2 text-nowrap">
-                                        <BiSolidEdit className='text-xl ml-4 text-blue-400' onClick={() => {
-                                            setSelectedExam(rowData);
-                                        }} />
+                                        {!pickMode &&
+                                            <BiSolidEdit className='text-xl ml-4 text-blue-400' onClick={() => {
+                                                setSelectedExam(rowData);
+                                            }} />
+                                        }
                                     </div>
                                 );
                             }}
@@ -110,4 +119,4 @@ const CreateExam = () => {
     );
 };
 
-export default CreateExam;
+export default Exam;
