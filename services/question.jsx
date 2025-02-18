@@ -10,10 +10,6 @@ export const getQuestions = (data) => {
     return http.post(`${prefixUrl}/getQuestions`, JSON.stringify(data));
 };
 
-export const getQuestionById = (data) => {
-    return http.post(`${prefixUrl}/getQuestionById`, JSON.stringify(data));
-};
-
 export const updateQuestion = (data) => {
     return http.post(`${prefixUrl}/updateQuestion`, JSON.stringify(data));
 };

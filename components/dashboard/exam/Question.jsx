@@ -6,6 +6,7 @@ import { useModalContext } from '@/components/dashboard/Modal';
 import Exam from './Exam';
 import CustomInput from '../CustomInput';
 import useCreateQustion from '@/hooks/question/useCreateQustion';
+import useUpdateQustion from '@/hooks/question/useUpdateQustion';
 import Table from '@/components/dashboard/Table';
 import Pagination from '@/components/dashboard/Pagination';
 import { BiSolidEdit } from 'react-icons/bi';
@@ -13,6 +14,7 @@ import useQuestionList from '@/hooks/question/useQuestionList';
 
 const convertSelectedQutionToFormData = (selectedQustion) => {
     return {
+        question_id: selectedQustion?._id || "",
         exam_id: selectedQustion?._id || "",
         question: selectedQustion?.question || "",
         options: selectedQustion?.options?.length ? selectedQustion.options : ["", "", "", ""],
@@ -32,14 +34,21 @@ const Question = ({ setParentLoading }) => {
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(12);
 
+
+
     const { questionListRequest } = useQuestionList(({ questions, questionCount }) => {
         setQuestionCount(questionCount);
         setQuestions(questions);
     }, page, perPage);
 
+    const { updateQustionRequest } = useUpdateQustion(() => {
+        setFormData(convertSelectedQutionToFormData(null));
+        questionListRequest();
+    });
 
     const { CreateQustionRequest } = useCreateQustion(() => {
-        setFormData(convertSelectedQutionToFormData(null))
+        setFormData(convertSelectedQutionToFormData(null));
+        questionListRequest();
     });
 
     useEffect(() => {
@@ -87,9 +96,14 @@ const Question = ({ setParentLoading }) => {
             <CustomInput rightLabel="گزینه 3" value={formData.options[2]} onChange={handleInputChange('options[2]')} />
             <CustomInput rightLabel="گزینه 4" value={formData.options[3]} onChange={handleInputChange('options[3]')} />
 
-            <DivButton className='bg-green-500 justify-center' onClick={() => {
-                CreateQustionRequest(formData);
-            }}>ثبت</DivButton>
+
+            <DivButton className={`bg-green-500 justify-center ${formData?.question_id && "bg-yellow-500"}`} onClick={() => {
+                if (formData?.question_id) {
+                    updateQustionRequest(formData);
+                } else {
+                    CreateQustionRequest(formData);
+                }
+            }}>{(formData?.question_id) ? "ثبت" : "ایجاد سوال"}</DivButton>
 
             {questions &&
                 <Table

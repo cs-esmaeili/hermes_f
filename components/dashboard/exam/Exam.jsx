@@ -13,9 +13,9 @@ import { BiSolidEdit } from 'react-icons/bi';
 
 const converSelectedExamToFormData = (selectedExam) => {
     return {
-        title: selectedExam?.title || "",
-        duration: selectedExam?.duration || "",
-        questionCount: selectedExam?.questionCount || "",
+        title: selectedExam?.title || "تست",
+        duration: selectedExam?.duration || "1",
+        questionCount: selectedExam?.questionCount || "2",
         exam_id: selectedExam?._id || null,
     }
 }
