@@ -1,17 +1,17 @@
-import { startExam } from '@/services/examSession';
+import { getActiveExamSession } from '@/services/examSession';
 import { toast } from 'react-hot-toast';
 import translation from "@/translation/translation";
 
-const useStartExamSession = (listener) => {
+
+const useGetActiveExamSession = (Listener) => {
 
     const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong', 'permissions']);
 
-    const startExamSessionRequest = async (exam_id) => {
+    const getActiveExamSessionRequest = async (session_id) => {
         try {
-            const { data } = await startExam({ exam_id });
-            const { message, examSession } = data;
-            toast.success(message);
-            if (listener) listener(examSession);
+            
+            const { data: { examSession } } = await getActiveExamSession({ session_id });
+            Listener(examSession);
         } catch (error) {
             console.log(error);
             if (error?.response?.data?.message) {
@@ -22,6 +22,6 @@ const useStartExamSession = (listener) => {
         }
     };
 
-    return { startExamSessionRequest };
+    return { getActiveExamSessionRequest };
 };
-export default useStartExamSession;
+export default useGetActiveExamSession;

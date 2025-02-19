@@ -57,8 +57,8 @@ const Question = ({ setParentLoading }) => {
     }, []);
 
     useEffect(() => {
-        console.log(formData);
-    }, [formData]);
+        questionListRequest();
+    }, [page]);
 
     const handleInputChange = (field) => (e) => {
         if (field.startsWith("options[")) {

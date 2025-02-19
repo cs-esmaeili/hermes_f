@@ -8,18 +8,21 @@ import useStartExamSession from '@/hooks/examSession/useStartExamSession';
 const page = () => {
 
     const [exam_id, setExam_id] = useState("");
-
-    const { startExamSessionRequest } = useStartExamSession(() => {
-
+    const [sessionId, setSessionId] = useState("");
+    const { startExamSessionRequest } = useStartExamSession((examSession) => {
+        setSessionId(examSession._id);
     });
 
     return (
-        <div className="w-full justify-center  flex">
+        <div className="w-full items-center  flex flex-col gap-5">
             <div className='w-1/2'>
                 <CustomInput rightLabel={"ای دی امتحان"} value={exam_id} onChange={(e) => setExam_id(e.target.value)} />
                 <DivButton className={"bg-green-500 w-full justify-center"} onClick={() => {
                     startExamSessionRequest(exam_id);
                 }}>ساخت</DivButton>
+            </div>
+            <div>
+                <div>{"http://localhost:3001/dashboard/exam/" + sessionId}</div>
             </div>
         </div>
     );

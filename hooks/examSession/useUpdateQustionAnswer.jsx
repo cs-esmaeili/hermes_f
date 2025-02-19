@@ -1,17 +1,16 @@
-import { startExam } from '@/services/examSession';
+import { updateQustionAnswer } from '@/services/examSession';
 import { toast } from 'react-hot-toast';
 import translation from "@/translation/translation";
 
-const useStartExamSession = (listener) => {
+const useUpdateQustionAnswer = (listener) => {
 
     const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong', 'permissions']);
 
-    const startExamSessionRequest = async (exam_id) => {
+    const updateQustionAnswerRequest = async ({ sessionId, questionIndex, answer }) => {
         try {
-            const { data } = await startExam({ exam_id });
-            const { message, examSession } = data;
+            const { data: { message } } = await updateQustionAnswer({ sessionId, questionIndex, answer });
             toast.success(message);
-            if (listener) listener(examSession);
+            if (listener) listener();
         } catch (error) {
             console.log(error);
             if (error?.response?.data?.message) {
@@ -22,6 +21,6 @@ const useStartExamSession = (listener) => {
         }
     };
 
-    return { startExamSessionRequest };
+    return { updateQustionAnswerRequest };
 };
-export default useStartExamSession;
+export default useUpdateQustionAnswer;

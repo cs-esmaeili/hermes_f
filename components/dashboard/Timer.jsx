@@ -1,41 +1,44 @@
 import React, { useState, useEffect } from 'react';
 
-function Timer({ min, TimerEndListener }) {
-    const [minutes, setMinutes] = useState(min);
-    const [seconds, setSeconds] = useState(0);
+function CountdownTimer({ initialTime, onTimerEnd }) {
+    // تبدیل رشته زمان (hh:mm:ss) به تعداد ثانیه‌ها
+    const parseTimeStringToSeconds = (timeStr) => {
+        const [hours, minutes, seconds] = timeStr.split(':').map(Number);
+        return hours * 3600 + minutes * 60 + seconds;
+    };
 
+    const [timeLeft, setTimeLeft] = useState(parseTimeStringToSeconds(initialTime));
 
     useEffect(() => {
-        let intervalId;
-
-        if (minutes > 0 || seconds > 0) {
-            intervalId = setInterval(() => {
-                if (minutes == 0 && seconds == 1) {
-                    TimerEndListener();
-                }
-
-                if (seconds > 0) {
-                    setSeconds((prevSeconds) => prevSeconds - 1);
-                } else {
-                    if (minutes > 0) {
-                        setMinutes((prevMinutes) => prevMinutes - 1);
-                        setSeconds(59);
-                    } else {
-                        clearInterval(intervalId);
-                    }
-                }
-            }, 1000);
+        // اگر زمان به پایان رسیده باشد، listener را فراخوانی می‌کنیم
+        if (timeLeft <= 0) {
+            onTimerEnd && onTimerEnd();
+            return;
         }
 
+        const intervalId = setInterval(() => {
+            setTimeLeft((prevTime) => {
+                if (prevTime <= 1) {
+                    clearInterval(intervalId);
+                    onTimerEnd && onTimerEnd();
+                    return 0;
+                }
+                return prevTime - 1;
+            });
+        }, 1000);
 
-        return () => {
-            clearInterval(intervalId);
-        };
-    }, [minutes, seconds]);
+        return () => clearInterval(intervalId);
+    }, [timeLeft, onTimerEnd]);
 
-    return (
-        <p>{`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`}</p>
-    );
+    // تبدیل تعداد ثانیه‌ها به فرمت hh:mm:ss
+    const formatTime = (totalSeconds) => {
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    };
+
+    return <p>{formatTime(timeLeft)}</p>;
 }
 
-export default Timer;
+export default CountdownTimer;
