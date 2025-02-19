@@ -16,8 +16,8 @@ import useGoogleLogInCheckNeedRegister from '@/hooks/auth/useGoogleLogInCheckNee
 const LogIn = () => {
 
 
-    const [userName, setUserName] = useState("cs.esmaeili@gmail.com");
-    const [userNameType, setUserNameType] = useState("email");
+    const [userName, setUserName] = useState("09137378601");
+    const [userNameType, setUserNameType] = useState("phone");
     const [error, setError] = useState("");
     const [loadingMain, setLoadingMain] = useState(false);
     const [page, SetPage] = useState("main");
@@ -70,7 +70,7 @@ const LogIn = () => {
                                     setUserName(e.target.value);
                                     setUserNameType(isEmailOrPhone(e.target.value));
                                 }} />
-                                {(userNameType == "phone") && <Phone userName={userName} setError={setError} setLoadingMain={setLoadingMain} />}
+                                {(userNameType == "phone") && <Phone userName={userName} setError={setError} setLoadingMain={setLoadingMain}  />}
                                 {(userNameType == "email") && <Password userName={userName} setError={setError} SetPage={SetPage} setLoadingMain={setLoadingMain} />}
                             </>
                         }

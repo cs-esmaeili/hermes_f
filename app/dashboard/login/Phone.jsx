@@ -4,7 +4,7 @@ import CustomInput from '@/components/dashboard/CustomInput';
 import Timer from '@/components/dashboard/Timer';
 import { useEffect, useState } from 'react';
 
-const Phone = ({ userName, setError }) => {
+const Phone = ({ userName, setError, setLoadingMain }) => {
 
     const [loading, setLoading] = useState(false);
     const [code, setCode] = useState("");
@@ -12,7 +12,7 @@ const Phone = ({ userName, setError }) => {
     const [timer, setTimer] = useState(0);
 
     const { phoneStepOneLogInRequest } = usePhoneLogInStepOne(userName, setLoading, setStep, setTimer, setError);
-    const { phoneStepTwoLogInRequest } = usePhoneLogInStepTwo(userName, code, setLoading, setStep, setTimer, setError);
+    const { phoneStepTwoLogInRequest } = usePhoneLogInStepTwo(userName, code, setLoading, setStep, setTimer, setError, setLoadingMain);
 
 
     useEffect(() => {
@@ -53,7 +53,7 @@ const Phone = ({ userName, setError }) => {
             <div className='flex grow justify-center items-center'>
                 {timer != 0 && !step &&
                     <div className='w-full flex items-center justify-center'>
-                        <Timer min={timer} TimerEndListener={() => {
+                        <Timer initialTime={timer} onTimerEnd={() => {
                             setStep(true);
                             setCode("");
                             setTimer(0);
