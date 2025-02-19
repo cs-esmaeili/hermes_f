@@ -12,7 +12,7 @@ const ExamDetail = () => {
     const [examSession, setExamSession] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // activeQuestionIndex: اگر برابر -1 شود یعنی همه سوالات پاسخ داده شده‌اند
+    // activeQuestionIndex: اگر برابر -1 شود یعنی هیچ سوال فعالی وجود ندارد
     const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
 
     const { updateQustionAnswerRequest } = useUpdateQustionAnswer();
@@ -20,8 +20,8 @@ const ExamDetail = () => {
     const { getActiveExamSessionRequest } = useGetActiveExamSession((session) => {
         setExamSession(session);
         setLoading(false);
-        // در هنگام دریافت جلسه، اولین سوالی که پاسخ آن هنوز 0 است، به عنوان سوال فعال انتخاب شود.
-        const firstUnanswered = session.questions.findIndex(q => q.answer === 0);
+        // اولین سوالی که هنوز پاسخی ثبت نشده است (answer === null) را به عنوان سوال فعال انتخاب می‌کنیم
+        const firstUnanswered = session.questions.findIndex(q => q.answer === null);
         setActiveQuestionIndex(firstUnanswered);
     });
 
@@ -50,8 +50,8 @@ const ExamDetail = () => {
     // به‌روزرسانی پاسخ یک سوال در state
     const handleAnswerChange = (questionIndex, selectedValue) => {
         setExamSession((prevSession) => {
-            const updatedQuestions = prevSession.questions.map((q, index) => {
-                if (index === questionIndex) {
+            const updatedQuestions = prevSession.questions.map((q, idx) => {
+                if (idx === questionIndex) {
                     return { ...q, answer: selectedValue };
                 }
                 return q;
@@ -60,38 +60,62 @@ const ExamDetail = () => {
         });
     };
 
-    // ثبت پاسخ سوال فعلی و تعیین سوال فعال بعدی (اولین سوالی که هنوز پاسخ 0 دارد)
+    // ثبت پاسخ سوال فعلی و تعیین سوال فعال بعدی
     const handleSubmitAnswer = () => {
-        const currentQuestion = examSession.questions[activeQuestionIndex];
-        const answer = currentQuestion.answer;
-        updateQustionAnswerRequest({
-            sessionId: session_id,
-            questionIndex: activeQuestionIndex,
-            answer
+        setExamSession(prevSession => {
+            const updatedQuestions = prevSession.questions.map((q, idx) => {
+                if (idx === activeQuestionIndex) {
+                    // اگر کاربر پاسخی انتخاب نکرده باشد، مقدار را به "unanswered" تغییر می‌دهیم
+                    const newAnswer = (q.answer === null || q.answer === undefined) ? "unanswered" : q.answer;
+                    return { ...q, answer: newAnswer };
+                }
+                return q;
+            });
+            // ارسال درخواست آپدیت به سرور
+            updateQustionAnswerRequest({
+                sessionId: session_id,
+                questionIndex: activeQuestionIndex,
+                answer: updatedQuestions[activeQuestionIndex].answer
+            });
+            // پیدا کردن اولین سوالی که هنوز پاسخی ثبت نشده (فقط شرط q.answer === null)
+            const nextUnansweredIndex = updatedQuestions.findIndex(q => q.answer === null);
+            if (activeQuestionIndex === prevSession.questions.length - 1 || nextUnansweredIndex === -1) {
+                setActiveQuestionIndex(-1);
+            } else {
+                setActiveQuestionIndex(nextUnansweredIndex);
+            }
+            return { ...prevSession, questions: updatedQuestions };
         });
-        // یافتن اولین سوالی که هنوز پاسخ داده نشده (یعنی answer === 0)
-        const nextUnansweredIndex = examSession.questions.findIndex(q => q.answer === 0);
-        setActiveQuestionIndex(nextUnansweredIndex);
     };
+
+    const isExamFinished = activeQuestionIndex === -1 || examSession.questions.findIndex(q => q.answer === null) === -1;
+    const isLastQuestion = activeQuestionIndex === examSession.questions.length - 1;
 
     return (
         <div className="flex grow flex-col overflow-y-auto p-3">
             <div className='rtl'>
-                <Timer initialTime={examSession.exam_id.duration} TimerEndListener={() => {
-                    // عملیات در پایان تایمر
-                }} />
+                <Timer
+                    initialTime={examSession.exam_id.duration}
+                    TimerEndListener={() => {
+                        // عملیات در پایان تایمر
+                    }}
+                />
             </div>
             <div className='rtl'>
                 {examSession.questions && examSession.questions.length > 0 ? (
                     examSession.questions.map((q, index) => {
                         const { question_id: { question, options } } = q;
-                        const currentAnswer = q.answer; // مقدار فعلی پاسخ انتخاب شده
+                        const currentAnswer = q.answer;
                         const containerClasses = index === activeQuestionIndex
                             ? "flex flex-col bg-primary p-3 rounded-md gap-3 mb-4"
                             : "flex flex-col bg-primary p-3 rounded-md gap-3 mb-4 opacity-50";
 
                         return (
-                            <div key={index} className={containerClasses}>
+                            <div
+                                key={index}
+                                className={containerClasses}
+                                style={index !== activeQuestionIndex ? { pointerEvents: 'none' } : {}}
+                            >
                                 <div className="font-semibold">{question}</div>
                                 <div>
                                     <div className="flex items-center mb-1 gap-2">
@@ -99,11 +123,10 @@ const ExamDetail = () => {
                                             type="radio"
                                             id={`question-${index}-option-1`}
                                             name={`question-${index}`}
-                                            value={1}
-                                            checked={currentAnswer === 1}
-                                            onChange={() => handleAnswerChange(index, 1)}
+                                            value="1"
+                                            checked={currentAnswer === "1"}
+                                            onChange={() => handleAnswerChange(index, "1")}
                                             className="mr-2"
-                                            disabled={index !== activeQuestionIndex}
                                         />
                                         <label htmlFor={`question-${index}-option-1`}>{options[0]}</label>
                                     </div>
@@ -112,11 +135,10 @@ const ExamDetail = () => {
                                             type="radio"
                                             id={`question-${index}-option-2`}
                                             name={`question-${index}`}
-                                            value={2}
-                                            checked={currentAnswer === 2}
-                                            onChange={() => handleAnswerChange(index, 2)}
+                                            value="2"
+                                            checked={currentAnswer === "2"}
+                                            onChange={() => handleAnswerChange(index, "2")}
                                             className="mr-2"
-                                            disabled={index !== activeQuestionIndex}
                                         />
                                         <label htmlFor={`question-${index}-option-2`}>{options[1]}</label>
                                     </div>
@@ -125,11 +147,10 @@ const ExamDetail = () => {
                                             type="radio"
                                             id={`question-${index}-option-3`}
                                             name={`question-${index}`}
-                                            value={3}
-                                            checked={currentAnswer === 3}
-                                            onChange={() => handleAnswerChange(index, 3)}
+                                            value="3"
+                                            checked={currentAnswer === "3"}
+                                            onChange={() => handleAnswerChange(index, "3")}
                                             className="mr-2"
-                                            disabled={index !== activeQuestionIndex}
                                         />
                                         <label htmlFor={`question-${index}-option-3`}>{options[2]}</label>
                                     </div>
@@ -138,11 +159,10 @@ const ExamDetail = () => {
                                             type="radio"
                                             id={`question-${index}-option-4`}
                                             name={`question-${index}`}
-                                            value={4}
-                                            checked={currentAnswer === 4}
-                                            onChange={() => handleAnswerChange(index, 4)}
+                                            value="4"
+                                            checked={currentAnswer === "4"}
+                                            onChange={() => handleAnswerChange(index, "4")}
                                             className="mr-2"
-                                            disabled={index !== activeQuestionIndex}
                                         />
                                         <label htmlFor={`question-${index}-option-4`}>{options[3]}</label>
                                     </div>
@@ -150,11 +170,17 @@ const ExamDetail = () => {
                                 {index === activeQuestionIndex && (
                                     <button
                                         onClick={handleSubmitAnswer}
-                                        className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+                                        style={{
+                                            marginTop: '1rem',
+                                            backgroundColor: isExamFinished ? '#ef4444' : '#3b82f6',
+                                            color: '#ffffff',
+                                            padding: '0.5rem 1rem',
+                                            borderRadius: '0.375rem',
+                                            border: 'none',
+                                            cursor: 'pointer'
+                                        }}
                                     >
-                                        {activeQuestionIndex === -1 || examSession.questions.findIndex(q => q.answer === 0) === -1
-                                            ? "ثبت پاسخ و پایان آزمون"
-                                            : "ثبت پاسخ و رفتن به سوال بعدی"}
+                                        {isExamFinished ? "ثبت پاسخ و پایان آزمون" : "ثبت پاسخ"}
                                     </button>
                                 )}
                             </div>
