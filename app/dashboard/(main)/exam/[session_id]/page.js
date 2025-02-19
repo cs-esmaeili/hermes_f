@@ -12,8 +12,7 @@ const ExamDetail = () => {
     const [examSession, setExamSession] = useState(null);
     const [loading, setLoading] = useState(true);
 
-
-    // اگر activeQuestionIndex برابر با -1 باشد، یعنی هیچ سوال فعالی وجود ندارد
+    // activeQuestionIndex: اگر برابر -1 شود یعنی همه سوالات پاسخ داده شده‌اند
     const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
 
     const { updateQustionAnswerRequest } = useUpdateQustionAnswer();
@@ -21,6 +20,9 @@ const ExamDetail = () => {
     const { getActiveExamSessionRequest } = useGetActiveExamSession((session) => {
         setExamSession(session);
         setLoading(false);
+        // در هنگام دریافت جلسه، اولین سوالی که پاسخ آن هنوز 0 است، به عنوان سوال فعال انتخاب شود.
+        const firstUnanswered = session.questions.findIndex(q => q.answer === 0);
+        setActiveQuestionIndex(firstUnanswered);
     });
 
     useEffect(() => {
@@ -58,7 +60,7 @@ const ExamDetail = () => {
         });
     };
 
-    // ثبت پاسخ سوال فعلی و تغییر به سوال بعدی (یا پایان آزمون در صورت آخرین سوال)
+    // ثبت پاسخ سوال فعلی و تعیین سوال فعال بعدی (اولین سوالی که هنوز پاسخ 0 دارد)
     const handleSubmitAnswer = () => {
         const currentQuestion = examSession.questions[activeQuestionIndex];
         const answer = currentQuestion.answer;
@@ -67,18 +69,16 @@ const ExamDetail = () => {
             questionIndex: activeQuestionIndex,
             answer
         });
-        if (activeQuestionIndex < examSession.questions.length - 1) {
-            setActiveQuestionIndex(activeQuestionIndex + 1);
-        } else {
-            setActiveQuestionIndex(-1);
-        }
+        // یافتن اولین سوالی که هنوز پاسخ داده نشده (یعنی answer === 0)
+        const nextUnansweredIndex = examSession.questions.findIndex(q => q.answer === 0);
+        setActiveQuestionIndex(nextUnansweredIndex);
     };
 
     return (
         <div className="flex grow flex-col overflow-y-auto p-3">
             <div className='rtl'>
                 <Timer initialTime={examSession.exam_id.duration} TimerEndListener={() => {
-
+                    // عملیات در پایان تایمر
                 }} />
             </div>
             <div className='rtl'>
@@ -152,7 +152,7 @@ const ExamDetail = () => {
                                         onClick={handleSubmitAnswer}
                                         className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
                                     >
-                                        {activeQuestionIndex === examSession.questions.length - 1
+                                        {activeQuestionIndex === -1 || examSession.questions.findIndex(q => q.answer === 0) === -1
                                             ? "ثبت پاسخ و پایان آزمون"
                                             : "ثبت پاسخ و رفتن به سوال بعدی"}
                                     </button>
