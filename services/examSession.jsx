@@ -13,3 +13,7 @@ export const getActiveExamSession = (data) => {
 export const updateQustionAnswer = (data) => {
     return http.post(`${prefixUrl}/updateQustionAnswer`, JSON.stringify(data));
 };
+
+export const getExamSession = (data) => {
+    return http.post(`${prefixUrl}/getExamSession`, JSON.stringify(data));
+};
