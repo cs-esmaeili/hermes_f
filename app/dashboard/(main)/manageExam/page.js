@@ -5,6 +5,7 @@ import NavigationMenu from '@/components/dashboard/NavigationMenu';
 import BlurLoading from '@/components/dashboard/BlurLoading';
 import Exam from '@/components/dashboard/exam/Exam';
 import Question from '@/components/dashboard/exam/Question';
+import Sessions from '@/components/dashboard/exam/Sessions';
 
 
 const page = () => {
@@ -25,6 +26,7 @@ const page = () => {
                     items={[
                         { page: "exam", icon: "dashboard", label: "آزمون" },
                         { page: "question", icon: "dashboard", label: "بانک سوال" },
+                        { page: "Sessions", icon: "list", label: "لیست امتحانات" },
                     ]}
                 />
             </div>
@@ -34,6 +36,9 @@ const page = () => {
                 }
                 {(page == "question") &&
                     <Question setParentLoading={setLoading} />
+                }
+                {(page == "Sessions") &&
+                    <Sessions setParentLoading={setLoading} />
                 }
 
             </div>

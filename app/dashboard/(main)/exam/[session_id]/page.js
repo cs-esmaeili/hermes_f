@@ -4,7 +4,6 @@ import { useParams } from 'next/navigation';
 import { useState, useEffect } from "react";
 import useGetActiveExamSession from '@/hooks/examSession/useGetActiveExamSession';
 import useUpdateQustionAnswer from '@/hooks/examSession/useUpdateQustionAnswer';
-import useGetExamSession from '@/hooks/examSession/useGetExamSession';
 import Timer from '@/components/dashboard/Timer';
 import { useRouter } from 'next/navigation';
 
@@ -19,7 +18,6 @@ const ExamDetail = () => {
     const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
 
     const { updateQustionAnswerRequest } = useUpdateQustionAnswer();
-    const { getExamSessionRequest } = useGetExamSession();
 
     const { getActiveExamSessionRequest } = useGetActiveExamSession(
         (session) => {

@@ -17,3 +17,7 @@ export const updateQustionAnswer = (data) => {
 export const getExamSession = (data) => {
     return http.post(`${prefixUrl}/getExamSession`, JSON.stringify(data));
 };
+
+export const getExamSessions = (data) => {
+    return http.post(`${prefixUrl}/getExamSessions`, JSON.stringify(data));
+};

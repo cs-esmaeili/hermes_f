@@ -1,13 +1,9 @@
 'use client';
 
-import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import useGetExamSession from '@/hooks/examSession/useGetExamSession';
-import Timer from '@/components/dashboard/Timer';
 
-const ExamResults = () => {
-
-    const session_id = "67b6b62c2d8f73f9194c25e1";
+const ExamResults = ({ session_id }) => {
 
     const [examSession, setExamSession] = useState(null);
     const [loading, setLoading] = useState(true);
