@@ -2,9 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import useGetExamSession from '@/hooks/examSession/useGetExamSession';
+import { useParams } from 'next/navigation';
+const ExamResults = () => {
 
-const ExamResults = ({ session_id }) => {
-
+    const params = useParams();
+    const { session_id } = params;
+    
     const [examSession, setExamSession] = useState(null);
     const [loading, setLoading] = useState(true);
 

@@ -5,6 +5,7 @@ import useGetExamSessions from '@/hooks/examSession/useGetExamSessions';
 import Table from '@/components/dashboard/Table';
 import Pagination from '@/components/dashboard/Pagination';
 import { FaEye } from "react-icons/fa";
+import { useRouter } from 'next/navigation';
 
 const Sessions = ({ setParentLoading }) => {
 
@@ -12,6 +13,7 @@ const Sessions = ({ setParentLoading }) => {
     const [sessionCount, setSessionCount] = useState(null);
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(12);
+    const { push } = useRouter();
 
     const { getExamSessionsRequest } = useGetExamSessions(({ examSessionCount, examSession }) => {
         setSessions(examSession);
@@ -45,7 +47,7 @@ const Sessions = ({ setParentLoading }) => {
                             <div className="flex h-full items-center justify-center gap-2 text-nowrap">
                                 {rowData.status == "completed" &&
                                     <FaEye className='text-xl ml-4 text-yellow-400 cursor-pointer' onClick={() => {
-                                        setFormData(convertSelectedQutionToFormData(rowData));
+                                        push(`/dashboard/exam/result/${rowData._id}`)
                                     }} />
                                 }
                             </div>

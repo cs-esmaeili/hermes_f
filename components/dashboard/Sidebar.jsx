@@ -21,13 +21,12 @@ const Sidebar = ({ open, setOpen }) => {
 
   const allItems = [
     { name: "صفحه اصلی پنل", url: "/dashboard", icon: <Icon name={"dashboard"} className="w-8 h-8" /> },
-    { name: "مدیریت ارزیابی", url: "/dashboard/manageExam", icon: <Icon name={"exam"} className="w-8 h-8" /> },
+    { name: "آزمون", url: "/dashboard/exam", icon: <Icon name={"exam"} className="w-8 h-8" /> },
     { name: "دسترسی ها", url: "/dashboard/role", icon: <Icon name={"permissions"} className="w-8 h-8" /> },
     { name: "کاربران", url: "/dashboard/users", icon: <Icon name={"users"} className="w-8 h-8" /> },
     { name: "فایل ها", url: "/dashboard/filemanager", icon: <Icon name={"file"} className="w-8 h-8" /> },
     { name: "درخواست ها", url: "/dashboard/approval", icon: <Icon name={"adminApproval"} className="w-8 h-8" /> },
     { name: "دوره ها", url: "/dashboard/course", icon: <Icon name={"course"} className="w-8 h-8" /> },
-    { name: "آزمون", url: "/dashboard/exam", icon: <Icon name={"exam"} className="w-8 h-8" /> },
     { name: "دسته بندی ها", url: "/dashboard/category", icon: <Icon name={"category"} className="w-8 h-8" /> },
     { name: "مطالب", url: "/dashboard/post", icon: <Icon name={"stack"} className="w-8 h-8" /> },
     { name: "تیکت ها", url: "/dashboard/tickets", icon: <Icon name={"ticket"} className="w-8 h-8" /> },

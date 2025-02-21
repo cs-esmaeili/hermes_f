@@ -12,7 +12,7 @@ const ExamDetail = () => {
     const { session_id } = params;
     const [examSession, setExamSession] = useState(null);
     const [loading, setLoading] = useState(true);
-    const { push } = useRouter();
+    const { replace } = useRouter();
 
     // activeQuestionIndex: اگر برابر -1 شود یعنی هیچ سوال فعالی وجود ندارد
     const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
@@ -31,7 +31,7 @@ const ExamDetail = () => {
         },
         () => {
             setLoading(false);
-            push('/dashboard');
+            replace('/dashboard');
         }
     );
 
@@ -40,6 +40,12 @@ const ExamDetail = () => {
             getActiveExamSessionRequest(session_id);
         }
     }, [session_id]);
+
+    useEffect(() => {
+        if (activeQuestionIndex == -1) {
+            replace("/dashboard/exam")
+        }
+    }, [activeQuestionIndex]);
 
     if (loading) {
         return (
