@@ -6,8 +6,8 @@ const useGetExamSessions = (Listener, page, perPage) => {
 
     const getExamSessionsRequest = async () => {
         try {
-            const { data: { examSessionCount, examSession } } = await getExamSessions({ page, perPage });
-            Listener({ examSessionCount, examSession });
+            const { data: { examSessionCount, examSessions } } = await getExamSessions({ page, perPage });
+            Listener({ examSessionCount, examSessions });
         } catch (error) {
             console.log(error);
             if (error?.response?.data?.message) {

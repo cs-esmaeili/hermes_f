@@ -15,9 +15,10 @@ const Sessions = ({ setParentLoading }) => {
     const [perPage, setPerPage] = useState(12);
     const { push } = useRouter();
 
-    const { getExamSessionsRequest } = useGetExamSessions(({ examSessionCount, examSession }) => {
-        setSessions(examSession);
-        setSessionCount(sessionCount);
+    const { getExamSessionsRequest } = useGetExamSessions(({ examSessionCount, examSessions }) => {
+
+        setSessions(examSessions);
+        setSessionCount(examSessionCount);
     }, page, perPage);
 
     useEffect(() => {
