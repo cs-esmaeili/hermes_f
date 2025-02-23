@@ -4,6 +4,7 @@ import apiDataSlice from "./apiData";
 import productPricesSlice from "./productPrices";
 import boxPricesSlice from "./boxPrices";
 import informationSlice from "./information";
+import globalMessage from "./globalMessage";
 import logOutTime from "./logOutTime";
 
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
         boxPrices: boxPricesSlice,
         information: informationSlice,
         logOutTime: logOutTime,
+        globalMessage: globalMessage,
     },
     devTools: true
 });

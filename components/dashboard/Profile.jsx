@@ -17,7 +17,8 @@ import Roles from "@/components/dashboard/role/Roles";
 import { ImCross } from "react-icons/im";
 import DivButton from "@/components/dashboard/DivButton";
 import ApprovalStatus from "./approval/ApprovalStatus";
-
+import { useSelector, useDispatch } from 'react-redux';
+import { setGlobalMessage } from '@/state/globalMessage';
 
 const converSelectedUserToFormData = (selectedUser) => {
     return {
@@ -53,7 +54,8 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
     const { openModal, closeModal } = useModalContext();
     const pickFileRef = useRef(null);
     const scrollbarRef = useRef();
-
+    const dispatch = useDispatch();
+    const globalMessage = useSelector((state) => state.globalMessage.value);
     const [formData, setFormData] = useState(converSelectedUserToFormData(selectedUser));
 
     const { createUserRequest } = useCreateUser(() => { setFormData(initialFormData) });
@@ -62,8 +64,6 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
     const { changeAvatarRequest } = useChangeAvatar(selectedUser?._id, () => {
         userInformationRequest();
     });
-
-
 
 
     useEffect(() => {
@@ -112,9 +112,15 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
     }
 
     useEffect(() => {
-        if (userType !== "normal") {
+        if (userType !== "normal" && !globalMessage?.message) {
             scrollbarRef.current.scrollTop = scrollbarRef.current.scrollHeight;
             setFormData({ ...formData, iWant: userType })
+        }
+
+    }, [userType]);
+    useEffect(() => {
+        if (globalMessage?.message) {
+            setUserType(globalMessage.openSection);
         }
     }, [userType]);
 
@@ -124,6 +130,9 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
 
     return (
         <div className='flex flex-col grow h-full gap-3 bg-primary rounded-xl p-5 overflow-auto' ref={scrollbarRef}>
+            {globalMessage?.message && <div onLoad={() => {
+                dispatch(setGlobalMessage(null));
+            }} className="flex grow bg-red-500 p-10 justify-center rounded-lg"> {globalMessage.message} </div>}
             {selectedUser && <ApprovalStatus approval={selectedUser} />}
             {selectedUser && isAdmin && (
                 <div className="flex justify-between bg-orange-400 p-3 rounded-md">
