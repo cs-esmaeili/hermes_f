@@ -24,6 +24,7 @@
     "cookies-next": "^5.1.0",
     "cytoscape": "^3.31.0",
     "googleapis": "^144.0.0",
+    "html2canvas": "^1.4.1",
     "inquirer": "^8.2.6",
     "jalaali-js": "^1.2.7",
     "lottie-react": "^2.4.1",
