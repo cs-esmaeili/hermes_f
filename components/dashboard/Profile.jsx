@@ -21,30 +21,31 @@ import ApprovalStatus from "./approval/ApprovalStatus";
 
 const converSelectedUserToFormData = (selectedUser) => {
     return {
-        userName: selectedUser?.userName || "",
-        email: selectedUser?.email || "",
+        userName: selectedUser?.userName || "32432423",
+        email: selectedUser?.email || "32432423",
         password: "",
-        role: selectedUser?.role_id || "",
-        fullName: selectedUser?.data?.fullName || "",
-        nationalCode: selectedUser?.data?.nationalCode || "",
-        birthday: selectedUser?.data?.birthday || "",
-        shebaNumber: selectedUser?.data?.shebaNumber || "",
-        cardNumber: selectedUser?.data?.cardNumber || "",
-        fatherName: selectedUser?.data?.fatherName || "",
-        companyName: selectedUser?.data?.companyName || "",
-        economicCode: selectedUser?.data?.economicCode || "",
-        registrationNumber: selectedUser?.data?.registrationNumber || "",
-        postalCode: selectedUser?.data?.postalCode || "",
-        ostan: selectedUser?.data?.ostan || "",
-        shahr: selectedUser?.data?.shahr || "",
-        github: selectedUser?.data?.github || "",
-        linkedin: selectedUser?.data?.linkedin || "",
-        telegram: selectedUser?.data?.telegram || "",
-        instagram: selectedUser?.data?.instagram || "",
-        twitter: selectedUser?.data?.twitter || "",
-        address: selectedUser?.data?.address || "",
-        biography: selectedUser?.data?.biography || "",
+        role: selectedUser?.role_id || "32432423",
+        fullName: selectedUser?.data?.fullName || "32432423",
+        nationalCode: selectedUser?.data?.nationalCode || "32432423",
+        birthday: selectedUser?.data?.birthday || "32432423",
+        shebaNumber: selectedUser?.data?.shebaNumber || "32432423",
+        cardNumber: selectedUser?.data?.cardNumber || "32432423",
+        fatherName: selectedUser?.data?.fatherName || "32432423",
+        companyName: selectedUser?.data?.companyName || "32432423",
+        economicCode: selectedUser?.data?.economicCode || "32432423",
+        registrationNumber: selectedUser?.data?.registrationNumber || "32432423",
+        postalCode: selectedUser?.data?.postalCode || "32432423",
+        ostan: selectedUser?.data?.ostan || "32432423",
+        shahr: selectedUser?.data?.shahr || "32432423",
+        github: selectedUser?.data?.github || "32432423",
+        linkedin: selectedUser?.data?.linkedin || "32432423",
+        telegram: selectedUser?.data?.telegram || "32432423",
+        instagram: selectedUser?.data?.instagram || "32432423",
+        twitter: selectedUser?.data?.twitter || "32432423",
+        address: selectedUser?.data?.address || "32432423",
+        biography: selectedUser?.data?.biography || "32432423",
         file: selectedUser?.data?.image?.url || null,
+        iWant: selectedUser?.data?.iWant || "",
     }
 }
 const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoading }) => {
@@ -52,8 +53,6 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
     const { openModal, closeModal } = useModalContext();
     const pickFileRef = useRef(null);
     const scrollbarRef = useRef();
-
-
 
     const [formData, setFormData] = useState(converSelectedUserToFormData(selectedUser));
 
@@ -64,11 +63,7 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
         userInformationRequest();
     });
 
-    useEffect(() => {
-        if (userType !== "normal") {
-            scrollbarRef.current.scrollTop = scrollbarRef.current.scrollHeight;
-        }
-    }, [userType]);
+
 
 
     useEffect(() => {
@@ -116,6 +111,16 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
         }
     }
 
+    useEffect(() => {
+        if (userType !== "normal") {
+            scrollbarRef.current.scrollTop = scrollbarRef.current.scrollHeight;
+            setFormData({ ...formData, iWant: userType })
+        }
+    }, [userType]);
+
+    useEffect(() => {
+        console.log(formData.iWant);
+    }, [formData]);
 
     return (
         <div className='flex flex-col grow h-full gap-3 bg-primary rounded-xl p-5 overflow-auto' ref={scrollbarRef}>
@@ -168,14 +173,14 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
                 </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 grow">
-                {['company', 'teacher', 'degree'].map((type) => (
+                {['company', 'Teacher', 'certificate'].map((type) => (
                     <div key={type} className={`flex flex-col bg-secondary rounded-lg p-3 justify-center items-center border-2 border-transparent hover:border-accent ${userType === type && "!border-accent"}`} onClick={() => setUserType(userType === type ? "normal" : type)}>
-                        <Lottie animationData={{ company: Company, teacher: Teacher, degree: Degree }[type]} className="w-1/2 h-60" />
-                        <span>{type === "company" ? "شرکت / حقوقی هستم" : type === "teacher" ? "مدرس هستم" : "نیاز به مدرک دارم"}</span>
+                        <Lottie animationData={{ company: Company, Teacher: Teacher, certificate: Degree }[type]} className="w-1/2 h-60" />
+                        <span>{type === "company" ? "شرکت / حقوقی هستم" : type === "Teacher" ? "مدرس هستم" : "نیاز به مدرک دارم"}</span>
                     </div>
                 ))}
             </div>
-            {userType === "degree" && (
+            {userType === "certificate" && (
                 <>
                     <div className='flex flex-col md:flex-row grow gap-5 justify-center items-end'>
                         <CustomInput rightLabel={"شماره شبا"} inputClassName={"bg-secondary"} containerClassName={"w-full"} value={formData.shebaNumber} onChange={handleInputChange('shebaNumber')} />
@@ -193,7 +198,7 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
                     </div>
                 </>
             )}
-            {userType === "teacher" && (
+            {userType === "Teacher" && (
                 <>
                     <div className='flex flex-col md:flex-row grow gap-5 justify-center items-end'>
                         <CustomInput rightLabel={"شماره شبا"} inputClassName={"bg-secondary"} containerClassName={"w-full"} value={formData.shebaNumber} onChange={handleInputChange('shebaNumber')} />
