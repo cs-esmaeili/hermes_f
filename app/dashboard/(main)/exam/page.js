@@ -15,7 +15,6 @@ const DashboardPage = () => {
     const examCheck = userHavePermission(["exam.examNavigationMenu"]);
     const questionCheck = userHavePermission(["exam.questionNavigationMenu"]);
 
-    // Create the items array inside the component to avoid duplicate items on re-renders.
     let items = [
         { page: "Sessions", icon: "list", label: "آزمون ها" },
     ];

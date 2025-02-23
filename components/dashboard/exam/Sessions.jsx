@@ -6,6 +6,7 @@ import Table from '@/components/dashboard/Table';
 import Pagination from '@/components/dashboard/Pagination';
 import { FaEye } from "react-icons/fa";
 import { useRouter } from 'next/navigation';
+import { IoEnter } from "react-icons/io5";
 
 const Sessions = ({ setParentLoading }) => {
 
@@ -46,6 +47,11 @@ const Sessions = ({ setParentLoading }) => {
                     actionComponent={({ rowData, rowIndex }) => {
                         return (
                             <div className="flex h-full items-center justify-center gap-2 text-nowrap">
+                                {rowData.status == "in-progress" &&
+                                    <IoEnter className='text-xl ml-4 text-yellow-400 cursor-pointer' onClick={() => {
+                                        push(`/dashboard/exam/${rowData._id}`)
+                                    }} />
+                                }
                                 {rowData.status == "completed" &&
                                     <FaEye className='text-xl ml-4 text-yellow-400 cursor-pointer' onClick={() => {
                                         push(`/dashboard/exam/result/${rowData._id}`)
