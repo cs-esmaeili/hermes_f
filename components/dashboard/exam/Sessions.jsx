@@ -7,6 +7,8 @@ import Pagination from '@/components/dashboard/Pagination';
 import { FaEye } from "react-icons/fa";
 import { useRouter } from 'next/navigation';
 import { IoEnter } from "react-icons/io5";
+import DivButton from '../DivButton';
+import Icon from '@/components/general/Icon';
 
 const Sessions = ({ setParentLoading }) => {
 
@@ -48,14 +50,28 @@ const Sessions = ({ setParentLoading }) => {
                         return (
                             <div className="flex h-full items-center justify-center gap-2 text-nowrap">
                                 {rowData.status == "in-progress" &&
-                                    <IoEnter className='text-xl ml-4 text-yellow-400 cursor-pointer' onClick={() => {
+                                    <DivButton className='!w-fit bg-yellow-500 text-textcolor' onClick={() => {
                                         push(`/dashboard/exam/${rowData._id}`)
-                                    }} />
+                                    }}>
+                                        <IoEnter className='text-xl  cursor-pointer' />
+                                        <span>ادامه امتحان</span>
+                                    </DivButton>
                                 }
                                 {rowData.status == "completed" &&
-                                    <FaEye className='text-xl ml-4 text-yellow-400 cursor-pointer' onClick={() => {
+                                    <DivButton className='!w-fit bg-yellow-500 text-textcolor' onClick={() => {
                                         push(`/dashboard/exam/result/${rowData._id}`)
-                                    }} />
+                                    }} >
+                                        <FaEye className='text-xl  cursor-pointer' />
+                                        <span>مشاهده نتایج</span>
+                                    </DivButton>
+                                }
+                                {rowData.status == "completed" &&
+                                    <DivButton className='!w-fit bg-blue-500 text-textcolor' onClick={() => {
+                                        push(`/dashboard/exam/result/${rowData._id}`)
+                                    }} >
+                                        <Icon name={"certificate"} className="w-6 h-6" />
+                                        <span>دریافت مدرک</span>
+                                    </DivButton>
                                 }
                             </div>
                         );

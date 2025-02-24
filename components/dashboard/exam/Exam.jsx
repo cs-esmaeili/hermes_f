@@ -9,6 +9,7 @@ import DivButton from '../DivButton';
 import Table from '@/components/dashboard/Table';
 import Pagination from '@/components/dashboard/Pagination';
 import { BiSolidEdit } from 'react-icons/bi';
+import CustomSelect from '../CustomSelect';
 
 
 const converSelectedExamToFormData = (selectedExam) => {
@@ -16,6 +17,9 @@ const converSelectedExamToFormData = (selectedExam) => {
         title: selectedExam?.title || "تست",
         duration: selectedExam?.duration || "1",
         questionCount: selectedExam?.questionCount || "2",
+        minScore: selectedExam?.minScore || "2",
+        timeGate: selectedExam?.timeGate || "2",
+        certificate: selectedExam?.certificate || "2",
         exam_id: selectedExam?._id || null,
     }
 }
@@ -71,6 +75,24 @@ const Exam = ({ setParentLoading, pickMode = false, examPicker = null }) => {
                             value={formData.duration} onChange={handleInputChange('duration')} />
                         <CustomInput rightLabel="تعداد سوالات" inputClassName={"bg-secondary"} containerClassName={"w-full"}
                             value={formData.questionCount} onChange={handleInputChange('questionCount')} />
+                    </div>
+                    <div className='flex grow flex-wrap md:flex-nowrap gap-3  justify-between rtl'>
+                        <CustomInput rightLabel="حداقل نمره برای دریافت مدرک" inputClassName={"bg-secondary"} containerClassName={"w-full"}
+                            value={formData.minScore} onChange={handleInputChange('minScore')} />
+                        <CustomInput rightLabel="دوره آموزش" inputClassName={"bg-secondary"} containerClassName={"w-full"}
+                            value={formData.timeGate} onChange={handleInputChange('timeGate')} />
+
+                        <CustomSelect
+                            rightLabel="مدرک آزمون"
+                            containerClassName="w-full"
+                            selectClassName="bg-secondary"
+                            value={formData.certificate}
+                            onChange={handleInputChange('certificate')}
+                            placeholder="انتخاب کنید"
+                            options={[
+                                { value: 'ICDL', label: 'ICDL' },
+                            ]}
+                        />
                     </div>
                     <DivButton className={`w-full bg-green-500 justify-center ${selectedExam && "bg-yellow-500"}`} onClick={() => {
                         if (selectedExam) {
