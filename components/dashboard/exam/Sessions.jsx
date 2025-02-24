@@ -65,7 +65,8 @@ const Sessions = ({ setParentLoading }) => {
                                         <span>مشاهده نتایج</span>
                                     </DivButton>
                                 }
-                                {rowData.status == "completed" && rowData.score >= rowData.exam_id.minScore &&
+                                {rowData.status == "completed" &&
+                                // {rowData.status == "completed" && rowData.score >= rowData.exam_id.minScore &&
                                     <DivButton className='!w-fit bg-blue-500 text-textcolor' onClick={() => {
                                         push(`/dashboard/certificate/${rowData._id}`)
                                     }} >

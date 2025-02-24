@@ -5,12 +5,13 @@ import { useState, useRef, useEffect } from 'react';
 import html2canvas from 'html2canvas';
 import DivButton from '../DivButton';
 import CustomInput from '../CustomInput';
-
+import QRCode from 'react-qr-code';
 
 const convertToFormData = (data) => {
     return {
         title: data?.exam_id.title || "این یک مدرک ازمایشی است",
         name: data?.name || "32432423",
+        session_id: data?._id || "32432423",
         image: data?.image || `${process.env.NEXT_PUBLIC_API}assets/back.jpg`,
     }
 }
@@ -171,6 +172,7 @@ const Icdl = ({ data, editMode = false }) => {
                                     <CustomImage src={`${process.env.NEXT_PUBLIC_API + process.env.NEXT_PUBLIC_LOGO_URL}`} width={200} height={200} />
                                 </div>
                                 <div className='flex w-full items-center justify-center text-3xl mt-10'>{formData.text}</div>
+                                <QRCode value={`${process.env.NEXT_PUBLIC_API}cert/${formData.session_id}`} size={256} />
                             </div>
                         </div>
                     </div>
