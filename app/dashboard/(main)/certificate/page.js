@@ -1,12 +1,34 @@
-'use client';
+'use client'
 
+import { useState, useEffect, useRef } from 'react';
+import NavigationMenu from '@/components/dashboard/NavigationMenu';
+import BlurLoading from '@/components/dashboard/BlurLoading';
 import Icdl from '@/components/dashboard/certificate/Icdl';
-import React from 'react';
 
 const page = () => {
+
+    const [page, setPage] = useState("ICDL");
+    const [loading, setLoading] = useState(false);
+
     return (
-        <div className='flex grow'>
-            <Icdl image={`${process.env.NEXT_PUBLIC_API}assets/back.jpg`} text={"این یک مدرک ازمایشی است"}/>
+        <div className='flex flex-col grow rtl gap-3'>
+
+            <BlurLoading loading={loading} />
+
+            <div className='flex w-1/6 '>
+                <NavigationMenu
+                    page={page}
+                    setPage={(page) => { setLoading(true); setPage(page); }}
+                    containerClass={"flex-col xl:pl-3"}
+                    items={[
+                        { page: "ICDL", icon: "certificate", label: "ICDL" },
+                    ]}
+                />
+            </div>
+
+            {(page == "ICDL") &&
+                <Icdl editMode />
+            }
         </div>
     );
 };

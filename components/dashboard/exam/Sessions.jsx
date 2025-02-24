@@ -65,9 +65,9 @@ const Sessions = ({ setParentLoading }) => {
                                         <span>مشاهده نتایج</span>
                                     </DivButton>
                                 }
-                                {rowData.status == "completed" &&
+                                {rowData.status == "completed" && rowData.score >= rowData.exam_id.minScore &&
                                     <DivButton className='!w-fit bg-blue-500 text-textcolor' onClick={() => {
-                                        push(`/dashboard/exam/result/${rowData._id}`)
+                                        push(`/dashboard/certificate/${rowData._id}`)
                                     }} >
                                         <Icon name={"certificate"} className="w-6 h-6" />
                                         <span>دریافت مدرک</span>
