@@ -34,7 +34,6 @@ function InputDatePicker({ icon, value, onChange, reset, length = 3 }) {
 
     useEffect(() => {
         setDefaultTime(value ? value.split("-") : ["", "", ""]);
-        console.log(value ? value.split("-") : "");
     }, [value]);
 
     return (
