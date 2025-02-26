@@ -9,16 +9,23 @@ import QRCode from 'react-qr-code';
 
 const convertToFormData = (data) => {
     return {
-        title: data?.exam_id.title || "این یک مدرک ازمایشی است",
-        name: data?.name || "32432423",
-        session_id: data?._id || "32432423",
-        image: data?.image || `${process.env.NEXT_PUBLIC_API}assets/back.jpg`,
+        score: data?.score || 0,
+        image: data?.user?.image?.url || "",
+        fullName: data?.user.fullName || "",
+        nationalCode: data?.user.nationalCode || "",
+        fatherName: data?.user.fatherName || "",
+        startDate: data?.startDate || "",
+        endDate: data?.endDate || "",
+        backImageV: data?.image || `${process.env.NEXT_PUBLIC_API}assets/back.jpg`,
+        backImageH: data?.image || `${process.env.NEXT_PUBLIC_API}assets/back.jpg`,
     }
 }
 
-const Icdl = ({ data, editMode = false }) => {
+const General = ({ data, dijital = true, editMode = false }) => {
+
     const [scale, setScale] = useState(0.2);
     const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [dijitalForm, setDijitalForm] = useState(dijital);
     const exportRef = useRef(null);
     const containerRef = useRef(null);
     const isDragging = useRef(false);
@@ -26,6 +33,7 @@ const Icdl = ({ data, editMode = false }) => {
 
     const [imageSize, setImageSize] = useState({ width: 800, height: 600 });
     const [formData, setFormData] = useState(convertToFormData(data));
+    console.log(convertToFormData(data));
 
 
     const handleInputChange = (field) => (e) => {
@@ -127,10 +135,28 @@ const Icdl = ({ data, editMode = false }) => {
 
                 {editMode &&
                     <div className='flex flex-col w-full gap-3'>
-                        <CustomInput rightLabel={"نام پدر"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.name} onChange={handleInputChange('name')} />
-                        <CustomInput rightLabel={"نام پدر"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.name} onChange={handleInputChange('name')} />
-                        <CustomInput rightLabel={"نام پدر"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.name} onChange={handleInputChange('name')} />
-                        <CustomInput rightLabel={"نام پدر"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.name} onChange={handleInputChange('name')} />
+                        {dijitalForm ?
+                            <DivButton className="w-full bg-red-400 text-textcolor h-fit justify-center"
+                                onClick={() => {
+                                    setDijitalForm(!dijitalForm);
+                                }}
+                            >مشاهد نسخه اصلی</DivButton>
+                            :
+                            <DivButton className="w-full bg-blue-400 text-textcolor h-fit justify-center"
+                                onClick={() => {
+                                    setDijitalForm(!dijitalForm);
+                                }}
+                            >مشاهده نسخه دیجیتال</DivButton>
+                        }
+                        <CustomInput rightLabel={"نمره"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.score} onChange={handleInputChange('score')} />
+                        <CustomInput rightLabel={"نام خانوادگی"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.fullName} onChange={handleInputChange('fullName')} />
+                        <CustomInput rightLabel={"کد ملی"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.nationalCode} onChange={handleInputChange('nationalCode')} />
+                        <CustomInput rightLabel={"نام پدر"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.fatherName} onChange={handleInputChange('fatherName')} />
+
+                        <DivButton onClick={handleExport} className="w-full bg-yellow-500 text-textcolor h-fit justify-center">
+                            ساخت مدرک
+                        </DivButton>
+
                     </div>
                 }
 
@@ -159,19 +185,22 @@ const Icdl = ({ data, editMode = false }) => {
                                 backgroundColor: 'white',
                             }}>
                             <img
-                                src={formData.image}
+                                src={`${process.env.NEXT_PUBLIC_API}untouchable/certificats/General/${(dijitalForm) ? "dijitalB.jpg" : "normalB.jpg"}`}
                                 alt="Background"
                                 className="absolute w-full h-full object-cover"
                             />
 
                             {/* محتوای مدرک */}
                             <div className='absolute inset-0 flex flex-col justify-center items-center border-4 border-red-500 text-black p-4'>
-                                <div className='flex w-full items-center justify-center text-6xl'>{formData.title}</div>
-                                <div className='flex w-full items-center justify-center text-6xl'>{formData.name}</div>
+                                <div className='flex w-full items-center justify-center text-6xl'>{formData.fullName}</div>
+                                <div className='flex w-full items-center justify-center text-6xl'>{formData.nationalCode}</div>
+                                <div className='flex w-full items-center justify-center text-6xl'>{formData.fatherName}</div>
+                                <div className='flex w-full items-center justify-center text-6xl'>{formData.score}</div>
+                                <div className='flex w-full items-center justify-center text-6xl'>{formData.startDate}</div>
+                                <div className='flex w-full items-center justify-center text-6xl'>{formData.endDate}</div>
                                 <div className='flex w-full items-center justify-center text-6xl mt-5'>
                                     <CustomImage src={`${process.env.NEXT_PUBLIC_API + process.env.NEXT_PUBLIC_LOGO_URL}`} width={200} height={200} />
                                 </div>
-                                <div className='flex w-full items-center justify-center text-3xl mt-10'>{formData.text}</div>
                                 <QRCode value={`${process.env.NEXT_PUBLIC_API}cert/${formData.session_id}`} size={256} />
                             </div>
                         </div>
@@ -182,4 +211,4 @@ const Icdl = ({ data, editMode = false }) => {
     );
 };
 
-export default Icdl;
+export default General;

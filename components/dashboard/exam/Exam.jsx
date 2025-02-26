@@ -1,5 +1,6 @@
 'use client'
 
+import useGetCertificateTemplates from '@/hooks/CertificateTemplate/useGetCertificateTemplates';
 import { useState, useEffect, useRef } from 'react';
 import CustomInput from '@/components/dashboard/CustomInput';
 import useCreateExam from '@/hooks/exam/useCreateExam';
@@ -33,11 +34,18 @@ const Exam = ({ setParentLoading, pickMode = false, examPicker = null }) => {
     const [examCount, setExamCount] = useState(null);
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(12);
+    const [certTemplates, setCertTemplates] = useState(12);
 
     const { getExamsRequest } = useGetExams(({ examCount, exams }) => {
         setExams(exams);
         setExamCount(examCount);
     }, page, perPage);
+
+    const { getCertificateTemplatesRequest } = useGetCertificateTemplates((templates) => {
+        setCertTemplates(templates);
+        console.log(templates);
+
+    });
 
     const { updateExamRequest } = useUpdateExam(() => {
         setFormData(converSelectedExamToFormData(null));
@@ -56,6 +64,7 @@ const Exam = ({ setParentLoading, pickMode = false, examPicker = null }) => {
 
     useEffect(() => {
         getExamsRequest();
+        getCertificateTemplatesRequest();
         setParentLoading(false);
     }, []);
 
@@ -89,10 +98,14 @@ const Exam = ({ setParentLoading, pickMode = false, examPicker = null }) => {
                             value={formData.certificate}
                             onChange={handleInputChange('certificate')}
                             placeholder="انتخاب کنید"
-                            options={[
-                                { value: 'ICDL', label: 'ICDL' },
-                            ]}
+                            options={Array.isArray(certTemplates)
+                                ? certTemplates.map(template => ({
+                                    value: template._id,
+                                    label: template.name,
+                                }))
+                                : []}
                         />
+
                     </div>
                     <DivButton className={`w-full bg-green-500 justify-center ${selectedExam && "bg-yellow-500"}`} onClick={() => {
                         if (selectedExam) {

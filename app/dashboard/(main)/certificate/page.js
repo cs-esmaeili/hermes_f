@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import NavigationMenu from '@/components/dashboard/NavigationMenu';
 import BlurLoading from '@/components/dashboard/BlurLoading';
-import Icdl from '@/components/dashboard/certificate/Icdl';
+import Icdl from '@/components/dashboard/certificate/General';
 
 const page = () => {
 
@@ -27,7 +27,7 @@ const page = () => {
             </div>
 
             {(page == "ICDL") &&
-                <Icdl editMode />
+                <Icdl editMode dijital={false} />
             }
         </div>
     );
