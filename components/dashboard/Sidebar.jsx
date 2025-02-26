@@ -16,9 +16,7 @@ const Sidebar = ({ open, setOpen }) => {
 
   const allItems = [
     { name: "صفحه اصلی پنل", url: "/dashboard", icon: <Icon name={"dashboard"} className="w-8 h-8" /> },
-    { name: "مدرک", url: "/dashboard/certificate", icon: <Icon name={"certificate"} className="w-8 h-8" /> },
-    { name: "مدرک تست", url: "/dashboard/certificateTest", icon: <Icon name={"certificate"} className="w-8 h-8" /> },
-    { name: "آزمون", url: "/dashboard/exam", icon: <Icon name={"exam"} className="w-8 h-8" /> },
+    { name: "آزمون و مدارک", url: "/dashboard/ExamAndCert", icon: <Icon name={"exam"} className="w-8 h-8" /> },
     { name: "دسترسی ها", url: "/dashboard/role", icon: <Icon name={"permissions"} className="w-8 h-8" /> },
     { name: "کاربران", url: "/dashboard/users", icon: <Icon name={"users"} className="w-8 h-8" /> },
     { name: "فایل ها", url: "/dashboard/filemanager", icon: <Icon name={"file"} className="w-8 h-8" /> },

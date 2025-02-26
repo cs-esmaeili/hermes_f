@@ -5,13 +5,13 @@ import NavigationMenu from '@/components/dashboard/NavigationMenu';
 import BlurLoading from '@/components/dashboard/BlurLoading';
 import Icdl from '@/components/dashboard/certificate/General';
 
-const page = () => {
+const CertificateTemplate = () => {
 
     const [page, setPage] = useState("ICDL");
     const [loading, setLoading] = useState(false);
 
     return (
-        <div className='flex flex-col grow rtl gap-3'>
+        <div className='flex flex-col grow rtl gap-3 h-full'>
 
             <BlurLoading loading={loading} />
 
@@ -33,4 +33,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default CertificateTemplate;

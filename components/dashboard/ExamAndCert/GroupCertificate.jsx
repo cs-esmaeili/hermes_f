@@ -6,7 +6,7 @@ import BlurLoading from '@/components/dashboard/BlurLoading';
 import VUserProfile from '@/components/dashboard/certificateTest/VUserProfile';
 import CertificateList from '@/components/dashboard/certificateTest/CertificateList';
 
-export default function certificateTest() {
+export default function GroupCertificate() {
 
     const [page, setPage] = useState("createCertificate");
     const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ export default function certificateTest() {
             setPage("createCertificate");
         }
     }, [selectedCert]);
-selectedCert
+    
     return (
         <div className='flex flex-col flex-co p-5 w-full xl:flex-row-reverse relative grow gap-3 h-full overflow-auto' ref={scrollbarRef}>
             <BlurLoading loading={loading} />
