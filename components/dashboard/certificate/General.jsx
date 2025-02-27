@@ -6,24 +6,31 @@ import html2canvas from 'html2canvas';
 import DivButton from '../DivButton';
 import CustomInput from '../CustomInput';
 import QRCode from 'react-qr-code';
+import PickFile from '../PickFile';
+import { BsImage, BsCake2 } from "react-icons/bs";
+import useCreateCertificate from "@/hooks/certificate/useCreateCertificate";
+import useGetCertificateTemplates from '@/hooks/CertificateTemplate/useGetCertificateTemplates';
 
 const convertToFormData = (data) => {
     return {
+        cert_id: data?._id || "",
         score: data?.score || 0,
-        image: data?.user?.image?.url || "",
-        fullName: data?.user.fullName || "",
-        nationalCode: data?.user.nationalCode || "",
-        fatherName: data?.user.fatherName || "",
-        startDate: data?.startDate || "",
-        endDate: data?.endDate || "",
-        title: data?.title || "",
+        fullName: data?.user.fullName || "هاها",
+        nationalCode: data?.user.nationalCode || "32423",
+        fatherName: data?.user.fatherName || "حسین",
+        startDate: data?.startDate || "11/1",
+        endDate: data?.endDate || "11/2",
+        title: data?.title || "المانی",
         backImageV: data?.image || `${process.env.NEXT_PUBLIC_API}assets/back.jpg`,
         backImageH: data?.image || `${process.env.NEXT_PUBLIC_API}assets/back.jpg`,
+        file: data?.user?.image?.url || null,
+        cert_template_id: data?.cert_template_id || "",
     }
 }
+const CertName = "General";
 
 const General = ({ data, dijital = true, editMode = false }) => {
-
+    const pickFileRef = useRef(null);
     const [scale, setScale] = useState(0.2);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [dijitalForm, setDijitalForm] = useState(dijital);
@@ -31,15 +38,39 @@ const General = ({ data, dijital = true, editMode = false }) => {
     const containerRef = useRef(null);
     const isDragging = useRef(false);
     const lastMousePosition = useRef({ x: 0, y: 0 });
-
     const [imageSize, setImageSize] = useState({ width: 800, height: 600 });
     const [formData, setFormData] = useState(convertToFormData(data));
-    console.log(convertToFormData(data));
 
+    const { getCertificateTemplatesRequest } = useGetCertificateTemplates((templates) => {
+        const matchingTemplate = templates.find(template => template.name === CertName);
+        if (matchingTemplate) {
+            setFormData({ ...formData, cert_template_id: matchingTemplate._id });
+        }
+    });
+
+    const { createCertificateRequest } = useCreateCertificate(() => {
+        setFormData(convertToFormData(null));
+        getCertificateTemplatesRequest();
+    }, (persent) => {
+
+    });
 
     const handleInputChange = (field) => (e) => {
         setFormData({ ...formData, [field]: e.target.value });
     };
+    const handleFileChange = (file) => {
+        setFormData({ ...formData, file });
+    };
+
+
+    function isValidUrl(string) {
+        try {
+            new URL(string);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
 
 
     useEffect(() => {
@@ -57,6 +88,11 @@ const General = ({ data, dijital = true, editMode = false }) => {
             }
         };
     }, []);
+
+    useEffect(() => {
+        getCertificateTemplatesRequest();
+    }, []);
+
 
     const handleWheel = (event) => {
         event.preventDefault();
@@ -122,7 +158,6 @@ const General = ({ data, dijital = true, editMode = false }) => {
             console.error('Error exporting image:', error);
         }
     };
-
     return (
         <div className='flex grow overflow-hidden gap-3'>
 
@@ -133,7 +168,7 @@ const General = ({ data, dijital = true, editMode = false }) => {
                 </DivButton>
 
                 {editMode &&
-                    <div className='flex flex-col w-full gap-3'>
+                    <div className='flex flex-col w-full gap-3 overflow-auto'>
                         {dijitalForm ?
                             <DivButton className="w-full bg-red-400 text-textcolor h-fit justify-center"
                                 onClick={() => {
@@ -147,15 +182,25 @@ const General = ({ data, dijital = true, editMode = false }) => {
                                 }}
                             >مشاهده نسخه دیجیتال</DivButton>
                         }
-                        <CustomInput rightLabel={"نمره"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.score} onChange={handleInputChange('score')} />
+                        <PickFile ref={pickFileRef} fileSelectListener={handleFileChange} />
+
+                        <DivButton onClick={() => pickFileRef.current.openFilePicker()} className="w-full bg-blue-400 text-textcolor h-fit justify-center">
+                            عکس
+                        </DivButton>
+
+                        <CustomInput rightLabel={"عنوان دوره"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.title} onChange={handleInputChange('title')} />
                         <CustomInput rightLabel={"نام خانوادگی"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.fullName} onChange={handleInputChange('fullName')} />
                         <CustomInput rightLabel={"کد ملی"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.nationalCode} onChange={handleInputChange('nationalCode')} />
                         <CustomInput rightLabel={"نام پدر"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.fatherName} onChange={handleInputChange('fatherName')} />
+                        <CustomInput rightLabel={"نمره"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.score} onChange={handleInputChange('score')} />
+                        <CustomInput rightLabel={"تاریخ شروع"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.startDate} onChange={handleInputChange('startDate')} />
+                        <CustomInput rightLabel={"تاریخ پایان"} inputClassName={"bg-primary"} containerClassName={"w-full"} value={formData.endDate} onChange={handleInputChange('endDate')} />
 
-                        <DivButton onClick={handleExport} className="w-full bg-yellow-500 text-textcolor h-fit justify-center">
+                        <DivButton onClick={() => {
+                            createCertificateRequest(formData);
+                        }} className="w-full bg-yellow-500 text-textcolor h-fit justify-center">
                             ساخت مدرک
                         </DivButton>
-
                     </div>
                 }
 
@@ -189,7 +234,6 @@ const General = ({ data, dijital = true, editMode = false }) => {
                                 className="absolute w-full h-full object-cover"
                             />
 
-                            {/* محتوای مدرک */}
                             <div className='absolute inset-0 flex flex-col justify-center items-center border-4 border-red-500 text-black p-4'>
                                 <div className='flex w-full items-center justify-center text-6xl'>{formData.fullName}</div>
                                 <div className='flex w-full items-center justify-center text-6xl'>{formData.nationalCode}</div>
@@ -199,9 +243,15 @@ const General = ({ data, dijital = true, editMode = false }) => {
                                 <div className='flex w-full items-center justify-center text-6xl'>{formData.endDate}</div>
                                 <div className='flex w-full items-center justify-center text-6xl'>{formData.title}</div>
                                 <div className='flex w-full items-center justify-center text-6xl mt-5'>
-                                    <CustomImage src={`${process.env.NEXT_PUBLIC_API + process.env.NEXT_PUBLIC_LOGO_URL}`} width={200} height={200} />
+                                    {formData.file ? (
+                                        <div className="relative">
+                                            <CustomImage src={isValidUrl(formData.file) ? formData.file : URL.createObjectURL(formData.file)} width={200} height={200} onClick={() => pickFileRef.current.openFilePicker()} />
+                                        </div>
+                                    ) : (
+                                        <BsImage className='text-5xl rounded' />
+                                    )}
                                 </div>
-                                <QRCode value={`${process.env.NEXT_PUBLIC_API}cert/${formData.session_id}`} size={256} />
+                                <QRCode value={`${process.env.NEXT_PUBLIC_API}cert/${formData.cert_id}`} size={256} />
                             </div>
                         </div>
                     </div>

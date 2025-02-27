@@ -124,10 +124,6 @@ const Profile = ({ setSelectedUser, selectedUser, isAdmin = false, setParentLoad
         }
     }, [userType]);
 
-    useEffect(() => {
-        console.log(formData.iWant);
-    }, [formData]);
-
     return (
         <div className='flex flex-col grow h-full gap-3 bg-primary rounded-xl p-5 overflow-auto' ref={scrollbarRef}>
             {globalMessage?.message && <div onLoad={() => {

@@ -9,7 +9,7 @@ const useCreateCertificate = (listener, setPersent) => {
     const createCertificateRequest = async ({
         fullName, nationalCode,
         birthday, fatherName, companyName, economicCode, registrationNumber, postalCode
-        , ostan, shahr, address, file , name
+        , ostan, shahr, address, file, name, cert_template_id, title, startDate, endDate
     }) => {
         try {
             let formData = new FormData();
@@ -26,6 +26,10 @@ const useCreateCertificate = (listener, setPersent) => {
             formData.append("shahr", shahr);
             formData.append("address", address);
             formData.append("file", file);
+            formData.append("cert_template_id", cert_template_id);
+            formData.append("title", title);
+            formData.append("startDate", startDate);
+            formData.append("endDate", endDate);
 
             const { data } = await createCertificate(formData, setPersent);
             const { message } = data;

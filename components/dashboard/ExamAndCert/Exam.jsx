@@ -36,7 +36,7 @@ const Exam = ({ setParentLoading, pickMode = false, examPicker = null }) => {
     const [examCount, setExamCount] = useState(null);
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(12);
-    const [certTemplates, setCertTemplates] = useState(12);
+    const [certTemplates, setCertTemplates] = useState(null);
 
     const { getExamsRequest } = useGetExams(({ examCount, exams }) => {
         setExams(exams);

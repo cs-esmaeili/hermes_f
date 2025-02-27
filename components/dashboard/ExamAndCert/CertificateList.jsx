@@ -7,7 +7,7 @@ import Icon from "@/components/general/Icon";
 import DivButton from "../DivButton";
 import { useRouter } from 'next/navigation';
 
-const CertificateList = ({ setSelectedCert, setParentLoading }) => {
+const CertificateList = ({ setSelectedCert, setParentLoading, selectMode = false }) => {
 
 
     const [certificates, setCertificates] = useState(null);
@@ -24,7 +24,7 @@ const CertificateList = ({ setSelectedCert, setParentLoading }) => {
 
 
     useEffect(() => {
-        setParentLoading(false);
+        if (setParentLoading) setParentLoading(false);
         certificateListRequest(page, perPage);
 
     }, []);
@@ -34,8 +34,8 @@ const CertificateList = ({ setSelectedCert, setParentLoading }) => {
             <div className='flex grow w-full overflow-x-scroll '>
                 {certificates &&
                     <Table
-                        headers={["زمان ساخت", "وضعیت", "نام مدرک", "نام کاربر"]}
-                        rowsData={["createdAt", "status", "name", "user.fullName"]}
+                        headers={["زمان ساخت", "وضعیت", "عنوان مدرک", "نام کاربر"]}
+                        rowsData={["createdAt", "status", "title", "user.fullName"]}
                         rows={certificates}
                         rowClasses={(row, rowIndex) => {
                             return "bg-primary";
@@ -49,14 +49,16 @@ const CertificateList = ({ setSelectedCert, setParentLoading }) => {
                             return (
                                 <div className="flex h-full items-center justify-center gap-2 text-nowrap">
 
-                                    {rowData.status != "paid" ?
+                                    {(rowData.status == "paid" || rowData.status == "byExam") &&
                                         <DivButton className='!w-fit bg-blue-500 text-textcolor' onClick={() => {
-                                            push(`/dashboard/certificate/${rowData._id}`)
+                                            push(`/dashboard/ExamAndCert/certificate/${rowData._id}`)
                                         }} >
                                             <Icon name={"certificate"} className="w-6 h-6" />
                                             <span>دریافت مدرک</span>
                                         </DivButton>
-                                        :
+                                    }
+
+                                    {(rowData.status == "unpaid" && selectMode) &&
                                         <BiSolidEdit className='text-xl ml-4 text-blue-400' onClick={() => {
                                             setSelectedCert(rowData);
                                         }} />

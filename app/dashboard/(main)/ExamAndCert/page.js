@@ -3,13 +3,13 @@
 import { useState } from 'react';
 import NavigationMenu from '@/components/dashboard/NavigationMenu';
 import BlurLoading from '@/components/dashboard/BlurLoading';
-import Exam from '@/components/dashboard/exam/Exam';
-import Question from '@/components/dashboard/exam/Question';
-import Sessions from '@/components/dashboard/exam/Sessions';
+import Exam from '@/components/dashboard/ExamAndCert/Exam';
+import Question from '@/components/dashboard/ExamAndCert/Question';
+import Sessions from '@/components/dashboard/ExamAndCert/Sessions';
 import userHavePermission from '@/hooks/general/userHavePermission';
 import CertificateTemplate from '@/components/dashboard/ExamAndCert/CertificateTemplate';
 import CertificateList from '@/components/dashboard/ExamAndCert/CertificateList';
-import VUserProfile from '@/components/dashboard/certificateTest/VUserProfile';
+import VUserProfile from '@/components/dashboard/ExamAndCert/VUserProfile';
 
 const DashboardPage = () => {
     const [activePage, setActivePage] = useState("Sessions");
@@ -23,13 +23,13 @@ const DashboardPage = () => {
     const certificateListCheck = userHavePermission(["exam.certificateList.NavigationMenu"]);
 
     let items = [
-        { page: "Sessions", icon: "list", label: "آزمون ها" },
+        { page: "Sessions", icon: "list", label: "جلسات آزمون" },
     ];
-    if (examCheck) items.push({ page: "exam", icon: "add", label: "ساخت آزمون" });
+    if (examCheck) items.push({ page: "exam", icon: "exam", label: "آزمون" });
     if (questionCheck) items.push({ page: "question", icon: "stack", label: "بانک سوال" });
     if (certificateTemplateCheck) items.push({ page: "CertTemplate", icon: "certificate", label: "قالب مدارک" });
+    if (certificateListCheck) items.push({ page: "certificateList", icon: "list", label: "لیست مدارک" });
     if (groupCertificateCheck) items.push({ page: "GroupCertificate", icon: "certificate", label: "ساخت مدرک گروهی" });
-    if (certificateListCheck) items.push({ page: "certificateList", icon: "dashboard", label: "لیست مدارک" });
 
     return (
         <div className='flex flex-col flex-co p-5 w-full xl:flex-row-reverse relative grow gap-3 h-full overflow-auto'>
