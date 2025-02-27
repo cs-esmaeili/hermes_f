@@ -20,6 +20,7 @@ const converSelectedExamToFormData = (selectedExam) => {
         questionCount: selectedExam?.questionCount || "2",
         minScore: selectedExam?.minScore || "2",
         timeGate: selectedExam?.timeGate || "2",
+        certTitle: selectedExam?.certTitle || "",
         cert_template_id: selectedExam?.cert_template_id || "",
         exam_id: selectedExam?._id || null,
     }
@@ -106,6 +107,10 @@ const Exam = ({ setParentLoading, pickMode = false, examPicker = null }) => {
                                 : []}
                         />
 
+                    </div>
+                    <div className='flex grow flex-wrap md:flex-nowrap gap-3  justify-between rtl'>
+                        <CustomInput rightLabel="عنوان برای درج در مدرک" inputClassName={"bg-secondary"} containerClassName={"w-full"}
+                            value={formData.certTitle} onChange={handleInputChange('certTitle')} />
                     </div>
                     <DivButton className={`w-full bg-green-500 justify-center ${selectedExam && "bg-yellow-500"}`} onClick={() => {
                         if (selectedExam) {

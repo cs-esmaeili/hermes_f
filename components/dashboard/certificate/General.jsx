@@ -16,6 +16,7 @@ const convertToFormData = (data) => {
         fatherName: data?.user.fatherName || "",
         startDate: data?.startDate || "",
         endDate: data?.endDate || "",
+        title: data?.title || "",
         backImageV: data?.image || `${process.env.NEXT_PUBLIC_API}assets/back.jpg`,
         backImageH: data?.image || `${process.env.NEXT_PUBLIC_API}assets/back.jpg`,
     }
@@ -47,7 +48,6 @@ const General = ({ data, dijital = true, editMode = false }) => {
         img.onload = () => {
             setImageSize({ width: img.width, height: img.height });
 
-            // محاسبه موقعیت اولیه به‌طوری که تصویر در مرکز باشد
             if (containerRef.current) {
                 const rect = containerRef.current.getBoundingClientRect();
                 setPosition({
@@ -64,7 +64,6 @@ const General = ({ data, dijital = true, editMode = false }) => {
         let newScale = scale + (event.deltaY > 0 ? -zoomFactor : zoomFactor);
         newScale = Math.min(Math.max(newScale, 0.2), 2);
 
-        // محاسبه تغییر موقعیت هنگام زوم
         const rect = containerRef.current.getBoundingClientRect();
         const offsetX = (event.clientX - rect.left) / rect.width;
         const offsetY = (event.clientY - rect.top) / rect.height;
@@ -198,6 +197,7 @@ const General = ({ data, dijital = true, editMode = false }) => {
                                 <div className='flex w-full items-center justify-center text-6xl'>{formData.score}</div>
                                 <div className='flex w-full items-center justify-center text-6xl'>{formData.startDate}</div>
                                 <div className='flex w-full items-center justify-center text-6xl'>{formData.endDate}</div>
+                                <div className='flex w-full items-center justify-center text-6xl'>{formData.title}</div>
                                 <div className='flex w-full items-center justify-center text-6xl mt-5'>
                                     <CustomImage src={`${process.env.NEXT_PUBLIC_API + process.env.NEXT_PUBLIC_LOGO_URL}`} width={200} height={200} />
                                 </div>
