@@ -22,7 +22,7 @@ const page = () => {
                 }}>ساخت</DivButton>
             </div>
             <div>
-                <div>{"http://localhost:3001/dashboard/exam/" + sessionId}</div>
+                <div>{"http://localhost:3001/dashboard/ExamAndCert/exam/" + sessionId}</div>
             </div>
         </div>
     );

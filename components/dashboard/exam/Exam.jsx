@@ -20,7 +20,7 @@ const converSelectedExamToFormData = (selectedExam) => {
         questionCount: selectedExam?.questionCount || "2",
         minScore: selectedExam?.minScore || "2",
         timeGate: selectedExam?.timeGate || "2",
-        certificate: selectedExam?.certificate || "2",
+        cert_template_id: selectedExam?.cert_template_id || "",
         exam_id: selectedExam?._id || null,
     }
 }
@@ -28,6 +28,7 @@ const converSelectedExamToFormData = (selectedExam) => {
 const Exam = ({ setParentLoading, pickMode = false, examPicker = null }) => {
 
     const [formData, setFormData] = useState(converSelectedExamToFormData(null));
+
 
     const [selectedExam, setSelectedExam] = useState(null);
     const [exams, setExams] = useState(null);
@@ -43,8 +44,7 @@ const Exam = ({ setParentLoading, pickMode = false, examPicker = null }) => {
 
     const { getCertificateTemplatesRequest } = useGetCertificateTemplates((templates) => {
         setCertTemplates(templates);
-        console.log(templates);
-
+        setFormData({ ...formData, cert_template_id: templates[0]._id })
     });
 
     const { updateExamRequest } = useUpdateExam(() => {
@@ -95,8 +95,8 @@ const Exam = ({ setParentLoading, pickMode = false, examPicker = null }) => {
                             rightLabel="مدرک آزمون"
                             containerClassName="w-full"
                             selectClassName="bg-secondary"
-                            value={formData.certificate}
-                            onChange={handleInputChange('certificate')}
+                            value={formData.cert_template_id}
+                            onChange={handleInputChange('cert_template_id')}
                             placeholder="انتخاب کنید"
                             options={Array.isArray(certTemplates)
                                 ? certTemplates.map(template => ({

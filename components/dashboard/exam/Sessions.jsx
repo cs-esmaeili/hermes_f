@@ -51,7 +51,7 @@ const Sessions = ({ setParentLoading }) => {
                             <div className="flex h-full items-center justify-center gap-2 text-nowrap">
                                 {rowData.status == "in-progress" &&
                                     <DivButton className='!w-fit bg-yellow-500 text-textcolor' onClick={() => {
-                                        push(`/dashboard/exam/${rowData._id}`)
+                                        push(`/dashboard/ExamAndCert/exam/${rowData._id}`)
                                     }}>
                                         <IoEnter className='text-xl  cursor-pointer' />
                                         <span>ادامه امتحان</span>
@@ -59,15 +59,16 @@ const Sessions = ({ setParentLoading }) => {
                                 }
                                 {rowData.status == "completed" &&
                                     <DivButton className='!w-fit bg-yellow-500 text-textcolor' onClick={() => {
-                                        push(`/dashboard/exam/result/${rowData._id}`)
+                                        push(`/dashboard/ExamAndCert/exam/result/${rowData._id}`)
                                     }} >
                                         <FaEye className='text-xl  cursor-pointer' />
                                         <span>مشاهده نتایج</span>
                                     </DivButton>
                                 }
-                                {rowData.status == "completed" && rowData.score >= rowData.exam_id.minScore &&
+                                {/* {rowData.status == "completed" && rowData.score >= rowData.exam_id.minScore && */}
+                                {rowData.status == "completed" &&
                                     <DivButton className='!w-fit bg-blue-500 text-textcolor' onClick={() => {
-                                        push(`/dashboard/certificate/${rowData._id}`)
+                                        push(`/dashboard/ExamAndCert/certificate/${rowData.cert_id._id}`)
                                     }} >
                                         <Icon name={"certificate"} className="w-6 h-6" />
                                         <span>دریافت مدرک</span>

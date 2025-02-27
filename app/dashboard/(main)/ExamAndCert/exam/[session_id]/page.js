@@ -43,7 +43,7 @@ const ExamDetail = () => {
 
     useEffect(() => {
         if (activeQuestionIndex == -1) {
-            replace("/dashboard/exam")
+            replace("/dashboard/ExamAndCert")
         }
     }, [activeQuestionIndex]);
 

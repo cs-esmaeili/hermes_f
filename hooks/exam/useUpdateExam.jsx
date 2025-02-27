@@ -6,9 +6,9 @@ const useUpdateExam = (listener) => {
 
     const { someThingIsWrong } = translation.getMultiple(['someThingIsWrong', 'permissions']);
 
-    const updateExamRequest = async ({ exam_id, title, duration, questionCount, minScore, timeGate, certificate }) => {
+    const updateExamRequest = async ({ exam_id, title, duration, questionCount, minScore, timeGate, cert_template_id }) => {
         try {
-            const { data: { message } } = await updateExam({ exam_id, title, duration, questionCount, minScore, timeGate, certificate });
+            const { data: { message } } = await updateExam({ exam_id, title, duration, questionCount, minScore, timeGate, cert_template_id });
             toast.success(message);
             if (listener) listener();
         } catch (error) {

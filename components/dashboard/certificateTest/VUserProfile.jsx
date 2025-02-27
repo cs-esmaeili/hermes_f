@@ -24,7 +24,6 @@ const converSelectedUserToFormData = (selectedCert) => {
         ostan: selectedCert?.ostan || "32432423",
         shahr: selectedCert?.shahr || "32432423",
         address: selectedCert?.address || "32432423",
-        address: selectedCert?.address || "32432423",
         file: selectedCert?.user?.image?.url || null,
     }
 }
@@ -68,7 +67,7 @@ const VUserProfile = ({ setSelectedCert, selectedCert, setParentLoading }) => {
     }
 
     return (
-        <div className='flex flex-col grow h-full gap-3 bg-primary rounded-xl p-5 overflow-auto' ref={scrollbarRef}>
+        <div className='flex flex-col grow h-fit gap-3 bg-primary rounded-xl p-5 overflow-auto' ref={scrollbarRef}>
             {selectedCert  && (
                 <div className="flex justify-between bg-orange-400 p-3 rounded-md">
                     <div className="flex grow items-center">{`User : ${selectedCert._id}`}</div>
@@ -107,23 +106,6 @@ const VUserProfile = ({ setSelectedCert, selectedCert, setParentLoading }) => {
                         <BsImage className='text-5xl rounded' onClick={() => pickFileRef.current.openFilePicker()} />
                     )}
                 </div>
-            </div>
-            <div className='flex flex-col md:flex-row grow gap-5'>
-                <CustomInput rightLabel={"استان"} inputClassName={"bg-secondary"} containerClassName={"w-full"} value={formData.ostan} onChange={handleInputChange('ostan')} />
-                <CustomInput rightLabel={"شهر"} inputClassName={"bg-secondary"} containerClassName={"w-full"} value={formData.shahr} onChange={handleInputChange('shahr')} />
-            </div>
-            <div className='flex flex-col md:flex-row grow gap-5'>
-                <CustomInput rightLabel={"آدرس"} inputClassName={"bg-secondary"} containerClassName={"w-full"} value={formData.address} onChange={handleInputChange('address')} />
-            </div>
-            <div className='flex flex-col md:flex-row grow gap-5'>
-                <CustomInput rightLabel={"کد پستی"} inputClassName={"bg-secondary"} containerClassName={"w-full"} value={formData.postalCode} onChange={handleInputChange('postalCode')} />
-            </div>
-            <div className='flex flex-col md:flex-row grow gap-5'>
-                <CustomInput rightLabel={"نام شرکت"} inputClassName={"bg-secondary"} containerClassName={"w-full"} value={formData.companyName} onChange={handleInputChange('companyName')} />
-                <CustomInput rightLabel={"کد  ثبت شرکت"} inputClassName={"bg-secondary"} containerClassName={"w-full"} value={formData.registrationNumber} onChange={handleInputChange('registrationNumber')} />
-            </div>
-            <div className='flex flex-col md:flex-row grow gap-5'>
-                <CustomInput rightLabel={"کد اختصاصی شرکت"} inputClassName={"bg-secondary"} containerClassName={"w-full"} value={formData.economicCode} onChange={handleInputChange('economicCode')} />
             </div>
             <DivButton className={`bg-orange-500 text-textcolor w-full flex justify-center items-center`} onClick={() => {
                 createCertificateRequest(formData);
