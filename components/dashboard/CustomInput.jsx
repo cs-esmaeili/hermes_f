@@ -12,38 +12,58 @@ const CustomInput = forwardRef(
       onLeftLabelClick,
       onRightLabelClick,
       placeholder,
+      leftError,   // new prop for left side error message
+      rightError,  // new prop for right side error message
       ...inputProps
     },
     ref
   ) => {
+    // If any error exists, apply error styling to the input field.
+    const hasError = leftError || rightError;
     return (
       <div className={containerClassName}>
-        <div className={`flex justify-between ${!leftLabel ? 'justify-end' : ' mb-1'}`}>
-          {leftLabel && (
-            <label
-              htmlFor={inputProps.id || inputProps.name}
-              className={`text-sm cursor-pointer mr-auto ${leftLabelClassName}`}
-              onClick={onLeftLabelClick}
-            >
-              {leftLabel}
-            </label>
-          )}
-          {rightLabel && (
-            <label
-              htmlFor={inputProps.id || inputProps.name}
-              className={`text-sm cursor-pointer text-right ml-auto ${rightLabelClassName}`}
-              onClick={onRightLabelClick}
-            >
-              {rightLabel}
-            </label>
-          )}
-        </div>
+        {(leftLabel || rightLabel) &&
+          <div className="flex justify-between mb-1">
+            <div className="flex flex-col">
+              {leftLabel && (
+                <label
+                  htmlFor={inputProps.id || inputProps.name}
+                  className={`text-sm cursor-pointer mr-auto ${leftLabelClassName}`}
+                  onClick={onLeftLabelClick}
+                >
+                  {leftLabel}
+                </label>
+              )}
+              {leftError && (
+                <span className="text-red-600 text-xs italic">
+                  {leftError}
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col items-end">
+              {rightLabel && (
+                <label
+                  htmlFor={inputProps.id || inputProps.name}
+                  className={`text-sm cursor-pointer ml-auto ${rightLabelClassName}`}
+                  onClick={onRightLabelClick}
+                >
+                  {rightLabel}
+                </label>
+              )}
+              {rightError && (
+                <span className="text-red-600 text-xs italic">
+                  {rightError}
+                </span>
+              )}
+            </div>
+          </div>
+        }
         <input
-          ref={ref} // Attach the ref to the actual input element
-          placeholder={placeholder} // استفاده از placeholder
-          className={`p-2 bg-primary rounded-md focus:outline-none focus:ring focus:ring-accent w-full
-            ${process.env.NEXT_PUBLIC_DIRECTION}
-            ${inputClassName}`}
+          ref={ref}
+          placeholder={placeholder}
+          className={`p-2 bg-primary rounded-md focus:outline-none focus:ring focus:ring-accent w-full 
+            ${process.env.NEXT_PUBLIC_DIRECTION} ${inputClassName} ${hasError ? 'border border-red-500' : ''
+            }`}
           {...inputProps}
         />
       </div>
