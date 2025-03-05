@@ -5,13 +5,12 @@ import CustomInput from "../dashboard/CustomInput";
 import DivButton from "../dashboard/DivButton";
 import Icon from "../general/Icon";
 import { VscColorMode } from "react-icons/vsc";
-import Navigation from "../site/Navigation";
-import NestedMenu from "./NestedMenu";
+import NavigationMenu from "@/components/site/NavigationMenu";
 
 const Header = () => {
     return (
         <div className="flex flex-col rtl">
-            {/* 
+
             <div className="flex mt-5 bg-secondary rounded-2xl p-8 justify-center items-center rtl gap-20">
                 <div className="w-3/12">
                     <CustomImage
@@ -29,9 +28,9 @@ const Header = () => {
                             placeholder={"چه دوره ای نیاز دارید؟"}
                         />
                     </div>
-                    <DivButton className="bg-accent !w-fit text-textcolor !p-2">
-                        <Icon className={"text-textcolor w-7 h-7"} name={"userSpeak"} />
+                    <DivButton className="bg-accent !w-fit text-textcolor !p-2 px-5 gap-2">
                         <span>تدریس کنید</span>
+                        <Icon className={"text-textcolor w-7 h-7"} name={"userSpeak"} />
                     </DivButton>
                 </div>
 
@@ -67,81 +66,10 @@ const Header = () => {
                 </div>
             </div>
 
-            <div className="flex bg-secondary bg-opacity-50 mx-16 min-h-16 rounded-b-2xl justify-center items-center">
-                <div className="flex grow justify-center mx-10">
-                    <div className="w-fit p-3 hover:bg-blue-400 transition rounded-lg cursor-pointer">
-                        آزمون های آنلاین
-                    </div>
-                    <div className="w-fit p-3 hover:bg-blue-400 transition rounded-lg cursor-pointer">
-                        مقالات
-                    </div>
-                    <div className="w-fit p-3 hover:bg-blue-400 transition rounded-lg cursor-pointer">
-                        لینک های سریع
-                    </div>
-                    <div className="w-fit p-3 hover:bg-blue-400 transition rounded-lg cursor-pointer">
-                        دسته بندی ها
-                    </div>
-                </div>
-            </div> */}
+
+            <NavigationMenu />
 
 
-
-            <div>
-
-
-                <NestedMenu
-                    items={[
-                        {
-                            name: "دسته‌بندی ۱",
-                            href: "/categories/1",
-                            subMenu: [
-                                { name: "زیر دسته ۱", href: "/categories/1-1" },
-                                { name: "زیر دسته ۲", href: "/categories/1-2" },
-                            ],
-                        },
-                        { name: "دسته‌بندی ۲", href: "/categories/2" },
-                        {
-                            name: "دسته‌بندی ۳",
-                            href: "/categories/3",
-                            subMenu: [
-                                {
-                                    name: "زیر دسته ۳-۱",
-                                    href: "/categories/3-1",
-                                    subMenu: [
-                                        { name: "زیر زیر دسته", href: "/categories/3-1-1" },
-                                    ],
-                                },
-                            ],
-                        },
-                    ]}
-                />
-                <NestedMenu
-                    items={[
-                        {
-                            name: "دسته‌بندی ۱",
-                            href: "/categories/1",
-                            subMenu: [
-                                { name: "زیر دسته ۱", href: "/categories/1-1" },
-                                { name: "زیر دسته ۲", href: "/categories/1-2" },
-                            ],
-                        },
-                        { name: "دسته‌بندی ۲", href: "/categories/2" },
-                        {
-                            name: "دسته‌بندی ۳",
-                            href: "/categories/3",
-                            subMenu: [
-                                {
-                                    name: "زیر دسته ۳-۱",
-                                    href: "/categories/3-1",
-                                    subMenu: [
-                                        { name: "زیر زیر دسته", href: "/categories/3-1-1" },
-                                    ],
-                                },
-                            ],
-                        },
-                    ]}
-                />
-            </div>
         </div>
     );
 };

@@ -16,7 +16,7 @@ const DivButton = ({ onClick, children, ariaLabel, role = 'button', tabIndex = 0
             role={role}
             tabIndex={tabIndex}
             aria-label={ariaLabel}
-            className={`flex ${process.env.NEXT_PUBLIC_DIRECTION} items-center rounded-lg p-3 w-full gap-3  select-none ${className}`}
+            className={`flex ${process.env.NEXT_PUBLIC_DIRECTION} items-center rounded-lg p-3 w-full  select-none ${className}`}
         >
             {children}
         </div>
