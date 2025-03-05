@@ -1,3 +1,5 @@
+'use client'
+
 const DivButton = ({ onClick, children, ariaLabel, role = 'button', tabIndex = 0, className = '' }) => {
 
     const handleKeyPress = (event) => {

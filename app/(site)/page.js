@@ -2,8 +2,22 @@ import React from 'react';
 
 const page = () => {
   return (
-    <div>
-      Home Page
+    <div className='flex flex-col h-screen'>
+      <div>
+        sa
+      </div>
+      <div>
+        sa
+      </div>
+      <div>
+        sa
+      </div>
+      <div>
+        sa
+      </div>
+      <div>
+        sa
+      </div>
     </div>
   );
 };

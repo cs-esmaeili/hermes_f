@@ -1,3 +1,5 @@
+'use client'
+
 import { ReactSVG } from "react-svg";
 
 const Icon = ({ name, className }) => {
