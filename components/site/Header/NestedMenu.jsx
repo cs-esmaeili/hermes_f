@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Icon from "@/components/general/Icon";
-import DivButton from "../dashboard/DivButton";
+import DivButton from "../../dashboard/DivButton";
 
 export default function NestedMenu({ items, menuClassName, menuName }) {
     const [open, setOpen] = useState(false);
