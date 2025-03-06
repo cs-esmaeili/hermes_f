@@ -6,6 +6,7 @@ import Link from "next/link";
 import Icon from "@/components/general/Icon";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 import CustomInput from "@/components/dashboard/CustomInput";
+import DivButton from "@/components/dashboard/DivButton";
 
 const Sidebar = () => {
 
@@ -22,25 +23,22 @@ const Sidebar = () => {
         { name: "دسته بندی ها", url: "/dashboard/category", icon: <Icon name="category" className="w-8 h-8" /> },
         { name: "مطالب", url: "/dashboard/post", icon: <Icon name="stack" className="w-8 h-8" /> },
         { name: "تیکت ها", url: "/dashboard/tickets", icon: <Icon name="ticket" className="w-8 h-8" /> },
-        { name: "تیکت ها", url: "/dashboard/tickets", icon: <Icon name="ticket" className="w-8 h-8" /> },
-        { name: "تیکت ها", url: "/dashboard/tickets", icon: <Icon name="ticket" className="w-8 h-8" /> },
-        { name: "تیکت ها", url: "/dashboard/tickets", icon: <Icon name="ticket" className="w-8 h-8" /> },
-        { name: "تیکت ها", url: "/dashboard/tickets", icon: <Icon name="ticket" className="w-8 h-8" /> },
-        { name: "تیکت ها", url: "/dashboard/tickets", icon: <Icon name="ticket" className="w-8 h-8" /> },
-        { name: "تیکت ها", url: "/dashboard/tickets", icon: <Icon name="ticket" className="w-8 h-8" /> },
     ];
 
     return (
         <>
+            {/* آیکون منو برای باز/بسته کردن سایدبار */}
             <RiMenu3Line
                 className="text-2xl cursor-pointer"
                 onClick={() => setOpen(!open)}
             />
 
+            {/* Overlay با کلیک روی آن سایدبار بسته می‌شود */}
             {open && (
                 <div
                     onClick={() => setOpen(false)}
-                    className="fixed inset-0 z-20 bg-black bg-opacity-50"></div>
+                    className="fixed inset-0 z-20 bg-black bg-opacity-50"
+                ></div>
             )}
 
             <aside
@@ -48,8 +46,10 @@ const Sidebar = () => {
                     open
                         ? "fixed bottom-0 right-0 top-0 z-30 h-full min-w-max bg-primary p-3 duration-500 ease-in overflow-y-auto overflow-x-hidden ltr"
                         : "fixed right-[-100%] h-full z-30 min-w-max bg-primary p-3 duration-500 ease-in lg:static lg:flex overflow-y-auto overflow-x-hidden ltr flex-col"
-                }>
+                }
+            >
 
+                {/* دکمه بسته شدن (ضرب) در بالای سمت چپ */}
                 {open && (
                     <div
                         className="absolute top-5 left-5 z-40 cursor-pointer"
@@ -96,4 +96,6 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar;
+// استفاده از dynamic import به همراه { ssr: false } برای جلوگیری از رندر سروری
+import dynamic from "next/dynamic";
+export default dynamic(() => Promise.resolve(Sidebar), { ssr: false });
