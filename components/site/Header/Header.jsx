@@ -51,9 +51,9 @@ const Header = () => {
                                 placeholder="چه دوره ای نیاز دارید؟"
                             />
                         </div>
-                        <DivButton className="bg-accent !w-fit text-textcolor !p-2 px-5 gap-2 flex-nowrap min-w-fit">
+                        <DivButton className="bg-accent !w-fit  !p-2 px-5 gap-2 flex-nowrap min-w-fit  dark:text-textcolor text-white">
                             <span>تدریس کنید</span>
-                            <Icon className="text-textcolor w-7 h-7" name="userSpeak" />
+                            <Icon className="w-7 h-7" name="userSpeak" />
                         </DivButton>
                     </div>
                 </div>

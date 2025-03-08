@@ -1,25 +1,13 @@
-import React from 'react';
+import Part1 from "@/components/site/Home/Part1";
 
-const page = () => {
+
+const Page = () => {
   return (
-    <div className='flex flex-col h-screen'>
-      <div>
-        sa
-      </div>
-      <div>
-        sa
-      </div>
-      <div>
-        sa
-      </div>
-      <div>
-        sa
-      </div>
-      <div>
-        sa
-      </div>
+    <div className="flex flex-col grow">
+      <Part1/>
+
     </div>
   );
 };
 
-export default page;
+export default Page;

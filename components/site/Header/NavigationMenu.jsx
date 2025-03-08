@@ -4,7 +4,7 @@ import NestedMenu from "./NestedMenu";
 
 export default function Navigation() {
     return (
-        <nav className="hidden  lg:flex bg-secondary bg-opacity-50 mx-16 min-h-16 rounded-b-2xl justify-center items-center  ">
+        <nav className="hidden  lg:flex bg-gray-200 dark:bg-secondary  dark:bg-opacity-50 mx-16 min-h-16 rounded-b-2xl justify-center items-center  ">
             <ul className="flex grow justify-center items-center mx-10">
                 <li>
                     <Link
