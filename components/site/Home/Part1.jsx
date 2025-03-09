@@ -7,7 +7,7 @@ import Illustration from "./Illustration";
 
 const Part1 = () => {
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 flex-col-reverse lg:flex-row mt-20" dir="rtl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 flex-col-reverse lg:flex-row" dir="rtl">
             <div className="flex flex-col justify-center px-10  mt-10 lg:mt-0 order-2 lg:order-none">
                 <div className="font-[1000] flex flex-col gap-3 text-center lg:text-right ">
                     <div className="text-5xl lg:text-6xl text-balance">مرجع آموزش های</div>
