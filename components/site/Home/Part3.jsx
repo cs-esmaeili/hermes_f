@@ -44,7 +44,7 @@ const Part3 = () => {
 
     const CourseCard = ({ teacher, duration, price, title }) => {
         return (
-            <div className="select-none cursor-pointer flex flex-col h-full min-w-[300px] bg-secondary rounded-lg p-4 shadow-md">
+            <div className="select-none cursor-pointer flex flex-col h-full min-w-[300px] bg-secondary rounded-3xl p-4 shadow-md ">
 
                 <div className='flex'>
 

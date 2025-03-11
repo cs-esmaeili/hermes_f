@@ -17,7 +17,7 @@ const Part1 = () => {
                     <div> همین حالا با هرمس یادگیری را شروع کن ,  رویاهاتو با آموزش به واقعیت تبدیل کن</div>
                 </div>
 
-                <DivButton className="bg-accent !w-fit gap-3 mx-auto lg:my-10 lg:mx-0 text-xl !px-10 dark:text-textcolor text-white">
+                <DivButton className="bg-[#f04c4b] !w-fit gap-3 mx-auto lg:my-10 lg:mx-0 text-xl !px-10 dark:text-textcolor text-white">
                     <span>شروع یادگیری</span>
                     <Icon name={"multipleforwardleft"} className={"w-8 h-8"} />
                 </DivButton>

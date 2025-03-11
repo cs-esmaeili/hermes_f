@@ -10,23 +10,24 @@ export default function NestedMenu({ items, menuClassName, menuName }) {
 
     return (
         <div
-            className="relative inline-block"
+            className="relative inline-block "
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => setOpen(false)}
         >
             <DivButton
                 aria-expanded={open}
                 aria-controls="nested-menu-popover"
-                className="gap-2 text-textcolor px-3 py-2 rounded-md text-sm transition-colors duration-300 hover:bg-blue-400 focus:outline-none">
+                className="gap-2 text-white dark:text-textcolor px-3 py-2 rounded-md text-sm transition-colors duration-300 hover:bg-blue-400 focus:outline-none">
                 <Icon name={"menu"} className="h-7 w-7" />
                 <span>{menuName}</span>
             </DivButton>
 
             <ul
                 id="nested-menu-popover"
-                className={`absolute right-0 top-full z-50 transform transition duration-300 ease-out ${open
-                    ? "opacity-100 translate-y-0 pointer-events-auto"
-                    : "opacity-0 -translate-y-2 pointer-events-none"
+                className={`absolute right-0 top-full z-50 transform transition duration-300 ease-out 
+                    ${open
+                        ? "opacity-100 translate-y-0 pointer-events-auto"
+                        : "opacity-0 -translate-y-2 pointer-events-none"
                     } ${menuClassName ? menuClassName : "w-48 bg-secondary rounded-md shadow-md"}`}
             >
                 {items.map((item, index) => (
@@ -80,7 +81,6 @@ function MenuItem({ item }) {
                 {hasSubMenu && <span className="px-2 text-textcolor">{">"}</span>}
             </div>
 
-            {/* منوی فرعی */}
             {hasSubMenu && openSub && (
                 <ul
                     className={`absolute right-full top-0 z-50 mt-0 ml-0 ${item.subMenuClassName

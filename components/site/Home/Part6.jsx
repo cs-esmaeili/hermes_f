@@ -8,12 +8,10 @@ const Part6 = () => {
                 مسیر های یادگیری
             </div>
 
-            {/* Grid for better responsiveness */}
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 rtl'>
 
-                {/* Learning Path 1 */}
                 <div className='flex flex-col flex-1 gap-3 relative'>
-                    <div className='flex flex-col bg-secondary p-3 md:p-5 rounded-3xl rl'>
+                    <div className='flex flex-col bg-[#ddebff] dark:bg-secondary p-3 md:p-5 rounded-3xl rl'>
                         <div className='flex grow justify-center items-center text-lg md:text-xl font-bold mb-3 md:mb-5'>
                             نرم افزار های کاربری پول ساز
                         </div>
@@ -33,9 +31,8 @@ const Part6 = () => {
                     </div>
                 </div>
 
-                {/* Learning Path 2 */}
                 <div className='flex flex-col flex-1 gap-3 relative'>
-                    <div className='flex flex-col bg-secondary p-3 md:p-5 rounded-3xl'>
+                    <div className='flex flex-col bg-[#ddebff] dark:bg-secondary p-3 md:p-5 rounded-3xl'>
                         <div className='flex grow justify-center items-center text-lg md:text-xl font-bold mb-3 md:mb-5'>
                             مهارت های عمومی کامپیوتر
                         </div>
@@ -55,9 +52,8 @@ const Part6 = () => {
                     </div>
                 </div>
 
-                {/* Learning Path 3 */}
                 <div className='flex flex-col flex-1 gap-3 relative'>
-                    <div className='flex flex-col bg-secondary p-3 md:p-5 rounded-3xl'>
+                    <div className='flex flex-col bg-[#ddebff] dark:bg-secondary p-3 md:p-5 rounded-3xl'>
                         <div className='flex grow justify-center items-center text-lg md:text-xl font-bold mb-3 md:mb-5'>
                             شروع برنامه نویسی
                         </div>

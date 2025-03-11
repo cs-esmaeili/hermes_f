@@ -10,9 +10,9 @@ const Page = () => {
   return (
     <div className="flex flex-col grow py-10 gap-10">
 
-      {/* <div className="font-extrablack text-9xl">
+      <div className="font-extrablack text-9xl text-accent">
         بهر خران چه کاه برند چه زعفران
-      </div> */}
+      </div>
 
 
       <Part1 />

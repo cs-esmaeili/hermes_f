@@ -1,10 +1,9 @@
-// Navigation.jsx (Server Component)
 import Link from "next/link";
 import NestedMenu from "./NestedMenu";
 
 export default function Navigation() {
     return (
-        <nav className="hidden  lg:flex bg-gray-200 dark:bg-secondary  dark:bg-opacity-50 mx-16 min-h-16 rounded-b-2xl justify-center items-center  ">
+        <nav className="hidden lg:flex bg-[#3c92cb] bg-[#514fb6] text-white dark:text-textcolor  mx-16 min-h-16 rounded-b-2xl justify-center items-center  ">
             <ul className="flex grow justify-center items-center mx-10">
                 <li>
                     <Link
@@ -17,12 +16,12 @@ export default function Navigation() {
                 <li className="relative">
                     <NestedMenu
                         menuName={"دسته بندی ها"}
-                        menuClassName="w-60 rounded-r-lg shadow-xl bg-secondary"  // استایل سفارشی منوی اصلی
+                        menuClassName="w-60 rounded-r-lg shadow-xl bg-secondary" 
                         items={[
                             {
                                 name: "دسته‌بندی ۱",
                                 href: "/categories/1",
-                                subMenuClassName: "w-60 rounded-l-lg shadow-xl bg-secondary border-r-2", // استایل سفارشی برای زیر منو
+                                subMenuClassName: "w-60 rounded-l-lg shadow-xl bg-secondary border-r-2", 
                                 subMenu: [
                                     { name: "زیر دسته ۱", href: "/categories/1-1" },
                                     { name: "زیر دسته ۲", href: "/categories/1-2" },
@@ -35,12 +34,12 @@ export default function Navigation() {
                             {
                                 name: "دسته‌بندی ۳",
                                 href: "/categories/3",
-                                subMenuClassName: "w-64 shadow-2xl bg-secondary border-r-2", // استایل سفارشی برای زیر منو
+                                subMenuClassName: "w-64 shadow-2xl bg-secondary border-r-2", 
                                 subMenu: [
                                     {
                                         name: "زیر دسته ۳-۱",
                                         href: "/categories/3-1",
-                                        subMenuClassName: "w-56 rounded-l-md shadow-md bg-secondary border-r-2", // استایل سفارشی برای زیر زیر منو
+                                        subMenuClassName: "w-56 rounded-l-md shadow-md bg-secondary border-r-2",
                                         subMenu: [
                                             { name: "زیر زیر دسته", href: "/categories/3-1-1" },
                                         ],
@@ -77,12 +76,12 @@ export default function Navigation() {
                 <li className="relative">
                     <NestedMenu
                         menuName={"لینک های سریع"}
-                        menuClassName="w-60 rounded-r-lg shadow-xl bg-secondary"  // استایل سفارشی منوی اصلی
+                        menuClassName="w-60 rounded-r-lg shadow-xl bg-secondary"
                         items={[
                             {
                                 name: "دسته‌بندی ۱",
                                 href: "/categories/1",
-                                subMenuClassName: "w-60 rounded-l-lg shadow-xl bg-secondary border-r-2", // استایل سفارشی برای زیر منو
+                                subMenuClassName: "w-60 rounded-l-lg shadow-xl bg-secondary border-r-2",
                                 subMenu: [
                                     { name: "زیر دسته ۱", href: "/categories/1-1" },
                                     { name: "زیر دسته ۲", href: "/categories/1-2" },
@@ -95,12 +94,12 @@ export default function Navigation() {
                             {
                                 name: "دسته‌بندی ۳",
                                 href: "/categories/3",
-                                subMenuClassName: "w-64 shadow-2xl bg-secondary border-r-2", // استایل سفارشی برای زیر منو
+                                subMenuClassName: "w-64 shadow-2xl bg-secondary border-r-2",
                                 subMenu: [
                                     {
                                         name: "زیر دسته ۳-۱",
                                         href: "/categories/3-1",
-                                        subMenuClassName: "w-56 rounded-l-md shadow-md bg-secondary border-r-2", // استایل سفارشی برای زیر زیر منو
+                                        subMenuClassName: "w-56 rounded-l-md shadow-md bg-secondary border-r-2",
                                         subMenu: [
                                             { name: "زیر زیر دسته", href: "/categories/3-1-1" },
                                         ],
