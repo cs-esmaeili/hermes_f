@@ -10,12 +10,19 @@ const Page = () => {
   return (
     <div className="flex flex-col grow py-10 gap-10">
 
+      {/* <div className="font-extrablack text-9xl">
+        بهر خران چه کاه برند چه زعفران
+      </div> */}
+
+
       <Part1 />
       <Part2 />
       <Part3 />
       <Part4 />
       <Part5 />
       <Part6 />
+
+
     </div>
   );
 };

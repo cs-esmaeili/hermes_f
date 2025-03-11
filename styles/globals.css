@@ -76,8 +76,8 @@
 
 @font-face {
   font-family: 'YekanBakh';
-  src: url('/assets/assets/fonts/YekanBakh-SemiBold.woff2') format('woff2'),
-    url('/assets/assets/fonts/YekanBakh-SemiBold.woff') format('woff');
+  src: url('/assets/fonts/YekanBakh-SemiBold.woff2') format('woff2'),
+    url('/assets/fonts/YekanBakh-SemiBold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
 }
@@ -97,6 +97,7 @@
   font-weight: 950;
   font-style: normal;
 }
+
 
 @layer utilities {
   .rtl {
@@ -132,18 +133,18 @@ body {
 
 
 .hide-scrollbar::-webkit-scrollbar {
-  display: none; /* مخفی کردن نوار اسکرول در مرورگرهای Webkit (مثل Chrome, Safari) */
+  display: none;
 }
 
 .hide-scrollbar::-webkit-scrollbar-thumb {
-  background-color: transparent; /* مخفی کردن Thumb نوار اسکرول */
+  background-color: transparent; 
 }
 
 .hide-scrollbar::-webkit-scrollbar-track {
-  background: transparent; /* مخفی کردن Track نوار اسکرول */
+  background: transparent; 
 }
 
 .hide-scrollbar {
-  -ms-overflow-style: none; /* برای مرورگرهای IE و Edge */
-  scrollbar-width: none; /* برای Firefox */
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
 }

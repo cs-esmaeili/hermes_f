@@ -3,7 +3,7 @@ import React from 'react';
 
 const Part6 = () => {
     return (
-        <div className='flex flex-col grow gap-4 p-4'>
+        <div className='flex flex-col grow gap-4'>
             <div className='flex grow justify-center items-center mb-5 text-2xl md:text-4xl font-bold'>
                 مسیر های یادگیری
             </div>
