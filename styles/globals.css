@@ -3,26 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --color-primary: 255 255 255;
-  /* Light mode primary: FFFFFF */
-  --color-secondary: 247 248 249;
-  /* Light mode secondary: F7F8F9 */
-  --color-accent: 59 130 246;
-  /* Light mode accent: 3B82F6 */
-  --color-text: 100 116 139;
-  /* Updated to a blue-gray shade (#64748B) */
+  --color-primary: 239 244 251;
+  --color-secondary: 255 255 255;
+  --color-accent: 81 79 182;
+  --color-text: 51 61 95;
 }
 
-/* Dark mode variables controlled by the 'dark' class */
 .dark {
   --color-primary: 14 35 56;
-  /* Dark mode primary: 0E2338 */
   --color-secondary: 22 47 72;
-  /* Dark mode secondary: 162F48 */
-  --color-accent: 81 182 255;
-  /* Dark mode accent: 51B6FF */
+  --color-accent: 81 79 182;
   --color-text: 255 255 255;
-  /* White text for dark mode */
 }
 
 .container {
