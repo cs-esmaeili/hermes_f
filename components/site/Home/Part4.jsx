@@ -94,8 +94,8 @@ const Part3 = () => {
 
 
     return (
-        <div className='flex flex-col grow justify-center overflow-hidden'>
-            <div className='flex grow rtl text-3xl mb-8 font-extrabold'>آموزش های محبوب ملی</div>
+        <div className='flex flex-col grow  justify-center overflow-hidden'>
+            <div className='flex grow rtl text-3xl mb-8 font-extrabold'>آموزش های محبوب بین المللی</div>
             <div
                 className='swapContainer flex w-full h-[230px] gap-3 overflow-x-auto hide-scrollbar rtl'
                 onMouseDown={handleonMouseDown}

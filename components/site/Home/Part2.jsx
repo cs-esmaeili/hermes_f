@@ -6,12 +6,12 @@ const categories = Array(15).fill("دسته بندی");
 const Part2 = () => {
     return (
         <div className='flex flex-col grow h-fit rtl md:mt-10 gap-5'>
-            <div className='flex justify-between w-full pr-3 my-1 md:my-0 opacity-75 text-xl'>
+            <div className='flex justify-between w-full pr-3 md:my-5 opacity-75 text-xl'>
                 <span>دسته بندی اصلی و سریع</span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-[85%_15%] lg:grid-cols-[87%_13%] gap-3 rtl">
-                <div className="relative flex flex-col items-center text-xl bg-secondary rounded-[2.5rem] p-5 order-first md:order-last gap-3 my-5 md:mt-0">
+                <div className="relative flex flex-col items-center text-xl bg-secondary rounded-[2.5rem] p-5 order-first md:order-last gap-3 mt-20 mb-5 md:mt-0">
                     <div className='absolute -top-16 left-1/2 transform -translate-x-1/2'>
                         <Icon name="cupfirst" className="h-16 w-16 text-orange-500" />
                     </div>
