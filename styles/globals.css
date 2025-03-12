@@ -5,6 +5,7 @@
 :root {
   --color-primary: 239 244 251;
   --color-secondary: 255 255 255;
+  --color-tertiary: 81 79 182;
   --color-accent: 60 146 203;
   --color-text: 51 61 95;
 }
@@ -12,6 +13,7 @@
 .dark {
   --color-primary: 14 35 56;
   --color-secondary: 22 47 72;
+  --color-tertiary: 81 79 182;
   --color-accent: 60 146 203;
   --color-text: 255 255 255;
 }
