@@ -5,6 +5,7 @@ import Part4 from "@/components/site/Home/Part4";
 import Part5 from "@/components/site/Home/Part5";
 import Part6 from "@/components/site/Home/Part6";
 import Part7 from "@/components/site/Home/Part7";
+import Part8 from "@/components/site/Home/Part8";
 
 
 const Page = () => {
@@ -18,6 +19,7 @@ const Page = () => {
       <Part5 />
       <Part6 />
       <Part7 />
+      <Part8 />
 
 
     </div>

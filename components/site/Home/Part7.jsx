@@ -7,9 +7,9 @@ import CourseCard from '../General/CourseCard';
 
 const Part7 = () => {
     return (
-        <div className='flex grow lg:bg-tertiary rtl p-12 lg:my-80 rounded-3xl flex-wrap'>
+        <div className='flex grow lg:bg-tertiary rtl p-5 lg:my-80 rounded-3xl flex-wrap'>
 
-            <div className="w-full lg:flex-[3] xl:flex-[4] bg-tertiary rounded-3xl p-5">
+            <div className="w-full lg:flex-[3] xl:flex-[4] bg-tertiary rounded-3xl p-5 text-white">
                 <div className='text-center text-2xl font-black mb-5'>مقالات وتجارب آموزشى سراسر جهان</div>
                 <div className='opacity-75 text-center lg:text-right'>
                     <div>
@@ -28,7 +28,7 @@ const Part7 = () => {
                 </DivButton>
             </div>
 
-            <div className="flex flex-wrap lg:flex-nowrap justify-evenly w-full lg:flex-[7] xl:flex-[6] pt-5 lg:p-0">
+            <div className="flex flex-wrap lg:flex-nowrap justify-evenly w-full lg:flex-[7] xl:flex-[6] pt-5 lg:p-0 gap-4">
 
                 
                 <div className='w-full md:w-fit lg:flex-1 relative'>
