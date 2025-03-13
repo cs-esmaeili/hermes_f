@@ -4,7 +4,7 @@ import Icon from '@/components/general/Icon';
 
 const CourseCard = () => {
     return (
-        <div className='flex flex-col h-[300px] w-[300] bg-secondary rounded-lg p-3 shadow-lg'>
+        <div className='flex flex-col h-[300px] w-[300] bg-secondary rounded-lg p-3'>
 
             <div className='flex-1'>
                 <div className="relative bg-primary 

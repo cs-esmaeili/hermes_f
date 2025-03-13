@@ -21,6 +21,7 @@ const Header = () => {
                         objectFit="scale-down"
                     />
                 </div>
+                
                 <div className="flex items-center gap-2">
                     <div className="flex justify-center items-center bg-primary rounded-full relative pl-12 hover:bg-blue-400 transition cursor-pointer">
                         <div className="absolute left-0 rounded-full border-2 border-secondary">
@@ -51,7 +52,7 @@ const Header = () => {
                                 placeholder="چه دوره ای نیاز دارید؟"
                             />
                         </div>
-                        <DivButton className="bg-[#f96930] !w-fit  !py-[6px] !px-5 gap-2 flex-nowrap min-w-fit !rounded-lg dark:text-textcolor text-white">
+                        <DivButton className="bg-accent !w-fit  !py-[6px] !px-5 gap-2 flex-nowrap min-w-fit !rounded-lg dark:text-textcolor text-white">
                             <span>تدریس کنید</span>
                             <Icon className="w-7 h-7" name="userSpeak" />
                         </DivButton>

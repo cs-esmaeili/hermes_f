@@ -1,3 +1,4 @@
+import Footer from "@/components/site/Footer/Footer";
 import Header from "@/components/site/Header/Header";
 
 export default function Layout({ children }) {
@@ -8,6 +9,7 @@ export default function Layout({ children }) {
             <div className="flex flex-col container  relative grow  justify-center w-full h-full max-w-[1288px] z-10">
                 <Header />
                 {children}
+                <Footer />
             </div>
         </main>
     )

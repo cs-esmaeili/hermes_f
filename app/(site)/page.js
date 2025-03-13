@@ -1,3 +1,4 @@
+import CollapsibleText from "@/components/general/CollapsibleText";
 import Part1 from "@/components/site/Home/Part1";
 import Part2 from "@/components/site/Home/Part2";
 import Part3 from "@/components/site/Home/Part3";
@@ -10,7 +11,7 @@ import Part8 from "@/components/site/Home/Part8";
 
 const Page = () => {
   return (
-    
+
     <div className="flex flex-col grow py-10 gap-10">
       <Part1 />
       <Part2 />
@@ -20,7 +21,7 @@ const Page = () => {
       <Part6 />
       <Part7 />
       <Part8 />
-
+      <CollapsibleText />
 
     </div>
   );
