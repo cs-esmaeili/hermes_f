@@ -70,11 +70,7 @@ const Header = () => {
                     <div className="flex justify-center items-center bg-primary rounded-full p-3">
                         <Icon className="text-textcolor w-7 h-7" name="cart" />
                     </div>
-                    {/* <div className="flex justify-center items-center bg-primary rounded-full p-3">
-                        <VscColorMode className="w-7 h-7" />
-                    </div> */}
                     <ThemeToggleButton />
-
                 </div>
 
             </div>

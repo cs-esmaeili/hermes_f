@@ -7,26 +7,6 @@ import Part5 from "@/components/site/Home/Part5";
 import Part6 from "@/components/site/Home/Part6";
 import Part7 from "@/components/site/Home/Part7";
 import Part8 from "@/components/site/Home/Part8";
-import CollapsibleMenu from "@/components/general/CollapsibleMenu";
-import { AiFillAlipayCircle } from "react-icons/ai";
-
-const menuItems = [
-  {
-    icon: <AiFillAlipayCircle />,
-    title: "علوم کامپیوتر",
-    subItems: [
-      { title: "داده‌کاوی و یادگیری ماشین", isActive: false, url: "/courses/data-mining" },
-      { title: "لینوکس", isActive: false, url: "/courses/linux" },
-      { title: "پایتون (Python)", isActive: true, url: "/courses/python" },
-      { title: "هوش مصنوعی", isActive: false, url: "/courses/ai" },
-      { title: "شبکه‌های کامپیوتری", isActive: false, url: "/courses/networks" }
-    ]
-  },
-  {
-    icon: <AiFillAlipayCircle />,
-    title: "طراحی و گرافیک",
-  },
-];
 
 
 const Page = () => {
@@ -42,8 +22,6 @@ const Page = () => {
       <Part7 />
       <Part8 />
       <CollapsibleText />
-      {/* <CollapsibleMenu menuItems={menuItems} /> */}
-
 
     </div>
   );

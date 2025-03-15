@@ -4,7 +4,7 @@ import { IoIosArrowDown } from "react-icons/io";
 
 export default function Navigation() {
     return (
-        <nav className="hidden lg:flex bg-tertiary text-white dark:text-textcolor  mx-16 min-h-16 rounded-b-2xl justify-center items-center  ">
+        <nav className="hidden lg:flex bg-tertiary text-white  dark:text-textcolor  mx-16 min-h-16 rounded-b-2xl justify-center items-center  ">
             <ul className="flex grow justify-center items-center mx-10">
                 <li className="relative">
                     <NestedMenu

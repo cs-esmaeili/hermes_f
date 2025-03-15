@@ -62,7 +62,7 @@ function MenuItem({ item }) {
 
     return (
         <li
-            className="relative rounded-lg p-2"
+            className="relative rounded-lg p-2 !text-textcolor"
             onMouseEnter={() => setOpenSub(true)}
             onMouseLeave={() => setOpenSub(false)}
         >
@@ -70,14 +70,14 @@ function MenuItem({ item }) {
                 {item.href ? (
                     <Link
                         href={item.href}
-                        className="flex grow px-4 py-2 text-textcolor"
+                        className="flex grow px-4 py-2"
                     >
                         {item.name}
                     </Link>
                 ) : (
-                    <span className="block px-4 py-2 text-textcolor">{item.name}</span>
+                    <span className="block px-4 py-2">{item.name}</span>
                 )}
-                {hasSubMenu && <span className="px-2 text-textcolor">{">"}</span>}
+                {hasSubMenu && <span className="px-2">{">"}</span>}
             </div>
 
             {hasSubMenu && openSub && (
