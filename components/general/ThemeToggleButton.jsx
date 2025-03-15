@@ -4,16 +4,15 @@ import { useEffect, useState } from 'react';
 import Icon from "../general/Icon";
 import { VscColorMode } from "react-icons/vsc";
 
-export default function ThemeToggleButton() {
+const ThemeToggleButton = () => {
   const [theme, setTheme] = useState(() => {
-    // Get the initial theme from localStorage or system preferences
     if (typeof window !== 'undefined') {
       const storedTheme = localStorage.getItem('theme');
       if (storedTheme === 'dark' || storedTheme === 'light') {
         return storedTheme;
       }
     }
-    return 'userSystem'; // Default to system theme
+    return 'userSystem';
   });
 
   useEffect(() => {
@@ -48,3 +47,6 @@ export default function ThemeToggleButton() {
     </div>
   );
 }
+
+import dynamic from "next/dynamic";
+export default dynamic(() => Promise.resolve(ThemeToggleButton), { ssr: false });

@@ -8,31 +8,12 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const setInitialTheme = `
-    (function() {
-      try {
-        const storedTheme = localStorage.getItem('theme');
-        if (storedTheme === 'dark' || storedTheme === 'light') {
-          document.documentElement.classList.toggle('dark', storedTheme === 'dark');
-        } else {
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          document.documentElement.classList.toggle('dark', prefersDark);
-        }
-      } catch (e) {
-        console.error('Error reading theme from localStorage:', e);
-      }
-    })();
-  `;
 
   return (
     <html
       className="font-yekanBakh"
       lang={translation.getCurrentLanguage()}
-      suppressHydrationWarning
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
-      </head>
       <body>{children}</body>
     </html>
   );

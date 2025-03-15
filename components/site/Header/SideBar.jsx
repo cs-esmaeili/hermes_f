@@ -96,6 +96,5 @@ const Sidebar = () => {
     );
 };
 
-// استفاده از dynamic import به همراه { ssr: false } برای جلوگیری از رندر سروری
 import dynamic from "next/dynamic";
 export default dynamic(() => Promise.resolve(Sidebar), { ssr: false });

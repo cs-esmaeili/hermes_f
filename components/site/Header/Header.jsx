@@ -6,6 +6,7 @@ import Icon from "../../general/Icon";
 import { VscColorMode } from "react-icons/vsc";
 import NavigationMenu from "@/components/site/Header/NavigationMenu";
 import Sidebar from "@/components/site/Header/SideBar";
+import ThemeToggleButton from "@/components/general/ThemeToggleButton";
 
 const Header = () => {
     return (
@@ -21,7 +22,7 @@ const Header = () => {
                         objectFit="scale-down"
                     />
                 </div>
-                
+
                 <div className="flex items-center gap-2">
                     <div className="flex justify-center items-center bg-primary rounded-full relative pl-12 hover:bg-blue-400 transition cursor-pointer">
                         <div className="absolute left-0 rounded-full border-2 border-secondary">
@@ -69,9 +70,11 @@ const Header = () => {
                     <div className="flex justify-center items-center bg-primary rounded-full p-3">
                         <Icon className="text-textcolor w-7 h-7" name="cart" />
                     </div>
-                    <div className="flex justify-center items-center bg-primary rounded-full p-3">
+                    {/* <div className="flex justify-center items-center bg-primary rounded-full p-3">
                         <VscColorMode className="w-7 h-7" />
-                    </div>
+                    </div> */}
+                    <ThemeToggleButton />
+
                 </div>
 
             </div>

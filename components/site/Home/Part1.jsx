@@ -38,7 +38,6 @@ const Part1 = () => {
                             </div>
                             <div>+1000 مدرس</div>
                         </div>
-
                     </div>
 
                     <div className="flex flex-col gap-10">
