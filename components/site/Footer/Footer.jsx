@@ -4,12 +4,49 @@ import { FaTelegram } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
+import { AiFillAlipayCircle } from "react-icons/ai";
+import CollapsibleMenu from '@/components/general/CollapsibleMenu';
+
+const menuItems = [
+    {
+        icon: <AiFillAlipayCircle />,
+        title: "سایر دسته بندی ها",
+        subItems: [
+            { title: "داده‌کاوی و یادگیری ماشین", isActive: false, url: "/courses/data-mining" },
+            { title: "لینوکس", isActive: false, url: "/courses/linux" },
+            { title: "پایتون (Python)", isActive: true, url: "/courses/python" },
+            { title: "هوش مصنوعی", isActive: false, url: "/courses/ai" },
+            { title: "شبکه‌های کامپیوتری", isActive: false, url: "/courses/networks" }
+        ]
+    },
+    {
+        icon: <AiFillAlipayCircle />,
+        title: "علوم کامپیوتر",
+    },
+    {
+        icon: <AiFillAlipayCircle />,
+        title: "مدریت و کسب و کار",
+    },
+    {
+        icon: <AiFillAlipayCircle />,
+        title: "زبان خارجی",
+    },
+    {
+        icon: <AiFillAlipayCircle />,
+        title: "اقتصاد و حسابداری",
+    },
+    {
+        icon: <AiFillAlipayCircle />,
+        title: "طراحی و گرافیک",
+    },
+];
+
 
 const Footer = () => {
     return (
         <div className='flex flex-col grow py-5 mt-5 gap-5'>
 
-            <div className='grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-4 grow h-fit'>
+            <div className=' grid-cols-1 sm:grid-cols-2  lg:grid-cols-4 grow h-fit hidden md:grid'>
                 <div className='flex flex-col flex-1 justify-center items-center gap-2 text-center'>
                     <Icon name={"clockSquare"} className={"h-16 w-16"} />
                     <div>هزار ساعت آموزش</div>
@@ -28,7 +65,11 @@ const Footer = () => {
                 </div>
             </div>
 
-            <div className='grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-6 grow h-fit bg-secondary rounded-3xl p-3 gap-5'>
+            <div className=' rounded-3xl p-3 gap-5  md:hidden'>
+                <CollapsibleMenu menuItems={menuItems} />
+            </div>
+
+            <div className=' grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-6 grow h-fit bg-secondary rounded-3xl p-3 gap-5 hidden md:grid'>
 
                 <div className='flex flex-col w-full justify-center items-center gap-3'>
                     <div className='flex items-center justify-center gap-2'>
@@ -205,7 +246,7 @@ const Footer = () => {
 
 
             </div>
-        </div>
+        </div >
     );
 };
 

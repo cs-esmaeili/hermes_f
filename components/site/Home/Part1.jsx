@@ -1,5 +1,3 @@
-
-
 import DivButton from "@/components/dashboard/DivButton";
 import Icon from "@/components/general/Icon";
 import Illustration from "./Illustration";
@@ -26,17 +24,17 @@ const Part1 = () => {
                     <div className="flex flex-col gap-10">
 
                         <div className="flex items-center text-nowrap gap-2">
-                            <div className="relative w-10 h-10">
+                            <div className="relative w-8 h-8">
                                 <div className="rounded-full w-7 h-7 bg-red-900 opacity-40"></div>
-                                <Icon name={"hat"} className="w-6 h-6 text-red-500 absolute -top-2 -left-2" />
+                                <Icon name={"academicHat"} className="w-6 h-6 text-red-500 absolute -top-1 -left-1" />
                             </div>
                             <div>+3000 آموزش بین المللی</div>
                         </div>
 
                         <div className="flex items-center text-nowrap gap-2">
                             <div className="relative w-8 h-8">
-                                <div className="rounded-full w-7 h-7 bg-green-900 opacity-40"></div>
-                                <Icon name={"shieldUser"} className="w-6 h-6 text-green-500 absolute -top-1 -left-1" />
+                                <div className="rounded-full w-7 h-7 bg-tertiary opacity-40"></div>
+                                <Icon name={"userSpeakEmpty"} className="w-6 h-6 text-tertiary absolute -top-1 -left-1" />
                             </div>
                             <div>+1000 مدرس</div>
                         </div>
@@ -56,15 +54,12 @@ const Part1 = () => {
                         <div className="flex items-center text-nowrap gap-2">
                             <div className="relative w-8 h-8">
                                 <div className="rounded-full w-7 h-7 bg-purple-900 opacity-40"></div>
-                                <Icon name={"bookmark"} className="w-6 h-6 text-purple-500 absolute -top-1 -left-1" />
+                                <Icon name={"certificateEmpty"} className="w-6 h-6 text-purple-500 absolute -top-1 -left-1" />
                             </div>
-                            <div>+1000 آموزش ملی</div>
+                            <div>گواهینامه معتبر آموزش</div>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
 
             <Illustration />

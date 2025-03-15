@@ -5,7 +5,7 @@ import Link from "next/link";
 import Icon from "@/components/general/Icon";
 import DivButton from "../../dashboard/DivButton";
 
-export default function NestedMenu({ items, menuClassName, menuName }) {
+export default function NestedMenu({ items, menuClassName, menuName, menuIcon = <Icon name={"menu"} className="h-7 w-7" /> }) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -18,7 +18,7 @@ export default function NestedMenu({ items, menuClassName, menuName }) {
                 aria-expanded={open}
                 aria-controls="nested-menu-popover"
                 className="gap-2 text-white dark:text-textcolor px-3 py-2 rounded-md text-sm transition-colors duration-300 hover:bg-blue-400 focus:outline-none">
-                <Icon name={"menu"} className="h-7 w-7" />
+                {menuIcon}
                 <span>{menuName}</span>
             </DivButton>
 
@@ -38,8 +38,7 @@ export default function NestedMenu({ items, menuClassName, menuName }) {
             <noscript>
                 <ul
                     id="nested-menu-popover-noscript"
-                    className={`absolute right-0 top-full z-50 ${menuClassName ? menuClassName : "w-48 bg-secondary rounded-md shadow-md text-textcolor"
-                        }`}
+                    className={`absolute right-0 top-full z-50 ${menuClassName ? menuClassName : "w-48 bg-secondary rounded-md shadow-md text-textcolor"}`}
                 >
                     {items.map((item, index) => (
                         <li key={index}>
